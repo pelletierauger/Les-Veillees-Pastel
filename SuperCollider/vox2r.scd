@@ -1,0 +1,445 @@
+
+
+(
+~voxA.stop;
+~voxA = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 4,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+
+    // Les intros lancinantes
+    \spos, Pseq([0.065, 0.067].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([0.068, 0.069].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \spos, Pseq([0.072, 0.073].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+
+    \rel, 0.5,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, 8,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t);
+)
+
+(
+~voxA2.stop;
+~voxA2 = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 4,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    // \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    // \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+
+    // Les intros lancinantes
+    \spos, Pseq([0.065, 0.067].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    // \spos, Pseq([0.068, 0.069].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    // \spos, Pseq([0.072, 0.073].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+
+    // Les lancinements avancent et se construisent
+    // \spos, Pseq([0.074, 0.076].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    // \spos, Pseq([0.095, 0.097].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    // \spos, Pseq([0.129, 0.1318, 0.133, 0.135].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    // peut-être
+    \spos, Pseq([0.2005, 0.215].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    // \spos, Pseq([0.2, 0.305].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+
+    \rel, 0.5,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, 20,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t);
+~bass0 = Synth.new(\simplest, [\freq, ~toFreq.("F2"), \amp, 4, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
+~bass1 = Synth.new(\simplest, [\freq, ~toFreq.("A3") * 0.midiratio, \amp, 3, \out, 0, \rel, 5, \pan, rrand(-0.5, 0.5)]);
+~bass2 = Synth.new(\simplest, [\freq, ~toFreq.("C3"), \amp, 2, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
+// ~drone2 = {
+//     var sig, index, index2, fond;
+//     fond = ~toFreq.("F2");
+//     index = SinOsc.ar(fond) * SinOsc.kr(0.1, mul:0.5, add:0.5).range(0.25, 1);
+//     index2 = SinOsc.ar(fond + 0.1) * SinOsc.kr(0.11, mul:0.5, add:0.5).range(0.25, 1);
+//     sig = Shaper.ar(~b.bufnum, [index, index2]) * 0.5;
+//     // sig = sig * LFSaw.ar([fond + 0.1, fond] * 4);
+//     // sig = sig + Shaper.ar(~b.bufnum, index2) * 0.5;
+//     sig = LeakDC.ar(sig * 0.4);
+// }.play;
+// ~drone3 = {
+//     var sig, index, index2, fond;
+//     fond = ~toFreq.("F3");
+//     index = SinOsc.ar(fond) * SinOsc.kr(0.1, mul:0.5, add:0.5).range(0.25, 1);
+//     index2 = SinOsc.ar(fond + 0.1) * SinOsc.kr(0.11, mul:0.5, add:0.5).range(0.25, 1);
+//     sig = Shaper.ar(~b.bufnum, [index, index2]) * 0.5;
+//     // sig = sig * LFSaw.ar([fond + 0.1, fond] * 4);
+//     // sig = sig + Shaper.ar(~b.bufnum, index2) * 0.5;
+//     sig = LeakDC.ar(sig * 0.1);
+// }.play;
+)
+(
+~drone2.free;
+~drone3.free;
+~voxA2.stop;
+~bass0.set(\gate, 0);
+~bass1.set(\gate, 0);
+~bass2.set(\gate, 0);
+)
+~bass1.set(\freq, ~toFreq.("A3") * 0.midiratio);
+
+
+(
+~shimmerD3.stop;
+~shimmerD3 = Pbind(
+    \instrument, \guitare,
+    \dur, 1 / 16,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \rel, 0.1,
+    \atk, 0.7,
+    \rate, [1] * -7.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, -16.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, 4 * 1,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t);
+)
+
+
+
+
+
+
+
+(
+// Lent build-up, probablement un La soutenu
+~voxA.stop;
+~voxA = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 4,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+
+    // Les intros lancinantes
+    \spos, Pseq([0.065, 0.067].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([0.068, 0.069].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \spos, Pseq([0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08, 0.085, 0.13].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \spos, Pseq([0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \rel, 0.5,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, 24,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t);
+)
+
+p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 0.5}});
+
+
+
+// Lenteur, lenteur
+
+
+(
+~voxAb.stop;
+~voxAb = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.231, 0.295].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.5,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 2,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [1]);
+)
+
+
+(
+~voxLento.stop;
+~voxLento = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.315, 0.32, 0.315, 0.319].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.85,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 2,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [1, 0.25]);
+)
+
+
+(
+~voxLento2.stop;
+~voxLento2 = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.5, 0.531].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.5,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 2,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [1, 0.25]);
+)
+
+
+(
+~voxLento2.stop;
+~voxLento2 = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.62].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.25,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 4,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [1, 0.25]);
+)
+
+
+(
+~voxLento2.stop;
+~voxLento2 = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.62, 0.889].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.25,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 4,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [1, 0.25]);
+)
+
+
+
+(
+~voxLento3.stop;
+~voxLento3 = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.88, 0.89].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.5,
+    \rel, Pseq([0.5, 0.75], inf),
+    \atk, 0.07,
+    \rate, 0.midiratio,
+    \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 3 * Pseq([1, 0.25], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [1, 0.25]);
+)
+
+
+
+(
+~voxLento2.stop;
+~voxLento2 = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.88, 0.82].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.5,
+    \rel, Pseq([0.5, 0.75], inf) * 2,
+    \atk, 0.07,
+    \rate, 0.midiratio,
+    \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 2 * Pseq([1, 0.75], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [1, 0.25]);
+)
+
+
+
+(
+// many new rhythms
+~voxFin.stop;
+~voxFin = Pbind(
+    \instrument, \vox,
+    \dur, 2,
+    \spos, Pseq([0.887].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \rel, 5,
+    \rel, Pseq([0.5], inf) * 4,
+    \atk, 0.07,
+    \rate, 0.midiratio,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 3 * Pseq([1, 0.75], inf),
+    \amp, Pseq([20], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [1, 0.25]);
+)
+
+
+
+(
+~voxFin2.stop;
+~voxFin2 = Pbind(
+    \instrument, \vox,
+    \dur, 2,
+    \spos, Pseq([0.19].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \rel, 5,
+    \rel, Pseq([0.5], inf) * 4,
+    \atk, 0.07,
+    \rate, 0.midiratio,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 3 * Pseq([1, 0.75], inf),
+    \amp, Pseq([30], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [1, 0.25]);
+)
