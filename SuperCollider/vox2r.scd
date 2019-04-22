@@ -145,11 +145,11 @@
 
 
 
-
+// --------Build-up---------------------- //
 (
-// Lent build-up, probablement un La soutenu
-~voxA.stop;
-~voxA = Pbind(
+// Lent build-up, un la soutenu
+~buildVoice.stop;
+~buildVoice = Pbind(
     \instrument, \vox,
     \dur, 1 / 16 * 4,
     // En La majeur
@@ -171,18 +171,55 @@
     \spos, Pseq([0.068, 0.069].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
     \spos, Pseq([0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08, 0.085, 0.13].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
     \spos, Pseq([0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-    \rel, 0.5,
+        \spos, Pseq([0.073].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \spos, Pfunc(~calcPos),
+    \rel, 0.5  * Pseq([Pgeom(1, 1.1, 4)], inf),
+//     \rel, 0.5,
     \atk, 0.07,
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, 24,
+    \amp, Pdefn(\buildAmp, 4) * Pseq([Pgeom(1, 1.2, 4)], inf),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t);
+).play(t, quant: 1);
 )
+~buildVoice.stop;
 
 p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 0.5}});
+Pdefn(\buildAmp, 6);
+(
+~posList = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
+~minList = 0;
+~maxList = 5;
+~currentBeat = 0;
+~numBeats = 4;
+~curInList = ~minList;
+)
+
+(
+~calcPos = {
+    var ret = ~posList[~curInList];
+//     if (~currentBeat == 0, {
+//         (~posList[~curInList]!4).postln;
+//     });
+//     ~currentBeat.postln;
+    ~currentBeat = ~currentBeat + 1;
+    if (~currentBeat == ~numBeats, {
+        ~currentBeat = 0;
+        ~curInList = ~curInList + 1;
+        if (~curInList > ~maxList, {
+           ~curInList = ~minList;
+        });
+    });
+    ret;
+};
+)
+
+
+// ------------------------------- //
+
+
 
 
 

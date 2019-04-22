@@ -1,5 +1,8 @@
 s.boot;
+s.record;
+s.stopRecording;
 FreqScope.new(400, 200, 0, server: s);
+
 (
 SynthDef.new(\simplest, {
     arg out, freq = 220, amp = 1, pan = 0, atk = 0.02, rel = 2, gate = 1;
@@ -20,21 +23,10 @@ Synth.new(\simplest, [\freq, ~toFreq.("A3") * 0.midiratio, \amp, 4, \out, 0, \re
 Synth.new(\simplest, [\freq, ~toFreq.("C3"), \amp, 3, \out, 0, \rel, 10, \pan, rrand(-0.5, 0.5)]);
 )
 
-
-
-
-
-s.boot;
-s.record;
-s.stopRecording;
-
 (
 ~sourceGroup = Group.new;
 ~fxGroup = Group.after(~sourceGroup);
-~volumeBus = Bus.audio(s, 2);
 ~reverbBus = Bus.audio(s, 2);
-~slideBus = Bus.audio(s, 2);
-~passesBus = Bus.audio(s, 2);
 ~highPassBus = Bus.audio(s, 2);
 )
 
