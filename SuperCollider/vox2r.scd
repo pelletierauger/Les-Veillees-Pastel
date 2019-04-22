@@ -40,7 +40,7 @@
 ~voxA2.stop;
 ~voxA2 = Pbind(
     \instrument, \vox,
-    \dur, 1 / 16 * 4,
+    \dur, 1 / 16 * 4 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii
@@ -78,13 +78,17 @@
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, 20,
+    \amp, 30,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t);
-~bass0 = Synth.new(\simplest, [\freq, ~toFreq.("F2"), \amp, 4, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
+).play(t, quant: 4);
+t.schedAbs(t.nextBar + 0.25, {
+
+~bass0 = Synth.new(\simplest, [\freq, ~toFreq.("F2"), \amp, 8, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
 ~bass1 = Synth.new(\simplest, [\freq, ~toFreq.("A3") * 0.midiratio, \amp, 3, \out, 0, \rel, 5, \pan, rrand(-0.5, 0.5)]);
 ~bass2 = Synth.new(\simplest, [\freq, ~toFreq.("C3"), \amp, 2, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
+
+});
 // ~drone2 = {
 //     var sig, index, index2, fond;
 //     fond = ~toFreq.("F2");
@@ -151,7 +155,7 @@
 ~buildVoice.stop;
 ~buildVoice = Pbind(
     \instrument, \vox,
-    \dur, 1 / 16 * 4,
+    \dur, 1 / 16 * 4 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii
@@ -179,15 +183,17 @@
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pdefn(\buildAmp, 4) * Pseq([Pgeom(1, 1.2, 4)], inf),
+    \amp, Pdefn(\buildAmp, 1) * Pseq([Pgeom(1, 1.2, 4)], inf),
+    \amp, Pdefn(\buildAmp, 1),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t, quant: 1);
+).play(t, quant: 4);
 )
 ~buildVoice.stop;
 
+~sylv.setn(\levels, [9, 4, 7, 16, 19, 7, 4, 7, 9].midiratio.scramble * 0.5 * 2);
 p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 0.5}});
-Pdefn(\buildAmp, 6);
+Pdefn(\buildAmp, 75);
 (
 ~posList = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
 ~minList = 0;
@@ -230,7 +236,7 @@ Pdefn(\buildAmp, 6);
 ~voxAb.stop;
 ~voxAb = Pbind(
     \instrument, \vox,
-    \dur, 1 / 16 * 8,
+    \dur, 1 / 16 * 8 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii

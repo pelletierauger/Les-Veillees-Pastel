@@ -28,6 +28,7 @@ Synth.new(\simplest, [\freq, ~toFreq.("C3"), \amp, 3, \out, 0, \rel, 10, \pan, r
 ~fxGroup = Group.after(~sourceGroup);
 ~reverbBus = Bus.audio(s, 2);
 ~highPassBus = Bus.audio(s, 2);
+~pulseBus = Bus.audio(s, 1);
 )
 
 (

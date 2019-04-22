@@ -6,7 +6,7 @@ p.pop;
 ~shimmerD2.stop;
 ~shimmerD2 = Pbind(
     \instrument, \guitare,
-    \dur, 1 / 16,
+    \dur, 1 / 16 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii
@@ -124,10 +124,13 @@ p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 1}});
 ~voxA.stop;
 ~voxD.stop;
 ~voxSup.stop;
+~buildVoice.stop;
+~buildVoice2.stop;
+~buildVoice3.stop;
 ~shimmerD2.stop;
 ~shimmerD2 = Pbind(
     \instrument, \guitare,
-    \dur, 1 / 16,
+    \dur, 1 / 16 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii
@@ -154,6 +157,8 @@ p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 1}});
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~highPassBus
 ).play(t);
+~shimmerD2.stop;
+~sylv.setn(\levels, [9, 4, 7, 16, 19, 7, 4, 7, 9].midiratio.scramble * 0.5 * 2);
 )
 
 

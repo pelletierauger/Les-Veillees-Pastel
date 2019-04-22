@@ -4,7 +4,7 @@
 ~shimmerNuits.stop;
 ~shimmerNuits = Pbind(
     \instrument, \guitare,
-    \dur, 1 / 16 * 64,
+    \dur, 1 / 16 * 64 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii

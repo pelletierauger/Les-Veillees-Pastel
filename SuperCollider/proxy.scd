@@ -71,7 +71,7 @@ p.pop;
 
 p.push;
 p.pop;
-
+t.beatDur;
 {300 + (SinOsc.ar(0.125, 0, 0.5, 0.5) * 400)}.plot(10);
 
 ~pulse = {Impulse.kr(0.125 * 2)};
@@ -82,9 +82,9 @@ p.pop;
 ~pulse3 = {Impulse.kr(2)};
 (
 ~sylv = {
-    arg fmFreq = 2;
+    arg fmFreq = 0.502;
     var fund = 87.31 * 4;
-    var env = EnvGen.ar(Env(~melo.kr, 0.25!8, curve: \step, loopNode: 0), ~pulse);
+    var env = EnvGen.ar(Env(~melo.kr, 0.25!8, curve: \step, loopNode: 0), ~pulseBus);
     var envf = EnvGen.ar(Env(~arr.kr, 0.25!3), ~pulse2);
     var envAmp = EnvGen.ar(Env([0, 1, 0], 0.25!2), ~pulse3);
     var filFreq = 900 + (SinOsc.ar(0.25, 0, 0.5, 0.5) * 800);
@@ -102,7 +102,7 @@ p.pop;
 ~sylv.free(5);
 
 [0, 4, 7].midiratio;
-
+topEnvironment.use(~pulseBus)
 currentEnvironment;
 currentEnvironment == topEnvironment;
 Environment.stack;

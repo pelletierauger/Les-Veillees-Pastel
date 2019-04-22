@@ -15,12 +15,34 @@ SynthDef.new(\metro, {
 ~metronome.stop;
 ~metronome = Pbind(
     \instrument, \metro,
-    \dur, 0.25,
+    \dur, 1,
     \freq, Pseq([880, 440, 440, 440] * 2, inf),
     \rel, 0.1,
     \atk, 0.0001,
     \out, 0
-).play(t, quant: 1);
+).play(t, quant: 4);
+)
+
+
+
+(
+SynthDef.new(\pulsemetro, {
+    arg out;
+    var sig, env;
+    env = EnvGen.kr(Env.new([1, 0], [0.1]), doneAction: 2);
+    sig = Pulse.ar(1) * 0.1;
+    Out.ar(out, sig);
+}).add;
+)
+
+(
+~pulseMet.stop;
+~pulseMet = Pbind(
+    \instrument, \pulsemetro,
+    \dur, 16,
+    \out, ~pulseBus
+//     \out, [0, ~pulseBus]
+).play(t, quant: 4);
 )
 t.tempo_(55/60);
 
@@ -33,7 +55,7 @@ t.bar;
 ~buildVoice2.stop;
 ~buildVoice2 = Pbind(
     \instrument, \vox,
-    \dur, 1 / 16 * 4,
+    \dur, 1 / 16 * 4 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii
@@ -58,21 +80,21 @@ t.bar;
     \atk, 0.07,
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
-    \amp, 2 * Pseq([Pgeom(1, 1.265, 8)], inf),
+    \amp, 2 * Pseq([Pgeom(1, 1.265, 8)], inf) * Pdefn(\buildAmp2, 1),
 //     \amp, 8,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t, quant: 1);
+).play(t, quant: 4);
 )
 
-
+Pdefn(\buildAmp2, 8);
 
 (
 // Lent build-up, un la soutenu
 ~buildVoice3.stop;
 ~buildVoice3 = Pbind(
     \instrument, \vox,
-    \dur, 1 / 16 * 4,
+    \dur, 1 / 16 * 4 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii
@@ -95,9 +117,23 @@ t.bar;
     \atk, 0.07,
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
-    \amp, 2 * Pseq([Pgeom(1, 1.265, 8)].stutter(4), inf),
+    \amp, 2 * Pseq([Pgeom(1, 1.265, 8)].stutter(4), inf) * Pdefn(\buildAmp3, 1),
 //     \amp, 8,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t, quant: 1);
+).play(t, quant: 4);
+)
+Pdefn(\buildAmp3, 5);
+t.tempo * 60 / 4;
+t.tempo_(55/60);
+t = TempoClock.new;
+t.tempo_(55 * 4/60);
+t.tempo_(50 * 4/60);
+t.tempo_(25 * 4/60);
+t.bar;
+(
+t.schedAbs(t.nextBar + 0.25, {
+~bass0 = Synth.new(\metro, [\freq, 110 * -4.midiratio * 1, \amp, 1, \out, 0, \rel, 4, \atk, 0.001, \pan, rrand(-0.5, 0.5)]);
+}
+);
 )
