@@ -78,15 +78,15 @@
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, 30,
+    \amp, 20,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
 ).play(t, quant: 4);
 t.schedAbs(t.nextBar + 0.25, {
 
-~bass0 = Synth.new(\simplest, [\freq, ~toFreq.("F2"), \amp, 8, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
-~bass1 = Synth.new(\simplest, [\freq, ~toFreq.("A3") * 0.midiratio, \amp, 3, \out, 0, \rel, 5, \pan, rrand(-0.5, 0.5)]);
-~bass2 = Synth.new(\simplest, [\freq, ~toFreq.("C3"), \amp, 2, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
+// ~bass0 = Synth.new(\simplest, [\freq, ~toFreq.("F2"), \amp, 8, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
+// ~bass1 = Synth.new(\simplest, [\freq, ~toFreq.("A3") * 0.midiratio, \amp, 3, \out, 0, \rel, 5, \pan, rrand(-0.5, 0.5)]);
+// ~bass2 = Synth.new(\simplest, [\freq, ~toFreq.("C3"), \amp, 2, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
 
 });
 // ~drone2 = {
@@ -193,7 +193,7 @@ t.schedAbs(t.nextBar + 0.25, {
 
 ~sylv.setn(\levels, [9, 4, 7, 16, 19, 7, 4, 7, 9].midiratio.scramble * 0.5 * 2);
 p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 0.5}});
-Pdefn(\buildAmp, 75);
+Pdefn(\buildAmp, 10);
 (
 ~posList = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
 ~minList = 0;

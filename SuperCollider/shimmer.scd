@@ -157,8 +157,8 @@ p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 1}});
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~highPassBus
 ).play(t);
-~shimmerD2.stop;
-~sylv.setn(\levels, [9, 4, 7, 16, 19, 7, 4, 7, 9].midiratio.scramble * 0.5 * 2);
+// ~shimmerD2.stop;
+// ~sylv.setn(\levels, [9, 4, 7, 16, 19, 7, 4, 7, 9].midiratio.scramble * 0.5 * 1);
 )
 
 

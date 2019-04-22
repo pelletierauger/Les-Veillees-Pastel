@@ -1,4 +1,5 @@
 s.boot;
+s.quit;
 s.record;
 s.stopRecording;
 FreqScope.new(400, 200, 0, server: s);
