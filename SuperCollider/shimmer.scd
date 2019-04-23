@@ -19,7 +19,7 @@ p.pop;
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, -4.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, 24,
+    \amp, 4,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~highPassBus
 ).play(t);
@@ -112,21 +112,22 @@ p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 1}});
 (
 // Les recherches lentes, les ruisseaux nuiteux
 // le long desquels on pense à Neptune
-~shimmerD2.stop;
+// ~shimmerD2.stop;
 // p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 1}});
 // p.use({~sylv.free;});
-~drone2.free;
-~drone3.free;
-~voxA2.stop;
-~bass0.set(\gate, 0);
-~bass1.set(\gate, 0);
-~bass2.set(\gate, 0);
-~voxA.stop;
-~voxD.stop;
-~voxSup.stop;
-~buildVoice.stop;
-~buildVoice2.stop;
-~buildVoice3.stop;
+// ~drone2.free;
+// ~drone3.free;
+// ~voxA2.stop;
+// ~bass0.set(\gate, 0);
+// ~bass1.set(\gate, 0);
+// ~bass2.set(\gate, 0);
+// ~voxA.stop;
+// ~voxD.stop;
+// ~voxSup.stop;
+// ~buildVoice.stop;
+// ~buildVoice2.stop;
+// ~buildVoice3.stop;
+// ~alt.free;
 ~shimmerD2.stop;
 ~shimmerD2 = Pbind(
     \instrument, \guitare,
@@ -155,18 +156,21 @@ p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 1}});
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
     \amp, 24,
     \pan, Pwhite(-0.5, 0.5, inf),
+    \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~highPassBus
-).play(t);
+).play(t, quant: [4]);
 // ~shimmerD2.stop;
-// ~sylv.setn(\levels, [9, 4, 7, 16, 19, 7, 4, 7, 9].midiratio.scramble * 0.5 * 1);
+// ~shimmerD3.stop;
+// ~shimmerD4.stop;
+// ~sylv.setn(\levels, [9, 4, 7, 16, 19, 7, 4, 7, 9].midiratio.scramble * 0.5 * 2);
 )
 
 
 
 (
 // Le surprenant shimmer strummy, citron et cuivre
-~shimmerD2.stop;
-~shimmerD2 = Pbind(
+~shimmerD3.stop;
+~shimmerD3 = Pbind(
     \instrument, \guitare,
     \dur, 1 / 16,
     // En La majeur
@@ -197,4 +201,76 @@ p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 1}});
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~highPassBus
 ).play(t);
+)
+
+
+
+
+
+
+Pdefn(\bassyAmp, 1);
+
+(
+// Une petite basse se balance doucement
+~shimmerD3.stop;
+~shimmerD3 = Pbind(
+    \instrument, \guitare,
+    \dur, 1 / 16 * 4 * 4 * 2,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.257].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.367].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.58, 0.365].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+        \spos, Pseq([0.365, 0.257].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.0235, 0.2545].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.0245, 0.2545].stutter(64), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.0545, 0.2545].stutter(64), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.0925, 0.2545].stutter(1), inf) + Pwhite(0.001, 0.002, inf),
+//  Le grésillement en Fa majeur
+    \spos, Pseq([0.2545, 0.335].stutter(64), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.779, 0.1025, 0.779, 0.1225].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0),
+    \spos, Pseq([0.779, 0.251].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0),
+    \spos, Pseq([0.779].stutter(1), inf),
+    \rel, 0.9,
+    \atk, 0.001,
+    \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, Pseq([-4, -4].midiratio.stutter(64), inf) * 1,
+    \amp, Pseq([1, 0.5], inf) * 32 * Pdefn(\bassyAmp, 1),
+//     \amp, 24,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4]);
+)
+
+(
+// Quatre accords qui lancinent mais avancent
+~shimmerD4.stop;
+~shimmerD4 = Pbind(
+    \instrument, \guitare,
+    \dur, 1 / 16 * 4 * 4 * 8 * 2,
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.257].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.367].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.58, 0.365].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+        \spos, Pseq([0.365, 0.257].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.0235, 0.2545].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.0245, 0.2545].stutter(64), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.0545, 0.2545].stutter(64), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.0925, 0.2545].stutter(1), inf) + Pwhite(0.001, 0.002, inf),
+//  Le grésillement en Fa majeur
+    \spos, Pseq([0.2545, 0.335].stutter(64), inf) + Pwhite(0.001, 0.002, inf),
+    \spos, Pseq([0.779, 0.1025, 0.779, 0.1225].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0),
+//     \spos, Pseq([0.779, 0.251].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0),
+//     \spos, Pseq([0.779].stutter(1), inf),
+    \rel, 3.9,
+    \atk, 0.001,
+    \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, Pseq([-4, -4].midiratio.stutter(64), inf) * 1,
+    \amp, Pseq([0.7, 1, 0.7, 1], inf) * Pseq([1, 0.5], inf) * 8 * 8 * Pdefn(\bassyAmp, 1),
+//     \amp, 24,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4]);
 )

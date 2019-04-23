@@ -24,17 +24,17 @@ SynthDef(\bvox, {
 ~voxFin.stop;
 ~voxFin = Pbind(
     \instrument, \vox,
-    \dur, 2,
+    \dur, 2 * 4,
     \spos, Pseq([0.887].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
     \rel, 5,
     \rel, Pseq([0.5], inf) * 4,
     \atk, 0.07,
     \rate, 0.midiratio,
     \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 3 * Pseq([1, 0.75], inf),
-    \amp, Pseq([20], inf),
+    \amp, Pseq([20] * 1.75, inf),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t, quant: [1, 0.25]);
+).play(t, quant: [1, 0.25] * 4);
 )
 
 
@@ -46,17 +46,17 @@ SynthDef(\bvox, {
 ~voxFin2.stop;
 ~voxFin2 = Pbind(
     \instrument, \bvox,
-    \dur, 2,
+    \dur, 2 * 4,
     \spos, Pseq([0.6982].stutter(4), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
     \rel, 5,
     \rel, Pseq([0.5], inf) * 4,
     \atk, 0.07,
     \rate, 0.midiratio,
     \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 5 * Pseq([1, 0.75], inf),
-    \amp, Pseq([20], inf),
+    \amp, Pseq([20] * 1.5, inf),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t, quant: [1, 0.25]);
+).play(t, quant: [1, 0.25] * 4);
 )
 
 
@@ -65,7 +65,7 @@ SynthDef(\bvox, {
 ~voxFin.stop;
 ~voxFin2.stop;
 ~shimmerD2.stop;
-p.use({~sylv.free;});
+// p.use({~sylv.free;});
 ~voxLento2.stop;
 ~voxLento3.stop;
 ~voxLento.stop;

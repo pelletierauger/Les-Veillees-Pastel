@@ -84,9 +84,9 @@
 ).play(t, quant: 4);
 t.schedAbs(t.nextBar + 0.25, {
 
-// ~bass0 = Synth.new(\simplest, [\freq, ~toFreq.("F2"), \amp, 8, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
-// ~bass1 = Synth.new(\simplest, [\freq, ~toFreq.("A3") * 0.midiratio, \amp, 3, \out, 0, \rel, 5, \pan, rrand(-0.5, 0.5)]);
-// ~bass2 = Synth.new(\simplest, [\freq, ~toFreq.("C3"), \amp, 2, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
+~bass0 = Synth.new(\simplest, [\freq, ~toFreq.("F2"), \amp, 8, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
+~bass1 = Synth.new(\simplest, [\freq, ~toFreq.("A3") * 0.midiratio, \amp, 3, \out, 0, \rel, 5, \pan, rrand(-0.5, 0.5)]);
+~bass2 = Synth.new(\simplest, [\freq, ~toFreq.("C3"), \amp, 2, \out, 0, \rel, 5, \atk, 0.1, \pan, rrand(-0.5, 0.5)]);
 
 });
 // ~drone2 = {
@@ -183,8 +183,8 @@ t.schedAbs(t.nextBar + 0.25, {
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pdefn(\buildAmp, 1) * Pseq([Pgeom(1, 1.2, 4)], inf),
-    \amp, Pdefn(\buildAmp, 1),
+    \amp, Pdefn(\buildAmp, 1) * Pseq([Pgeom(1, 1.1, 8)], inf),
+//     \amp, Pdefn(\buildAmp, 1),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
 ).play(t, quant: 4);
@@ -196,10 +196,10 @@ p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 0.5}});
 Pdefn(\buildAmp, 10);
 (
 ~posList = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
-~minList = 0;
+~minList = 4;
 ~maxList = 5;
 ~currentBeat = 0;
-~numBeats = 4;
+~numBeats = 8;
 ~curInList = ~minList;
 )
 
@@ -231,7 +231,7 @@ Pdefn(\buildAmp, 10);
 
 // Lenteur, lenteur
 
-
+1 / 16 * 8 * 4;
 (
 ~voxAb.stop;
 ~voxAb = Pbind(
@@ -256,10 +256,10 @@ Pdefn(\buildAmp, 10);
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 2,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 3,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t, quant: [1]);
+).play(t, quant: [4]);
 )
 
 
@@ -298,7 +298,7 @@ Pdefn(\buildAmp, 10);
 ~voxLento2.stop;
 ~voxLento2 = Pbind(
     \instrument, \vox,
-    \dur, 1 / 16 * 8,
+    \dur, 1 / 16 * 8 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii
@@ -318,10 +318,10 @@ Pdefn(\buildAmp, 10);
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 2,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 3,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t, quant: [1, 0.25]);
+).play(t, quant: [4, 1]);
 )
 
 
@@ -392,7 +392,7 @@ Pdefn(\buildAmp, 10);
 ~voxLento3.stop;
 ~voxLento3 = Pbind(
     \instrument, \vox,
-    \dur, 1 / 16 * 8,
+    \dur, 1 / 16 * 8 * 4,
     // En La majeur
     // Dmaj7, A, Dmaj7, Cm
     // IV, I, IV, iii
@@ -414,7 +414,7 @@ Pdefn(\buildAmp, 10);
     \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 3 * Pseq([1, 0.25], inf),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
-).play(t, quant: [1, 0.25]);
+).play(t, quant: [1, 0.25] * 4);
 )
 
 

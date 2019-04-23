@@ -90,7 +90,7 @@ t.bar;
 )
 ~buildVoice2.stop;
 Pdefn(\buildAmp2, 12);
-Pdefn(\buildAmp3, 7);
+Pdefn(\buildAmp3, 9);
 
 , 0.124, 0.124
 
@@ -151,19 +151,23 @@ Pdefn(\buildAmp2, 4);
     \atk, 0.09,
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
-    \amp, 1 * Pseq([Pgeom(1, 1.265, 8)].stutter(4), inf) * Pdefn(\buildAmp3, 1),
+    \amp, Pseq([Pgeom(1, 1.265, 8)].stutter(4), inf) * Pdefn(\buildAmp3, 1),
 //     \amp, 8,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: 4);
 )
-Pdefn(\buildAmp3, 4);
+Pdefn(\buildAmp3, 6);
 t.tempo * 60 / 4;
 t.tempo_(55/60);
 t = TempoClock.new;
 t.tempo_(55 * 4/60);
+t.tempo_(52 * 4/60);
 t.tempo_(50 * 4/60);
+t.tempo_(48 * 4/60);
 t.tempo_(25 * 4/60);
+t.tempo * 60/4;
+t.tempo;
 t.bar;
 (
 t.schedAbs(t.nextBar + 0.25, {
@@ -192,19 +196,61 @@ t.schedAbs(t.nextBar + 0.25, {
 
 
 (
-~voxA2.stop;
-~voxA2 = Pbind(
+~buildVoice4.stop;
+~buildVoice4 = Pbind(
     \instrument, \vox,
     \dur, 1,
     \spos, Pseq([0.2005, 0.215].stutter(16), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+        \spos, Pseq([0.2005].stutter(16), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \rel, 0.75,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(10, 1.1, 16)], inf) * Pdefn(\buildAmp4, 1) * 0.25,
+//  \amp, Pseq([Pgeom(10, 1.1, 16)], inf) * 1,
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \pan, Pseq([-1, 1], inf),
+    \out, 0
+).play(t, quant: 4);
+)
+Pdefn(\buildAmp4, 3);
+
+
+
+(
+~buildVoice5.stop;
+~buildVoice5 = Pbind(
+    \instrument, \vox,
+    \dur, 1,
+    \spos, Pseq([0.2005].stutter(16), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \spos, Pseq([0.305, 0.202].stutter(2), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
     \rel, 0.5,
     \atk, 0.07,
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
-    \amp, Pseq([Pgeom(10, 1.1, 16)], inf) * 0.5,
+    \amp, Pseq([1, 0.5], inf) * Pseq([Pgeom(2, 1.12, 16)], inf) * Pdefn(\buildAmp5, 1) * 0.5,
 //     \amp, 20,
     \pan, Pwhite(-1.0, 1.0, inf),
     \pan, Pseq([-1, 1], inf),
     \out, 0
 ).play(t, quant: 4);
+)
+Pdefn(\buildAmp5, 6);
+
+(
+// ~poussiere.free;
+~buildVoice2.stop;
+~buildVoice3.stop;
+~buildVoice4.stop;
+~buildVoice5.stop;
+)
+
+
+(
+Pdefn(\buildAmp2, 1);
+Pdefn(\buildAmp3, 0.1);
+Pdefn(\buildAmp4, 0.1);
+Pdefn(\buildAmp5, 0.01);
+Pdefn(\bassyAmp, 0.1);
+~alt.setn(\altAmp, 0.45);
 )
