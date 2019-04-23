@@ -411,7 +411,7 @@ Pdefn(\buildAmp, 10);
     \rel, Pseq([0.5, 0.75], inf),
     \atk, 0.07,
     \rate, 0.midiratio,
-    \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 3 * Pseq([1, 0.25], inf),
+    \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 4 * Pseq([1, 0.25], inf),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
 ).play(t, quant: [1, 0.25] * 4);

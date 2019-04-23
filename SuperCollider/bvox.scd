@@ -53,7 +53,7 @@ SynthDef(\bvox, {
     \atk, 0.07,
     \rate, 0.midiratio,
     \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 5 * Pseq([1, 0.75], inf),
-    \amp, Pseq([20] * 1.5, inf),
+    \amp, Pseq([20] * 1.75, inf),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
 ).play(t, quant: [1, 0.25] * 4);
@@ -70,4 +70,5 @@ SynthDef(\bvox, {
 ~voxLento3.stop;
 ~voxLento.stop;
 ~shimmerNuits.stop;
+~sylv.set(\gate, 0);
 )

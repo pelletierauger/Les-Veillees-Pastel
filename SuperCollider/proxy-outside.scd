@@ -12,7 +12,7 @@ t.beatDur!9;
 ~sylv = {
     arg fmFreq = 0.502, gate = 1, atk = 4, rel = 10;
     var fund = 87.31 * 4;
-    var levels = Control.names(\levels).kr([9, 4, 7, 16, 19, 4, 7, 9].midiratio.scramble * 0.5);
+    var levels = Control.names(\levels).kr(([9, 4, 7, 16, 19, 7, 9].scramble ++ 7).midiratio * 0.5);
 //     var levels = [9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 0.5;
     var env = EnvGen.ar(Env(levels, (t.beatDur)!8, curve: \step, loopNode: 0), In.ar(~pulseBus, 1));
     var envRel = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);

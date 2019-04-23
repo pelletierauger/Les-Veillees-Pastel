@@ -90,7 +90,7 @@ t.bar;
 )
 ~buildVoice2.stop;
 Pdefn(\buildAmp2, 12);
-Pdefn(\buildAmp3, 9);
+Pdefn(\buildAmp3, 8);
 
 , 0.124, 0.124
 
@@ -235,7 +235,7 @@ Pdefn(\buildAmp4, 3);
     \out, 0
 ).play(t, quant: 4);
 )
-Pdefn(\buildAmp5, 6);
+Pdefn(\buildAmp5, 7);
 
 (
 // ~poussiere.free;
@@ -243,14 +243,18 @@ Pdefn(\buildAmp5, 6);
 ~buildVoice3.stop;
 ~buildVoice4.stop;
 ~buildVoice5.stop;
+~alt.set(\gate, 0);
+~poussiere.set(\gate, 0);
+~shimmerD3.stop;
+~shimmerD4.stop;
 )
 
 
 (
-Pdefn(\buildAmp2, 1);
-Pdefn(\buildAmp3, 0.1);
-Pdefn(\buildAmp4, 0.1);
-Pdefn(\buildAmp5, 0.01);
-Pdefn(\bassyAmp, 0.1);
-~alt.setn(\altAmp, 0.45);
+Pdefn(\buildAmp2, 10 * 0);
+Pdefn(\buildAmp3, 8 * 0);
+Pdefn(\buildAmp4, 3 * 0);
+Pdefn(\buildAmp5, 7 * 0);
+Pdefn(\bassyAmp, 1 * 0);
+~alt.setn(\altAmp, 1 * 0);
 )
