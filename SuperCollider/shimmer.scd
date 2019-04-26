@@ -1,6 +1,17 @@
-s.record;
-s.stopRecording;
-p.pop;
+(
+~guitare = Buffer.read(s, "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Signes-Vitaux-3/SuperCollider/0001\ 7-Audio.aif");
+SynthDef(\guitare, {
+    arg buf = ~guitare, rate = 1, spos = 0, pan = 1, amp = 1, rel = 2, atk = 0.1, out = 0;
+    var sig, env, lfo;
+    env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]), doneAction: 2);
+    sig = PlayBuf.ar(2, ~guitare, rate * BufRateScale.ir(buf), startPos: spos * 7144448);
+    sig = sig * env;
+    sig = sig * amp;
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
+    Out.ar(out, sig);
+}).add;
+)
+
 (
 // Le chaud shimmer en Fa majeur
 ~shimmerD2.stop;
@@ -237,8 +248,7 @@ Pdefn(\bassyAmp, 1);
     \atk, 0.001,
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, Pseq([-4, -4].midiratio.stutter(64), inf) * 1,
-    \amp, Pseq([1, 0.5], inf) * 32 * Pdefn(\bassyAmp, 1),
-//     \amp, 24,
+    \amp, Pseq([1, 0.5], inf) * 32 * Pdefn(\bassyAmp, 1) * 0.5,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
@@ -250,7 +260,7 @@ Pdefn(\bassyAmp, 1);
 ~shimmerD4 = Pbind(
     \instrument, \guitare,
     \dur, 1 / 16 * 4 * 4 * 8 * 2,
-    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    \spos , Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     \spos, Pseq([0.257].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     \spos, Pseq([0.367].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     \spos, Pseq([0.58, 0.365].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
@@ -268,8 +278,46 @@ Pdefn(\bassyAmp, 1);
     \atk, 0.001,
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, Pseq([-4, -4].midiratio.stutter(64), inf) * 1,
-    \amp, Pseq([0.7, 1, 0.7, 1], inf) * Pseq([1, 0.5], inf) * 8 * 8 * Pdefn(\bassyAmp, 1),
+    \amp, Pseq([0.5, 1, 0.5, 1], inf) * Pseq([1, 0.5], inf) * 8 * 8 * Pdefn(\bassyAmp, 1),
 //     \amp, 24,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4]);
+)
+
+
+
+(
+// Notes qui languissent
+~shimmerD5.stop;
+~shimmerD5 = Pbind(
+    \instrument, \guitare,
+    \dur, 16,
+    \spos, Pseq([0.074, 0.05, 0.02], inf),
+    \spos, Pseq([0.074, 0.199], inf),
+    \rel, 5.9,
+    \atk, 0.001,
+    \rate, -4.midiratio,
+    \amp, Pseq([1], inf) * 64 * Pdefn(\bassyAmp, 1),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4]);
+)
+
+(
+// Notes qui languissent
+~shimmerD6.stop;
+~shimmerD6 = Pbind(
+    \instrument, \guitare,
+    \dur, 4,
+    \spos, Pseq([0.074, 0.05, 0.02], inf),
+    \spos, Pseq([0.1, 0.784, 0.091].stutter(4), inf),
+    \spos, 0.199,
+    \spos, Pseq([0.199, 0.25].stutter(4), inf),
+    \rel, 2.2,
+    \atk, 0.001,
+    \rate, -4.midiratio,
+    \amp, Pseq([1, 0.9, 0.8, 0.7], inf) * 64 * Pdefn(\bassyAmp, 1),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
