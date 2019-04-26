@@ -226,10 +226,7 @@ Pdefn(\bassyAmp, 1);
 ~shimmerD3.stop;
 ~shimmerD3 = Pbind(
     \instrument, \guitare,
-    \dur, 1 / 16 * 4 * 4 * 2,
-    // En La majeur
-    // Dmaj7, A, Dmaj7, Cm
-    // IV, I, IV, iii
+    \dur, 2,
     \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     \spos, Pseq([0.257].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     \spos, Pseq([0.367].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
@@ -244,6 +241,7 @@ Pdefn(\bassyAmp, 1);
     \spos, Pseq([0.779, 0.1025, 0.779, 0.1225].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0),
     \spos, Pseq([0.779, 0.251].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0),
     \spos, Pseq([0.779].stutter(1), inf),
+    \spos, Pseq([Rest()] ++ (0.779!15), inf),
     \rel, 0.9,
     \atk, 0.001,
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
@@ -252,14 +250,15 @@ Pdefn(\bassyAmp, 1);
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
-)
-
-(
+// )
+1 / 16 * 4 * 4 * 8 * 2;
+[Rest()] ++ (0.779!15);
+// (
 // Quatre accords qui lancinent mais avancent
 ~shimmerD4.stop;
 ~shimmerD4 = Pbind(
     \instrument, \guitare,
-    \dur, 1 / 16 * 4 * 4 * 8 * 2,
+    \dur, 16,
     \spos , Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     \spos, Pseq([0.257].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     \spos, Pseq([0.367].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
@@ -278,7 +277,7 @@ Pdefn(\bassyAmp, 1);
     \atk, 0.001,
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, Pseq([-4, -4].midiratio.stutter(64), inf) * 1,
-    \amp, Pseq([0.5, 1, 0.5, 1], inf) * Pseq([1, 0.5], inf) * 8 * 8 * Pdefn(\bassyAmp, 1),
+    \amp, Pseq([0.6, 1, 0.6, 1], inf) * Pseq([1, 0.5], inf) * 8 * 8 * Pdefn(\bassyAmp, 1),
 //     \amp, 24,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
@@ -307,6 +306,7 @@ Pdefn(\bassyAmp, 1);
 (
 // Notes qui languissent
 ~shimmerD6.stop;
+~shimmerD4.stop;
 ~shimmerD6 = Pbind(
     \instrument, \guitare,
     \dur, 4,
@@ -318,6 +318,45 @@ Pdefn(\bassyAmp, 1);
     \atk, 0.001,
     \rate, -4.midiratio,
     \amp, Pseq([1, 0.9, 0.8, 0.7], inf) * 64 * Pdefn(\bassyAmp, 1),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4]);
+)
+
+
+1 / 16 * 4 * 4 * 8 * 2;
+
+(
+// Quatre accords qui lancinent mais avancent
+~shimmerPlateau.stop;
+~shimmerPlateau = Pbind(
+    \instrument, \guitare,
+    \dur, 8,
+    \spos, Pseq([0.779, 0.19925, 0.779, 0.25], inf),
+    \rel, 2,
+    \atk, 0.001,
+    \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, Pseq([-4, -4].midiratio.stutter(64), inf) * 1,
+    \amp, Pseq([0.5, 1, 0.5, 1], inf) * Pseq([1, 0.5], inf) * 8 * 8 * Pdefn(\bassyAmp, 1),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4]);
+)
+
+
+(
+// Une petite basse se balance doucement
+~shimmerD3Inv.stop;
+~shimmerD3Inv = Pbind(
+    \instrument, \guitare,
+    \dur, 2,
+    \spos, 0.783,
+    \rel, 0.7,
+    \atk, 0.15,
+//     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
+//     \rate, Pseq([-4, -4].midiratio.stutter(64), inf) * 1,
+    \rate, -4.midiratio * -1,
+    \amp, Pseq([1, 0.5], inf) * 32 * Pdefn(\bassyAmp, 1) * 2,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
