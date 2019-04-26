@@ -1,6 +1,4 @@
 (
-// t = TempoClock.new;
-// t.tempo_(50/60);
 ~voice = Buffer.read(s, "/Users/guillaumepelletier/Downloads/slackjaw vox.wav");
 // ~voice.numFrames;
 SynthDef(\vox, {
