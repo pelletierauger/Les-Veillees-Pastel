@@ -1,3 +1,4 @@
+// beginGLSL
 setBothShaders(`
 precision mediump float;
 varying vec2 vTexCoord;
