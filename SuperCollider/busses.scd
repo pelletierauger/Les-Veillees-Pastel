@@ -49,3 +49,53 @@ SynthDef.new(\highPass, {
 ~highPassSynth.free;
 ~highPassSynth = Synth.new(\highPass, [\in, ~highPassBus, \out, ~reverbBus], ~fxGroup);
 )
+
+(
+t = TempoClock.new;
+t.tempo_(50 * 4/60);
+)
+
+(
+SynthDef.new(\metro, {
+    arg out, freq = 220, amp = 1, pan = 0, atk = 0.02, rel = 2;
+    var sig, env;
+//     rel = min(max(rel, 0.001), 10);
+    env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]), doneAction: 2);
+    sig = LFTri.ar([freq, freq + 0.1]);
+    sig = sig * env * amp;
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
+    Out.ar(out, sig);
+}).add;
+)
+
+(
+~metronome.stop;
+~metronome = Pbind(
+    \instrument, \metro,
+    \dur, 1,
+    \freq, Pseq([880, 440, 440, 440] * 2, inf),
+    \rel, 0.1,
+    \atk, 0.0001,
+    \out, 0
+).play(t, quant: 4);
+)
+
+(
+SynthDef.new(\pulsemetro, {
+    arg out;
+    var sig, env;
+    env = EnvGen.kr(Env.new([1, 0], [0.1]), doneAction: 2);
+    sig = Pulse.ar(1) * 0.1;
+    Out.ar(out, sig);
+}).add;
+)
+
+(
+~pulseMet.stop;
+~pulseMet = Pbind(
+    \instrument, \pulsemetro,
+    \dur, 16 * 2,
+    \out, ~pulseBus
+//     \out, [0, ~pulseBus]
+).play(t, quant: 4);
+)
