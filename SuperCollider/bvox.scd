@@ -1,8 +1,6 @@
 (
-// t = TempoClock.new;
-// t.tempo_(50/60);
 ~backvoice = Buffer.read(s, "/Users/guillaumepelletier/Downloads/slackjaw bv.wav");
-~backvoice.numFrames;
+// ~backvoice.numFrames;
 SynthDef(\bvox, {
     arg buf = ~backvoice, rate = 1, spos = 0, pan = 1, amp = 1, rel = 2, atk = 0.1, out = 0;
     var sig, env, lfo;
@@ -16,11 +14,8 @@ SynthDef(\bvox, {
 }).add;
 )
 
-
-
-
 (
-// many new rhythms
+// many rhythms
 ~voxFin.stop;
 ~voxFin = Pbind(
     \instrument, \vox,
@@ -37,12 +32,8 @@ SynthDef(\bvox, {
 ).play(t, quant: [1, 0.25] * 4);
 )
 
-
-
-
-
 (
-// many new rhythms
+// many rhythms bvox
 ~voxFin2.stop;
 ~voxFin2 = Pbind(
     \instrument, \bvox,
@@ -59,13 +50,11 @@ SynthDef(\bvox, {
 ).play(t, quant: [1, 0.25] * 4);
 )
 
-
 (
 ~voxAb.stop;
 ~voxFin.stop;
 ~voxFin2.stop;
 ~shimmerD2.stop;
-// p.use({~sylv.free;});
 ~voxLento2.stop;
 ~voxLento3.stop;
 ~voxLento.stop;
