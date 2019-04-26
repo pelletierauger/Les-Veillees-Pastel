@@ -1,9 +1,4 @@
-s.boot;
-s.quit;
-p.pop;
 (
-t = TempoClock.new;
-t.tempo_(50/60);
 ~guitare = Buffer.read(s, "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Signes-Vitaux-3/SuperCollider/0001\ 7-Audio.aif");
 SynthDef(\guitare, {
     arg buf = ~guitare, rate = 1, spos = 0, pan = 1, amp = 1, rel = 2, atk = 0.1, out = 0;
