@@ -32,7 +32,7 @@
 
 ~buildVoice2.stop;
 Pdefn(\buildAmp2, 12);
-Pdefn(\buildAmp3, 8);
+Pdefn(\buildAmp3, 7);
 
 
 (
@@ -85,9 +85,9 @@ Pdefn(\buildAmp3, 8);
 //     \amp, 8,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
-).play(t, quant: 4);
+).play(t, quant: [4, 2]);
 )
-Pdefn(\buildAmp3, 6);
+Pdefn(\buildAmp3, 8);
 
 
 (
@@ -166,14 +166,15 @@ Pdefn(\buildAmp5, 7);
 ~poussiere.set(\gate, 0);
 ~shimmerD3.stop;
 ~shimmerD4.stop;
+~fuzzyDust.set(\gate, 0);
 )
 
 
 (
-Pdefn(\buildAmp2, 10 * 0);
-Pdefn(\buildAmp3, 8 * 0);
-Pdefn(\buildAmp4, 3 * 0);
-Pdefn(\buildAmp5, 7 * 0);
-Pdefn(\bassyAmp, 1 * 0);
-~alt.setn(\altAmp, 1 * 0);
+Pdefn(\buildAmp2, 10 * 0.05);
+Pdefn(\buildAmp3, 8 * 0.05);
+Pdefn(\buildAmp4, 3 * 0.05);
+Pdefn(\buildAmp5, 7 * 0.05);
+Pdefn(\bassyAmp, 1 * 0.05);
+~alt.setn(\altAmp, 1 * 0.05);
 )
