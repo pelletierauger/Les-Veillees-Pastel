@@ -9,6 +9,7 @@ p.use({~sylv2.free;});
 t.beatDur;
 t.beatDur!9;
 (
+~sylv.free;
 ~sylv = {
     arg fmFreq = 0.502, gate = 1, atk = 4, rel = 10;
     var fund = 87.31 * 4;
@@ -22,7 +23,7 @@ t.beatDur!9;
     // envf.plot;
     var sig = SinOsc.ar([fund + 0.1 * env * 0.5, fund * env * 0.5]);
     sig = sig * LFTri.ar(fund * env * fmFreq + envf);
-    sig = sig * LFTri.ar(fund * env) * 0.4;
+    sig = sig * LFTri.ar(fund * env) * 0.4 * 1.5;
     sig = sig * envAmp * envRel;
     sig = LPF.ar(sig, filFreq);
     sig + (GVerb.ar(sig * 0.5) * 1) * 2;
