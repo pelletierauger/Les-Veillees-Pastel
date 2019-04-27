@@ -165,7 +165,7 @@ p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 1}});
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf),
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, 24,
+    \amp, 24 * 1.5,
     \pan, Pwhite(-0.5, 0.5, inf),
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~highPassBus
@@ -241,7 +241,7 @@ Pdefn(\bassyAmp, 1);
     \spos, Pseq([0.779, 0.1025, 0.779, 0.1225].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0),
     \spos, Pseq([0.779, 0.251].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0),
     \spos, Pseq([0.779].stutter(1), inf),
-    \spos, Pseq([Rest()] ++ (0.779!15), inf),
+//     \spos, Pseq([Rest()] ++ (0.779!15), inf),
     \rel, 0.9,
     \atk, 0.001,
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
@@ -250,10 +250,9 @@ Pdefn(\bassyAmp, 1);
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
-// )
-1 / 16 * 4 * 4 * 8 * 2;
-[Rest()] ++ (0.779!15);
-// (
+)
+
+(
 // Quatre accords qui lancinent mais avancent
 ~shimmerD4.stop;
 ~shimmerD4 = Pbind(
@@ -275,6 +274,7 @@ Pdefn(\bassyAmp, 1);
 //     \spos, Pseq([0.779].stutter(1), inf),
     \rel, 3.9,
     \atk, 0.001,
+    \atk, Pseq([0.2, 0.001], inf),
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, Pseq([-4, -4].midiratio.stutter(64), inf) * 1,
     \amp, Pseq([0.6, 1, 0.6, 1], inf) * Pseq([1, 0.5], inf) * 8 * 8 * Pdefn(\bassyAmp, 1),
@@ -293,11 +293,12 @@ Pdefn(\bassyAmp, 1);
     \instrument, \guitare,
     \dur, 16,
     \spos, Pseq([0.074, 0.05, 0.02], inf),
-    \spos, Pseq([0.074, 0.199], inf),
+    \spos, Pseq([0.199], inf),
+    \spos, Pseq([0.81, 0.85], inf),
     \rel, 5.9,
     \atk, 0.001,
     \rate, -4.midiratio,
-    \amp, Pseq([1], inf) * 64 * Pdefn(\bassyAmp, 1),
+    \amp, Pseq([1], inf) * 32 * Pdefn(\bassyAmp, 1),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
@@ -349,15 +350,16 @@ Pdefn(\bassyAmp, 1);
 ~shimmerD3Inv.stop;
 ~shimmerD3Inv = Pbind(
     \instrument, \guitare,
-    \dur, 2,
-    \spos, 0.783,
-    \rel, 0.7,
+    \dur, 0.5,
+    \spos, 0.787,
+    \spos, Pseq([0.787, 0.789].stutter(16), inf),
+    \rel, 0.1,
     \atk, 0.15,
 //     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
 //     \rate, Pseq([-4, -4].midiratio.stutter(64), inf) * 1,
-    \rate, -4.midiratio * -1,
-    \amp, Pseq([1, 0.5], inf) * 32 * Pdefn(\bassyAmp, 1) * 2,
-    \pan, Pwhite(-0.5, 0.5, inf),
+    \rate, -4.midiratio * -1 * 2 * -12.midiratio,
+    \amp, Pseq([1, 0.5], inf) * 32 * Pdefn(\bassyAmp, 1) * 1,
+    \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
 )
