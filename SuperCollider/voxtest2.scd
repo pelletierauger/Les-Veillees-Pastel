@@ -162,19 +162,20 @@ Pdefn(\buildAmp5, 7);
 ~buildVoice3.stop;
 ~buildVoice4.stop;
 ~buildVoice5.stop;
-~alt.set(\gate, 0);
+~mousse.set(\gate, 0);
 ~poussiere.set(\gate, 0);
 ~shimmerD3.stop;
 ~shimmerD4.stop;
-~fuzzyDust.set(\gate, 0);
+~brindilles.set(\gate, 0);
 )
 
 
 (
-Pdefn(\buildAmp2, 10 * 0.05);
+Pdefn(\buildAmp2, 12 * 0.05);
 Pdefn(\buildAmp3, 8 * 0.05);
 Pdefn(\buildAmp4, 3 * 0.05);
 Pdefn(\buildAmp5, 7 * 0.05);
 Pdefn(\bassyAmp, 1 * 0.05);
-~alt.setn(\altAmp, 1 * 0.05);
+~mousse.setn(\altAmp, 1 * 0.05);
+~brindilles.setn(\altAmp, 1 * 0.05);
 )
