@@ -1,0 +1,28 @@
+ffmpeg -i les-heures-pastel.mp4 -i /Users/guillaumepelletier/Music/SuperCollider\ Recordings/SC_190427_230957.mp3 -c:v libx264 -pix_fmt yuv420p les-heures-pastel.mp4
+
+
+ffmpeg -i les-heures-pastel.mp4 -i /Users/guillaumepelletier/Music/SuperCollider\ Recordings/SC_190427_230957.aiff -c:v copy -c:a aac  -strict experimental les-heures-pastel-2.mp4
+
+
+ffmpeg -i /Users/guillaumepelletier/Music/SuperCollider\ Recordings/SC_190427_230957.aiff /Users/guillaumepelletier/Music/SuperCollider\ Recordings/SC_190427_230957.aac
+
+
+ffmpeg -i /Users/guillaumepelletier/Music/SuperCollider\ Recordings/SC_190427_230957.aiff -c:a libfdk_aac -b:a 128k /Users/guillaumepelletier/Music/SuperCollider\ Recordings/SC_190427_230957.m4a
+
+afconvert /Users/guillaumepelletier/Music/SuperCollider\ Recordings/SC_190427_230957.aiff -o /Users/guillaumepelletier/Music/SuperCollider\ Recordings/heures-pastel.m4a -q 127 -b 128000 -f m4af -d aac
+
+
+afconvert -d aac -b 256000 /Users/guillaumepelletier/Music/SuperCollider\ Recordings/SC_190427_230957.aiff heures-pastel-son.mp4 -f mp4f
+
+ffmpeg -i les-heures-pastel.mp4 -i heures-pastel-son.mp4 -c:v copy -c:a copy les-heures-pastel-2.mp4
+
+ffmpeg -i les-heures-pastel.mp4 -i heures-pastel-son.mp4 -c:v copy les-heures-pastel-2.mp4
+
+ffmpeg -i les-heures-pastel.mp4
+
+
+ffmpeg -i les-heures-pastel.mp4 -i heures-pastel-son.mp4 -c:v copy -map 0:v:0 -map 1:a:0 les-heures-pastel-2.mp4
+
+La bonne affaire :
+
+ffmpeg -i les-heures-pastel.mp4 -itsoffset 3.0 -i heures-pastel-son.mp4 -map 0:v -map 1:a -c copy les-heures-pastel-2-delay.mp4
