@@ -2,7 +2,7 @@ s.boot;
 s.quit;
 s.record;
 s.stopRecording;
-FreqScope.new(400, 200, 0, server: s);
+FreqScope.new(500, 500, 0, server: s);
 
 
 (
@@ -11,6 +11,7 @@ FreqScope.new(400, 200, 0, server: s);
 ~reverbBus = Bus.audio(s, 2);
 ~highPassBus = Bus.audio(s, 2);
 ~pulseBus = Bus.audio(s, 1);
+~limitBus = Bus.audio(s, 2);
 )
 
 (
@@ -25,7 +26,7 @@ SynthDef.new(\reverb, {
     mul: 1, add: 0);
     del = LPF.ar(del, 600);
 	sig = sig + (del * 0.125);
-    Out.ar(0, sig);
+    Out.ar(~limitBus, sig);
 }).add;
 )
 
@@ -48,6 +49,31 @@ SynthDef.new(\highPass, {
 (
 ~highPassSynth.free;
 ~highPassSynth = Synth.new(\highPass, [\in, ~highPassBus, \out, ~reverbBus], ~fxGroup);
+)
+
+(
+SynthDef.new(\limit, {
+    arg in, out = 0;
+    var sig, compSig;
+    sig = In.ar(in, 2); 
+    compSig = Compander.ar(sig, sig,
+        thresh: 0.1,
+        slopeBelow: 1,
+        slopeAbove: 0.5,
+        clampTime: 0.01,
+        relaxTime: 0.01
+    );
+    sig = (sig * 0.95 + (compSig * 0.05);
+    sig = Limiter.ar(sig,0.97, 0.01);
+    Out.ar(0, sig);
+}).add;
+)
+
+(
+~limitSynth.free;
+~limitSynth = Synth.new(\limit, [\in, ~limitBus, \out, 0], ~fxGroup);
+~reverbSynth.free;
+~reverbSynth = Synth.new(\reverb, [\in, ~reverbBus, \out, 0], ~fxGroup);
 )
 
 (
