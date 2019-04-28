@@ -13,8 +13,11 @@
 }.play;
 )
 (
-~alt.free;
-~alt = {
+// les pieds dans la mousse
+// vert menthe vert sous-bois
+// la tête endolorie plongée dans les fougères
+~mousse.free;
+~mousse = {
     arg gate = 1, atk = 5, rel = 10;
     var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
     var env = Env.step(levels, [1, 1, 2, 1, 1, 2, 2] * 0.05 * 8, releaseNode: 6, loopNode: 0);
@@ -30,23 +33,35 @@
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
-    HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq, mul:0.1) * cAmp * envRel, 175);
+    sig = HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq, mul:0.1) * cAmp * envRel, 175);
+    Out.ar(~limitBus, sig);
 }.play;
 )
 
-~alt.free;
-~alt.set(\gate, 0);
-~alt.setn(\altAmp, 10);
+~mousse.free;
+~mousse.set(\gate, 0);
+~mousse.setn(\altAmp, 10);
 (
 t.sched(4, {
-~alt.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(6, {[-12, 0, 12, 24].choose;}));
+~mousse.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(6, {[-12, 0, 12, 24].choose;}));
 4;
 });
 )
-~alt.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(6, {[-12, 0, 12].choose;}));
-~alt.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
+~mousse.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(6, {[-12, 0, 12].choose;}));
+~mousse.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
 
 
+(
+~nouvellesMousses = Task { {
+    var lev0 = [12, 2].choose;
+    var lev1 = [0, 2].choose;
+    ~mousse.setn(\levels, [0, 4, 7, 9, 11, lev0, lev1].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
+    "Nouvelle mousse.".postln;
+    8.wait;
+}.loop(t);
+}.start;
+)
+~nouvellesMousses.stop;
 
 (
 ~poussiere.free;
@@ -73,8 +88,11 @@ t.sched(4, {
 
 t.beatDur * 8;
 (
-~fuzzyDust.free;
-~fuzzyDust = {
+// branches et cailloux
+// que la tête oublie
+// dont le corps se souvient
+~brindilles.free;
+~brindilles = {
     arg gate = 1, atk = 5, rel = 10;
     var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[12].choose;}));
     var env = Env.step(levels, [1, 1, 2, 1, 1, 2, 2] * t.beatDur * 2, releaseNode: 6, loopNode: 0);
@@ -90,15 +108,31 @@ t.beatDur * 8;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
-    HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq * 0.5, decaytime: 0.8, mul:0.2) * cAmp * envRel, 175);
+    sig = HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq * 0.5, decaytime: 0.8, mul:0.2) * cAmp * envRel, 175);
+    Out.ar(~limitBus, sig);
 }.play;
 )
 
-~fuzzyDust.free;
-~fuzzyDust.set(\gate, 0);
-~fuzzyDust.setn(\altAmp, 1);
+~brindilles.free;
+~brindilles.set(\gate, 0);
+~brindilles.setn(\altAmp, 1);
 
-~fuzzyDust.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[12].choose;}));
+~brindilles.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + 12);
+
+(
+~nouvellesBrindilles = Task { {
+    var lev0 = [12, 2].choose;
+    var lev1 = [0, 2].choose;
+    ~brindilles.setn(\levels, [0, 4, 7, 9, 11, lev0, lev1].scramble + 12);
+    "Nouvelles brindilles.".postln;
+    8.wait;
+}.loop(t);
+}.start;
+)
+~nouvellesBrindilles.stop;
+
+
+
 
 (
 ~happyLowCloud.free;
