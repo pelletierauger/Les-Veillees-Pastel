@@ -26,7 +26,7 @@ t.beatDur!9;
     sig = sig * LFTri.ar(fund * env) * 0.4 * 1.5;
     sig = sig * envAmp * envRel;
     sig = LPF.ar(sig, filFreq);
-    sig + (GVerb.ar(sig * 0.5) * 1) * 2;
+    Out.ar(~limitBus, sig + (GVerb.ar(sig * 0.5)) * 2);
 }.play();
 )
 ([0, 1, 2, 3, 4].scramble ++ 3);
