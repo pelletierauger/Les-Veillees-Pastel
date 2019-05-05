@@ -33,5 +33,3 @@
     midinote = midinote.midicps;
 };
 )
-
-~toFreq.("Gb4");
