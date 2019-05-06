@@ -33,3 +33,75 @@ thisProcess.nowExecutingPath;
 "others/names.scd".resolveRelative.load;
 "./busses.scd".loadRelative.wrapAt(-1);
 ~toFreq.("F2");
+
+
+
+
+
+(
+SynthDef(\space, {
+    arg amp = 1, out = 0, freq = 444;
+    var x = {|i|
+        r = [ 3, 5, 8, 9 ] / 8;
+        d = rrand(0.25*i, 3*i).round(0.25);
+//         f = i % 3 + 1 * r.wrapAt(i);
+           f = [0, 4, 7, 11].midiratio;
+        Env.sine(12, 0.01).ar(0, TDelay.ar(Impulse.ar(1/12), d)) * Resonz.ar(WhiteNoise.ar(0.5), f * freq, 0.01);  
+    } ! 8;
+    Out.ar(0, HPF.ar(Limiter.ar(55 * GVerb.ar(Splay.ar(x) * amp, 99, 10).flop.sum), 30).sanitize);
+}, [3]).add;
+)
+
+~space.free;
+~space = Synth.new(\space, [\freq, ~toFreq.("F1") * 16]);
+~space.set(\amp, 4);
+
+~toFreq.(~key) * 16;
+
+
+(
+~outerSpace.free;
+~outerSpace = {
+    x = {|i|
+        r = [ 3, 5, 8, 9 ] / 8;
+        d = rrand(0.25*i, 3*i).round(0.25);
+        f = i % 3 + 1 * 444 * r.wrapAt(i);
+//         f = 440 * [0.375, 0.625, 1, 1.125].wrapAt(i) * [1, 2, 3].wrapAt(i);
+        Env.sine(12, 0.01).ar(0, TDelay.ar(Impulse.ar(1/12), d)) * Resonz.ar(WhiteNoise.ar(0.5), f, 0.01);  
+    } ! 8;
+    HPF.ar(Limiter.ar(55 * GVerb.ar(Splay.ar(x), 99, 10).flop.sum), 30).sanitize;
+}.play();
+)
+440 * -5.midiratio;
+440 * 0.75;
+(
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440, 0.01)}.play;
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * 1.125, 0.01)}.play;
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * 0.75, 0.01)}.play;
+)
+(
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440, 0.01)}.play;
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * 4.midiratio, 0.01)}.play;
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * -5.midiratio, 0.01)}.play;
+)
+
+
+(
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * 0.5, 0.04)}.play;
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * 2 * SinOsc.kr(1/16).range(1.125, 4.midiratio), 0.01)}.play;
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * SinOsc.kr(1/16).range(0.75, -5.midiratio), 0.01)}.play;
+)
+
+
+
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * -12.midiratio, 0.01)}.play;
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * -17.midiratio, 0.01)}.play;
+
+
+[ 3, 5, 8, 9 ] / 8;
+r.wrapAt(4)
+1, 2, 3 * 444 * 
+440 * 1.125;
+rrand(0.25*7, 3*7).round(0.25);
+1, 2, 3
+{Env.sine(1, 0.01).ar(0, TDelay.ar(Impulse.ar(1), 0.5))}.plot(2);
