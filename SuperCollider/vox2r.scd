@@ -233,8 +233,8 @@ Pdefn(\buildAmp, 10);
 
 1 / 16 * 8 * 4;
 (
-~voxAb.stop;
-~voxAb = Pbind(
+~voxAbc.stop;
+~voxAbc = Pbind(
     \instrument, \vox,
     \dur, 1 / 16 * 8 * 4,
     // En La majeur
@@ -572,14 +572,19 @@ Pdefn(\buildAmp, 10);
 
 //     \spos, Pseq([Pseries(0.87, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
+// souffle premier
     \spos, Pseq([Pseries(0.91, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
-    \rel, 0.08,
+//     \spos, Pseq([Pseries(0.91, 0.001 * 0.5, 32)], inf) + Pseq([0, -0.06], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+//     \spos, Pseq([Pseries(0.91, 0.001 * 0.25, 64)], inf) + Pseq([0, -0.06], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+
+    \rel, 0.18,
     \atk, 0.07,
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.9, 16).asStream.nextN(16), inf) * 0.75,
+    \amp, Pseq(Pgeom(8, 0.9, 16).asStream.nextN(16), inf) * 1.5,
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, 0
 ).play(t, quant: [1]);
@@ -638,8 +643,19 @@ Pdefn(\buildAmp, 10);
 
     \spos, Pseq([Pseries(0.2, 0.003, 16)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
+// belles vagues
+    \spos, Pseq([Pseries(0.2, 0.003, 64)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
-    \rel, 0.08,
+// plus de belles vagues
+    \spos, Pseq([Pseries(0.2, 0.003, 64 + 16)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+
+//     \spos, Pseq([Pseries(0.2, 0.003, 64 + 16)], inf) + Pseq([0.3, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([Pseries(0.4, 0.001, 64 + 16)], inf) + Pseq([0.1, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+
+    \rel, 0.28,
     \atk, 0.07,
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio * 1,

@@ -95,9 +95,9 @@ s.quit;
 
 (
 // Un drone flottant et doux
-{Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 2, 0.01) * 4}.play;
+{Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 1, 0.01) * 4}.play;
 {Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 0.5 * 0.5, 0.01) * 4}.play;
-{Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 2 * 1.125, 0.01) * 4}.play;
+{Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 1 * 1.125, 0.01) * 4}.play;
 {Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 0.75, 0.01) * 4}.play;
 )
 
