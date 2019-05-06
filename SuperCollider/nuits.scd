@@ -27,8 +27,8 @@
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(1), inf),
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, 26 * 1.5,
+    \amp, 10,
     \pan, Pwhite(-0.5, 0.5, inf),
-    \out, ~reverbBus
+    \out, 0
 ).play(t);
 )

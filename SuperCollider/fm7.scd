@@ -1,7 +1,7 @@
 (
-{
+~droo = {
     var ctls, mods, chans, freq, sig;
-    freq = 220 * -24.midiratio;
+    freq = 440 * -28.midiratio;
     ctls = [
         // freq, phase, amp
         [freq * 1, 0, 1],
@@ -20,7 +20,7 @@
         [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]  // input of osc 5
     ];
     chans = [0, 1];
-    sig = FM7.ar(ctls, mods).slice(chans) * -12.dbamp; // using "slice" to select specific channels
+    sig = FM7.ar(ctls, mods).slice(chans) * -12.dbamp * 0.2; // using "slice" to select specific channels
 //     sig = LPF.ar(sig, 1000);
 }.play;
 )

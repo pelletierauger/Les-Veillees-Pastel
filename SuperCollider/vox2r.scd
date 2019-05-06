@@ -256,7 +256,7 @@ Pdefn(\buildAmp, 10);
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 3,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 1,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
 ).play(t, quant: [4]);
@@ -318,7 +318,7 @@ Pdefn(\buildAmp, 10);
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 3,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 1,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
 ).play(t, quant: [4, 1]);
@@ -411,7 +411,7 @@ Pdefn(\buildAmp, 10);
     \rel, Pseq([0.5, 0.75], inf),
     \atk, 0.07,
     \rate, 0.midiratio,
-    \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 4 * Pseq([1, 0.25], inf),
+    \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 1 * Pseq([1, 0.25], inf),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
 ).play(t, quant: [1, 0.25] * 4);
@@ -485,4 +485,167 @@ Pdefn(\buildAmp, 10);
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, 0
 ).play(t, quant: [1, 0.25]);
+)
+
+
+
+
+
+
+
+
+
+
+// Lenteur, lenteur
+
+1 / 16 * 8 * 4;
+(
+~voxAc.stop;
+~voxAc = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8 * 4,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+//     \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.295, 0.293].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([0.295, 0.28, 0.283].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([0.285, 0.2732].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([0.78].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.75,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 0.125,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, 0
+).play(t, quant: [4]);
+)
+
+
+
+(
+~voxAb.stop;
+~voxAb = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+//     \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.295, 0.293].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([0.295, 0.28, 0.283].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([0.285, 0.2732].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.787, 0.0002, 16)], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.782, 0.0002, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.785, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.83, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([Pseries(0.85, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([Pseries(0.87, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.91, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.08,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.9, 16).asStream.nextN(16), inf) * 0.75,
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \out, 0
+).play(t, quant: [1]);
+)
+
+
+
+
+
+(
+~voxAd.stop;
+~voxAd = Pbind(
+    \instrument, \vox,
+    \dur, 1 / 16 * 8,
+    // En La majeur
+    // Dmaj7, A, Dmaj7, Cm
+    // IV, I, IV, iii
+    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
+    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
+//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
+    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+//     \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
+
+    \spos, Pseq([0.295, 0.293].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([0.295, 0.28, 0.283].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([0.285, 0.2732].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.787, 0.0002, 16)], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.782, 0.0002, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.785, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.83, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([Pseries(0.85, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([Pseries(0.87, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([Pseries(0.91, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.8, 0.001, 16)], inf) + Pseq([0, 0.05], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     beau, beau, beau
+    \spos, Pseq([Pseries(0.5, 0.001, 16)], inf) + Pseq([0, 0.02], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([Pseries(0.71, 0.001, 32)], inf) + Pseq([0, -0.05], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+//     \spos, Pseq([Pseries(0.55, 0.001, 32)], inf) + Pseq([0, -0.05], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+//     \spos, Pseq([Pseries(0.1, 0.003, 16)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \spos, Pseq([Pseries(0.2, 0.003, 16)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+
+    \rel, 0.08,
+    \atk, 0.07,
+    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
+    \rate, 0.midiratio * 1,
+    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.9, 16).asStream.nextN(16), inf) * 0.75,
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \out, 0
+).play(t, quant: [1]);
 )

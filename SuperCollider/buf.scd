@@ -85,13 +85,28 @@ SynthDef(\space, {
 {Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * -5.midiratio, 0.01)}.play;
 )
 
-
+s.quit;
 (
-{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * 0.5, 0.04)}.play;
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 329.63 * 0.5, 0.02)}.play;
 {Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * 2 * SinOsc.kr(1/16).range(1.125, 4.midiratio), 0.01)}.play;
-{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * SinOsc.kr(1/16).range(0.75, -5.midiratio), 0.01)}.play;
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 329.63 * SinOsc.kr(1/16).range(0.75, -5.midiratio), 0.01)}.play;
 )
 
+
+(
+// Un drone flottant et doux
+{Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 2, 0.01) * 4}.play;
+{Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 0.5 * 0.5, 0.01) * 4}.play;
+{Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 2 * 1.125, 0.01) * 4}.play;
+{Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 0.75, 0.01) * 4}.play;
+)
+
+// Un brin de mystère
+{Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * 2 * SinOsc.kr(1/16).range(1.125, 4.midiratio), 0.01)}.play;
+
+{Splay.ar({|i|Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 55 * (i + 1), 0.01 / (i + 1))}!10) * 16}.play;
+{Splay.ar({|i|Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 55 * 0.75 * (i + 1), 0.01 / (i + 1))}!24) * 16}.play;
+{Splay.ar({|i|Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 55 * 1.25 * (i + 1), 0.01 / (i + 1))}!10)}.play;
 
 
 {Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * -12.midiratio, 0.01)}.play;

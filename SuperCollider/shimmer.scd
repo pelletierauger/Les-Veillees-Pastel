@@ -163,12 +163,12 @@ p.use({~melo = {[9, 4, 7, 16, 19, 4, 7, 9].midiratio.reverse.scramble * 1}});
     \rel, 0.1,
     \atk, 0.7,
     \rate, [1] * -12.midiratio  + Pwhite(0.001, 0.01, inf),
-    \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf),
+    \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf) * 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, 24 * 1.5,
+    \amp, 6,
     \pan, Pwhite(-0.5, 0.5, inf),
     \pan, Pwhite(-1.0, 1.0, inf),
-    \out, ~highPassBus
+    \out, 0
 ).play(t, quant: [4]);
 // ~shimmerD2.stop;
 // ~shimmerD3.stop;

@@ -6,11 +6,11 @@
 // Under GNU GPL 3 as per SuperCollider license
 
 //Example
-
+s.quit;
 ( // init
 	// Server.killAll
 // 	s.boot;
-    ~mainCaller = "/Users/guillaumepelletier/Desktop/Dropbox/Art/p5/Les-Veillees-Pastel/SuperCollider/DX7-Supercollider-master/DX7.scd".loadPaths.wrapAt(-1);
+    ~mainCaller = "/Users/guillaumepelletier/Desktop/Dropbox/Art/SuperCollider-Sketches/DX7-Supercollider-master/DX7.scd".loadPaths.wrapAt(-1);
 )
 ~mainCaller;
 ( // Note On 80 message with velocity value 100 and preset value 10000

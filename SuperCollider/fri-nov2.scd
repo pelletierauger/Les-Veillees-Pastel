@@ -14,17 +14,19 @@ SynthDef.new(\friture, {
     amp = min(max(amp, 0), 15);
 
 //     env = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
-    env = EnvGen.kr(Env.new([0.0, 1.0, 0.0], [atk, rel]));
-    env2 = EnvGen.kr(Env.new([0.0, 1.0, 0.0], [atk, rel * 3]), doneAction:2);
-    sig = SinOsc.ar([freq, freq + 1], width: 0.9) * 0.1;
+    env = EnvGen.kr(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential]), doneAction:2);
+    env2 = EnvGen.kr(Env.new([0.0, 1.0, 0.0], [atk, rel * 3]));
+    sig = SinOsc.ar([freq, freq + 1]) * 1.2;
     // sig = LFTri.ar([freq, freq + 1]) * 0.1;
     sig = sig * LFTri.ar([freq - 1, freq] * 0.125 * fm1freq);
     sig = sig * LFTri.ar([freq + 1, freq - 1] * 0.25 * 1.01, width: 0.2);
-    sig = sig * amp * env;
+//     sig = sig * LFSaw.ar([freq + 1, freq - 1] * 0.25 * 1.01, width: 0.2);
+//     sig = sig * amp * env;
     envf = XLine.kr(1000.0, 150.0, 0.05);
-    sig = sig + ((sig * 20000).clip(0, 1.0) * 0.026 * SinOsc.ar(5, mul:0.5, add:0.5));
+    sig = sig + ((sig * 20000).clip(0, 1.0) * 0.26 * SinOsc.ar(5, mul:0.5, add:0.5));
     sig2 = sig;
     sig = LPF.ar(sig, envf);
+    sig = sig * amp * env;
 //     sig = sig * 0.5 + Ringz.ar(sig, freq * 1, decaytime: 0.1, mul:0.2);
 //     sig = HPF.ar(sig, 2000);
     // sig = sig + (LPF.ar(((sig2 * 1000).clip(0, 1.0) * 0.001), 10000) * SinOsc.ar(1, mul:0.5, add:0.5));

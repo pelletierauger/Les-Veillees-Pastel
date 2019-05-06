@@ -12,6 +12,7 @@ FreqScope.new(500, 500, 0, server: s);
 ~highPassBus = Bus.audio(s, 2);
 ~pulseBus = Bus.audio(s, 1);
 ~limitBus = Bus.audio(s, 2);
+"others/names.scd".loadRelative;
 )
 
 (
