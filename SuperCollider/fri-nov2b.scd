@@ -2,7 +2,7 @@
 
 
 (
-SynthDef.new(\friture, {
+SynthDef.new(\friture2, {
     arg out = 0, freq = 440, pan = 0, atk = 1, dec = 1, rel = 2, sustain = 0.001, amp = 1, gate = 1, fm1freq = 4.001, lpff = 5000;
     var sig, env, lfo, envf, env2, sig2, envff;
 
@@ -36,16 +36,15 @@ SynthDef.new(\friture, {
 
 
 (
-~nouvelleFriture.stop;
-~nouvelleFriture = Pbind(
-    \instrument, \friture,
+~nouvelleFriture2.stop;
+~nouvelleFriture2 = Pbind(
+    \instrument, \friture2,
     \dur, Pseq([Pwhite(0.05, 0.1).stutter(24) * 2], inf),
     \dur, Pseq([0.125, 0.125, 0.5, 0.5] * 1, inf) * 0.25 * 8 * 2,
+    \dur, 1,
 //     \freq, ~toFreq.("Db6") * Pseq([Prand([0.5, 1, 2], inf)].stutter(8), inf),
 //     \freq, ~toFreq.("Db6") * Prand([0, 2, 4, 5, 7, 11], inf).stutter(48).midiratio,
-    \freq, ~toFreq.("F5") *
-    Pseq([0, 2, 4, 5, 0, 2, 5, 7].reverse.midiratio.stutter(2), inf) *
-    Pseq([1, 2].stutter(32), inf) * Prand([0.5, 1].stutter(4), inf),
+    \freq, ~toFreq.("F5"),
     \amp, Pseq([2, 0.5], inf) * 4,
     \rel, 2.75,
     \atk, 0.0025,
@@ -57,7 +56,7 @@ SynthDef.new(\friture, {
     \fm1freq, 4.001 * Pseq([0.5, 1], inf),
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
-).play(quant: 1);
+).play(quant: [4, 2]);
 )
 
 

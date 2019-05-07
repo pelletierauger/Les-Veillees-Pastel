@@ -158,3 +158,32 @@ t.beatDur * 8;
 
 ~happyLowCloud.setn(\altAmp, 40);
 ~happyLowCloud.set(\gate, 0);
+
+
+
+
+
+(
+SynthDef(\sand, {
+    arg freq = 440, pan = 0, out = 0, amp = 1, sus = 0.125, atk = 0.001;
+    var sig, sig2, env, sig2Env, sig2Fil, env2;
+    sig = Impulse.ar(0.01, mul: 0.4)!2;
+    sig2 = LFTri.ar([freq - 1, freq + 1] * 2) * LFTri.ar([freq - 1, freq + 1] * 1) * 0.4;
+    env = EnvGen.kr(Env.new([0, 1, 0.5, 0], [atk, sus * 1.5, 2]), doneAction: 2);
+    env2 = EnvGen.kr(Env.new([0, 1, 0], [0.1, 0.1]));
+    sig2Env = XLine.kr(1.0, 0.00001, 5.0);
+    sig2Fil = XLine.kr(50.0, 9000, 0.125);
+    sig2 = sig2 + PinkNoise.ar([0.5, 0.5]) * 0.5;
+    sig2 = sig2 * SinOsc.kr(6, [0, pi], mul:0.5, add:0.5);
+    sig2 = LPF.ar(sig2 * sig2Env, sig2Fil);
+    sig = Ringz.ar(sig, [freq, freq + 2] * 1, sus);
+    sig2 = Ringz.ar(sig2, [freq, freq + 2] * 2, sus);
+    sig = sig + sig2;
+//     sig = sig + ((sig * 10000).clip(-1.0, 1.0) * 0.1 * env2);
+//     sig = sig + ((sig * 100).clip(-1.0, 1.0) * 0.05 * SinOsc.kr(16, mul:10000).clip(0.0, 1.0));
+    sig = sig * env * 1.2 * amp * SinOsc.kr(6, [0, pi], mul:0.5, add:0.5);
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
+	Out.ar(out, sig);
+}).add;
+)
+~sa = Synth.new(\sand, [\freq, ~toFreq.("F5") * -10.midiratio, \amp, 0.25, \sus, 1, \out, ~reverbBus]);

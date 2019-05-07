@@ -1,4 +1,5 @@
 (
+~droo.free;
 ~droo = {
     var ctls, mods, chans, freq, sig;
     freq = 440 * -28.midiratio;

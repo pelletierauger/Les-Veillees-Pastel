@@ -1,19 +1,22 @@
 (
-~voice = Buffer.read(s, "/Users/guillaumepelletier/Downloads/slackjaw vox.wav");
+// ~voice = Buffer.read(s, "/Users/guillaumepelletier/Downloads/slackjaw vox.wav");
 // ~voice.numFrames;
 SynthDef(\vox, {
-    arg buf = ~voice, rate = 1, spos = 0, pan = 1, amp = 1, rel = 2, atk = 0.1, out = 0;
+    arg buf = ~voice, rate = 1, spos = 0, pan = 1, amp = 1, rel = 2, atk = 0.1, out = 0, hpass = 50;
     var sig, env, lfo;
     env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]), doneAction: 2);
     sig = PlayBuf.ar(2, ~voice, rate * BufRateScale.ir(buf), startPos: spos * 7481001);
+    // sig = LPF.ar(sig, 7000);
+    sig = HPF.ar(sig, hpass);
+//     sig = sig + (Resonz.ar(sig, ~toFreq.("F5")) * 8);
+//     sig = (Resonz.ar(sig, ~toFreq.("F5")) * 8);
     sig = sig * env;
     sig = sig * amp;
-    // sig = LPF.ar(sig, 7000);
     sig = Balance2.ar(sig[0], sig[1], pan, 1);
     Out.ar(out, sig);
 }).add;
 )
-
+~toFreq.("F6");
 (
 ~voxA.stop;
 ~voxA = Pbind(
@@ -488,3 +491,33 @@ p.use({~sylv.free;});
 ).play(t);
 )
 Pgeom(8, 0.8, 4).asStream.nextN(4).reverse
+
+
+
+
+
+
+
+
+(
+// ~voice = Buffer.read(s, "/Users/guillaumepelletier/Downloads/slackjaw vox.wav");
+// ~voice.numFrames;
+SynthDef(\vox, {
+    arg buf = ~voice, rate = 1, spos = 0, pan = 1, amp = 1, rel = 2, atk = 0.1, out = 0;
+    var sig, env, lfo, env2;
+    env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]));
+    env2 = EnvGen.kr(Env.new([0, 1, 0], [atk * 8, rel * 8]), doneAction: 2);
+    sig = PlayBuf.ar(2, ~voice, rate * BufRateScale.ir(buf), startPos: spos * 7481001);
+
+
+    // sig = LPF.ar(sig, 7000);
+//     sig = HPF.ar(sig, 2500);
+    sig = sig * env;
+    sig = sig * amp;
+    sig = sig + (Resonz.ar(sig, ~toFreq.("F5")) * 8);
+    sig = (Resonz.ar(sig, ~toFreq.("F5")) * 8);
+    sig = sig * env2;
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
+    Out.ar(out, sig);
+}).add;
+)

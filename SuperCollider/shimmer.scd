@@ -226,7 +226,7 @@ Pdefn(\bassyAmp, 1);
 ~shimmerD3.stop;
 ~shimmerD3 = Pbind(
     \instrument, \guitare,
-    \dur, 2,
+    \dur, 4,
     \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     \spos, Pseq([0.257].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     \spos, Pseq([0.367].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
@@ -249,7 +249,7 @@ Pdefn(\bassyAmp, 1);
     \amp, Pseq([1, 0.5], inf) * 32 * Pdefn(\bassyAmp, 1) * 0.5,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
-).play(t, quant: [4]);
+).play(t, quant: [4, 2]);
 )
 
 (
@@ -363,3 +363,25 @@ Pdefn(\bassyAmp, 1);
     \out, ~reverbBus
 ).play(t, quant: [4]);
 )
+
+
+
+
+
+
+(
+// Le seul shimmer qui reste
+~shimmerD2.stop;
+~shimmerD2 = Pbind(
+    \instrument, \guitare,
+    \dur, 0.25,
+    \spos, Pseq([0.141, 0.2545, 0.141, 0.2545].stutter(64), inf) + Pdefn(\shimPos, 0.009) + Pwhite(0.001, 0.002, inf),
+    \rel, 0.1,
+    \atk, 0.7,
+    \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf) * 0.midiratio,
+    \amp, 6,
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \out, ~reverbBus
+).play(t, quant: [4]);
+)
+Pdefn(\shimPos, 0.000);

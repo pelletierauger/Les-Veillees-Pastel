@@ -64,7 +64,7 @@ SynthDef.new(\limit, {
         clampTime: 0.01,
         relaxTime: 0.01
     );
-    sig = (sig * 0.95 + (compSig * 0.05);
+    sig = (sig * 0.95 + (compSig * 0.05));
     sig = Limiter.ar(sig,0.97, 0.01);
     Out.ar(0, sig);
 }).add;

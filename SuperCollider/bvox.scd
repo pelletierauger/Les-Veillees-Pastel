@@ -23,7 +23,7 @@ SynthDef(\bvox, {
     \atk, 0.07,
     \amp, 16,
     \pan, Pwhite(-0.5, 0.5, inf),
-    \out, 0
+    \out, ~limitBus
 ).play(t, quant: [4, 1]);
 )
 
@@ -38,7 +38,7 @@ SynthDef(\bvox, {
     \atk, 0.07,
     \amp, 16,
     \pan, Pwhite(-0.5, 0.5, inf),
-    \out, 0
+    \out, ~limitBus
 ).play(t, quant: [4, 1]);
 )
 

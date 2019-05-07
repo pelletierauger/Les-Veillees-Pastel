@@ -258,7 +258,7 @@ Pdefn(\buildAmp, 10);
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
     \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 1,
     \pan, Pwhite(-0.5, 0.5, inf),
-    \out, 0
+    \out, ~reverbBus
 ).play(t, quant: [4]);
 )
 
@@ -320,7 +320,7 @@ Pdefn(\buildAmp, 10);
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
     \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 1,
     \pan, Pwhite(-0.5, 0.5, inf),
-    \out, 0
+    \out, ~reverbBus
 ).play(t, quant: [4, 1]);
 )
 
@@ -413,7 +413,7 @@ Pdefn(\buildAmp, 10);
     \rate, 0.midiratio,
     \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 1 * Pseq([1, 0.25], inf),
     \pan, Pwhite(-0.5, 0.5, inf),
-    \out, 0
+    \out, ~reverbBus
 ).play(t, quant: [1, 0.25] * 4);
 )
 
@@ -584,10 +584,10 @@ Pdefn(\buildAmp, 10);
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.95, 32).asStream.nextN(32), inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.95, 32).asStream.nextN(32), inf) * 0.75,
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, 0
-).play(t, quant: [1]);
+).play(t, quant: [4]);
 )
 
 
@@ -654,14 +654,50 @@ Pdefn(\buildAmp, 10);
 
 //     \spos, Pseq([Pseries(0.4, 0.001, 64 + 16)], inf) + Pseq([0.1, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
+// plateaux reposants
+//     \spos, Pseq([Pseries(0.9, -0.003, 64 + 16)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+//     \spos, Pseq([Pseries(0.9, -0.001, 64 + 16)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+// assez repos
+//     \spos, Pseq([Pseries(0.85, -0.001, 32)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+//     \spos, Pseq([Pseries(0.72, -0.001, 32)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+//     \spos, Pseq([Pseries(0.65, -0.001, 32)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+//     \spos, Pseq([Pseries(0.42, 0.002, 32)], inf) + Pseq([0.1, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+
 
     \rel, 0.08,
     \atk, 0.07,
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio * 1,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.9, 16).asStream.nextN(16), inf) * 0.25,
+    \amp, Pseq(Pgeom(8, 0.9, 16).asStream.nextN(16), inf) * 1.5 * 0.5,
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, 0
+).play(t, quant: [4]);
+)
+
+
+
+
+// VOX CLOUD
+
+(
+// ~voxAb.stop;
+~voxAb = Pbind(
+    \instrument, \vox,
+    \dur, 0.5,
+    \spos, Pseq([Pseries(0.91, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+//     \spos, Pseq([Pseries(0.5, 0.001, 16)], inf) + Pseq([0, 0.02], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+
+    \rel, 0.08,
+    \atk, 0.07,
+    \amp, Pseq(Pgeom(8, 0.95, 32).asStream.nextN(32), inf)
+        * 2 * Pseq(Pseries(0, 0.01, 100).asStream.nextN(100).mirror, 1),
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \hpass, Pseq(Pseries(50, 20, 200).asStream.nextN(199), 199),
+    \out, ~reverbBus
 ).play(t, quant: [1]);
 )
+9000/200;
+Pseries(0, 0.01, 100).asStream.nextN(100).mirror.size;
+s.avgCPU;

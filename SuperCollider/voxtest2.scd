@@ -26,12 +26,12 @@
     \atk, 0.07,
     \amp, 1 * Pseq([Pgeom(1, 1.1265, 8)], inf) * Pseq([1, 0.5], inf) * Pdefn(\buildAmp2, 1),
     \pan, Pwhite(-0.5, 0.5, inf),
-    \out, ~reverbBus
+    \out, 0
 ).play(t, quant: 4);
 )
 
 ~buildVoice2.stop;
-Pdefn(\buildAmp2, 12);
+Pdefn(\buildAmp2, 4);
 Pdefn(\buildAmp3, 7);
 
 

@@ -3,7 +3,7 @@
 ~buildVoice2.stop;
 ~buildVoice2 = Pbind(
     \instrument, \vox,
-    \dur, 2,
+    \dur, 0.5,
     \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
     // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
 //     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
@@ -20,14 +20,13 @@
     \spos, Pseq([0.13, 0.069].stutter(8), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
     \spos, Pseq([0.067, 0.069].stutter(8), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
     \spos, Pseq([0.067, 0.0665, 0.069, 0.08].stutter(8), inf),
-    \spos, Pseq([0.067, 0.0665, 0.0681, 0.0695].stutter(4), inf) + Pseq([0, 0.000], inf),
-//     \spos, Pseq([0.067, 0.0665].stutter(1), inf),
-    \rel, 1.75,
+    \spos, Pseq([0.067, 0.0665, 0.0681, 0.0695].stutter(8), inf) + Pseq([Pseries(0, 0.001, 8)], inf),
+    \rel, 0.15,
     \atk, 0.07,
-    \amp, 1 * Pseq([Pgeom(1, 1.1265, 8)], inf) * Pseq([1, 0.5], inf) * Pdefn(\buildAmpV2, 0.5),
-    \pan, Pwhite(-0.5, 0.5, inf),
-    \out, 0
-).play(t, quant: 4);
+    \amp, 1 * Pseq([Pgeom(1, 1.1265, 8)], inf) * Pseq([1, 0.75], inf) * Pdefn(\buildAmpV2, 3),
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \out, ~reverbBus
+).play(t, quant: [4, 2]);
 )
 Pdefn(\buildAmpV2, 2);
 ~buildVoice2.stop;
