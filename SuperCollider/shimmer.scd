@@ -381,7 +381,7 @@ Pdefn(\bassyAmp, 1);
     \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf) * 0.midiratio,
     \amp, 6,
     \pan, Pwhite(-1.0, 1.0, inf),
-    \out, ~reverbBus
+    \out, ~highPassBus
 ).play(t, quant: [4]);
 )
-Pdefn(\shimPos, 0.000);
+Pdefn(\shimPos, 0.002);
