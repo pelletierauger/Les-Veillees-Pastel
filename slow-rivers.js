@@ -45,7 +45,7 @@ void main() {
 //     uv.x -= 0.75;
     uv *= 0.5;
     float d = length(uv);
-    float t = time * 0.125 * 0.06125 * 0.5;
+    float t = time * 0.125 * 0.125;
     float c = d;
 //     if (d < 0.3) c = 1.; else c = 0.;
     float r = 0.3;
