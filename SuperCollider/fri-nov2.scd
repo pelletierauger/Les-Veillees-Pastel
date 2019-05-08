@@ -41,14 +41,14 @@ SynthDef.new(\friture, {
 ~nouvelleFriture = Pbind(
     \instrument, \friture,
     \dur, Pseq([Pwhite(0.05, 0.1).stutter(24) * 2], inf),
-    \dur, Pseq([1.0, 1.0, 1.0, 0.5, 0.5], inf),
+    \dur, Pseq([1.0, 1.0, 1.0, 0.5, 0.5], inf) * 1,
 //     \freq, ~toFreq.("Db6") * Pseq([Prand([0.5, 1, 2], inf)].stutter(8), inf),
 //     \freq, ~toFreq.("Db6") * Prand([0, 2, 4, 5, 7, 11], inf).stutter(48).midiratio,
     \freq, ~toFreq.("F6") *
     Pseq([0, 2, 4, 5, 0, 2, 5, 7].reverse.midiratio.stutter(2), inf) *
     Pseq([1, 2].stutter(32), inf) * Prand([0.5, 1].stutter(4), inf),
     \freq, ~toFreq.("F6") * Pseq([-36, 12, -36, 12, -36].midiratio, inf),
-    \amp, Pseq([2, Rest(), 2, Rest(), 2], inf) * Pseq([Pgeom(1, 0.9, 10)], inf) * 0.4,
+    \amp, Pseq([2, Rest(), 2, Rest(), 2], inf) * Pseq([Pgeom(1, 0.9, 10)], inf) * 0.4 * 0.5,
     \rel, Pseq([1.25, 6, 1.25, 6, 1.25], inf),
     \atk, 0.0025,
     \atk, Pseq([0.0025, 0.05, 0.0025, 0.05, 0.0025], inf),
@@ -76,9 +76,9 @@ SynthDef.new(\friture, {
     \freq, ~toFreq.("F6") *
     Pseq([0, 2, 4, 5, 0, 2, 5, 7].reverse.midiratio.stutter(2), inf) *
     Pseq([1, 2].stutter(32), inf) * Prand([0.5, 1].stutter(4), inf),
-    \freq, ~toFreq.("F6") * Pseq([-36, 12].midiratio, inf),
+    \freq, ~toFreq.("F5") * Pseq([-36, 12].midiratio, inf),
     \amp, Pseq([2, 8], inf) * Pseq([Pgeom(1, 0.9, 12)], inf) * 0.4,
-    \rel, Pseq([1.25, 6], inf),
+    \rel, Pseq([1.25, Rest()], inf),
     \atk, 0.0025,
     \atk, Pseq([0.0025, 0.05], inf),
 //     \lpff, Pwhite(5000, 20000, inf).stutter(16).round,

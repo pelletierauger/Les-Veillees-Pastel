@@ -538,65 +538,28 @@ Pdefn(\buildAmp, 10);
 
 
 (
-~voxAb.stop;
-~voxAb = Pbind(
+~souffle.stop;
+~souffle = Pbind(
     \instrument, \vox,
-    \dur, 1 / 16 * 8,
-    // En La majeur
-    // Dmaj7, A, Dmaj7, Cm
-    // IV, I, IV, iii
-    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
-    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
-//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
-    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
-
-    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
-    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
-//     \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
-
-    \spos, Pseq([0.295, 0.293].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-//     \spos, Pseq([0.295, 0.28, 0.283].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-    \spos, Pseq([0.285, 0.2732].stutter(1), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-    \spos, Pseq([Pseries(0.787, 0.0002, 16)], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-    \spos, Pseq([Pseries(0.782, 0.0002, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-    \spos, Pseq([Pseries(0.785, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-    \spos, Pseq([Pseries(0.83, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-//     \spos, Pseq([Pseries(0.85, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-//     \spos, Pseq([Pseries(0.87, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-// souffle premier
+    \dur, 0.5,
     \spos, Pseq([Pseries(0.91, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
 //     \spos, Pseq([Pseries(0.91, 0.001 * 0.5, 32)], inf) + Pseq([0, -0.06], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 //     \spos, Pseq([Pseries(0.91, 0.001 * 0.25, 64)], inf) + Pseq([0, -0.06], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-
-    \rel, 0.08,
-    \atk, 0.07,
-    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
-    \rate, 0.midiratio,
-    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.95, 32).asStream.nextN(32), inf) * 0.75,
+    \rel, Pdefn(\souRel, 0.08),
+    \atk, 0.02,
+    \amp, Pseq(Pgeom(8, 0.95, 32).asStream.nextN(32), inf) * Pdefn(\souAmp, 2),
     \pan, Pwhite(-1.0, 1.0, inf),
-    \out, 0
+    \out, ~highPassBus
 ).play(t, quant: [4]);
 )
-
-
+Pdefn(\souRel, 0.28)
+Pdefn(\souAmp, 2.5)
 
 
 
 (
-~voxAd.stop;
-~voxAd = Pbind(
+~audessus.stop;
+~audessus = Pbind(
     \instrument, \vox,
     \dur, 1 / 16 * 8,
     // En La majeur
@@ -634,7 +597,7 @@ Pdefn(\buildAmp, 10);
     \spos, Pseq([Pseries(0.8, 0.001, 16)], inf) + Pseq([0, 0.05], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
 //     beau, beau, beau
-    \spos, Pseq([Pseries(0.5, 0.001, 16)], inf) + Pseq([0, 0.02], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+    \spos, Pdefn(\audessusSpos, 0.5) + Pseq([Pseries(0, 0.001, 16)], inf) + Pseq([0, 0.02], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
 //     \spos, Pseq([Pseries(0.71, 0.001, 32)], inf) + Pseq([0, -0.05], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
@@ -649,7 +612,7 @@ Pdefn(\buildAmp, 10);
 // plus de belles vagues
 //     \spos, Pseq([Pseries(0.2, 0.003, 64 + 16)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
-
+// les voix par la fenêtre
 //     \spos, Pseq([Pseries(0.2, 0.003, 64 + 16)], inf) + Pseq([0.3, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
 //     \spos, Pseq([Pseries(0.4, 0.001, 64 + 16)], inf) + Pseq([0.1, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
@@ -662,25 +625,30 @@ Pdefn(\buildAmp, 10);
 //     \spos, Pseq([Pseries(0.72, -0.001, 32)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 //     \spos, Pseq([Pseries(0.65, -0.001, 32)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 //     \spos, Pseq([Pseries(0.42, 0.002, 32)], inf) + Pseq([0.1, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
-
-
-
-    \rel, 0.08,
-    \atk, 0.07,
-    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
-    \rate, 0.midiratio * 1,
-    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.9, 16).asStream.nextN(16), inf) * 1.5 * 0.5,
+    \rel, Pdefn(\audessusRel, 0.08),
+    \atk, Pdefn(\audessusAtk, 0.07),
+    \amp, Pseq(Pgeom(8, 0.9, 16).asStream.nextN(16), inf) * 1.5 * Pdefn(\audessusAmp, 0.01),
     \pan, Pwhite(-1.0, 1.0, inf),
-    \out, 0
+    \out, ~reverbBus
 ).play(t, quant: [4]);
 )
 
+Pdefn(\audessusAmp, 1.125);
+Pdefn(\audessusRel, 0.28);
+Pdefn(\audessusAtk, 0.07);
+Pdefn(\audessusSpos, 0.5);
+Pdefn(\audessusSpos, 0.55);
+Pdefn(\audessusSpos, 0.6);
+Pdefn(\audessusSpos, 0.235);
 
+
+Pdefn(\buildAmpV2, 0.5);
+Pdefn(\buildRel, 0.35);
+Pdefn(\buildAtk, 0.007);
 
 
 // VOX CLOUD
-
+~piano.(~toMidi.("F5") + 2);
 (
 // ~voxAb.stop;
 ~voxAb = Pbind(
@@ -688,11 +656,12 @@ Pdefn(\buildAmp, 10);
     \dur, 0.5,
     \spos, Pseq([Pseries(0.91, 0.001, 16)], inf) + Pseq([0, 0.005], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 //     \spos, Pseq([Pseries(0.5, 0.001, 16)], inf) + Pseq([0, 0.02], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
+//     \spos, Pseq([Pseries(0.2, 0.003, 64)], inf) + Pseq([0, 0.2], inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
 
     \rel, 0.08,
     \atk, 0.07,
     \amp, Pseq(Pgeom(8, 0.95, 32).asStream.nextN(32), inf)
-        * 2 * Pseq(Pseries(0, 0.01, 100).asStream.nextN(100).mirror, 1),
+        * 1 * Pseq(Pseries(0, 0.01, 100).asStream.nextN(100).mirror, 1),
     \pan, Pwhite(-1.0, 1.0, inf),
     \hpass, Pseq(Pseries(50, 20, 200).asStream.nextN(199), 199),
     \out, ~reverbBus

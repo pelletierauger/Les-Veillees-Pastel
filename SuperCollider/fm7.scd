@@ -44,4 +44,14 @@ s.avgCPU;
 
 )
 
+
+~toFreq.("F2");
+~r = {87.307};
+~dfm1.play;
+~dfm1.free;
+(
+//evaluate this twice with a couple of seconds of gap in between
+//the argument 'mult' is used for speed - to copy and paste the entire NodeProxy and set multiplications quickly during performance
+~dfm1 = {arg mult = 1; DFM1.ar(SinOsc.ar([~r,~r*1.01]*mult,0,0.1),(~r*2)*mult,SinOsc.kr(0.05).range(0.9,1.1),1,0,0.0003,0.5)}.play;
+
 FM7.algoSpec(0, feedback: 0.0);

@@ -101,6 +101,23 @@ s.quit;
 {Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * -4.midiratio * 0.75, 0.01) * 4}.play;
 )
 
+
+(
+~vague.free;
+~vague = {
+Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * 12.midiratio * 2 * -4.midiratio, 0.01) * 6
+    * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
+}.play;
+)
+
+(
+~vague2.free;
+~vague2 = {
+Resonz.ar(BrownNoise.ar([0.5, 0.5]), 440 * -4.midiratio, 0.01) * 4
+    * SinOsc.kr(0.05, [0, pi], mul:0.5, add:0.5);
+}.play;
+)
+
 // Un brin de mystère
 {Resonz.ar(WhiteNoise.ar([0.5, 0.5]), 440 * 2 * SinOsc.kr(1/16).range(1.125, 4.midiratio), 0.01)}.play;
 

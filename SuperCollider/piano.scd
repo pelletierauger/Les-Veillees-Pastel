@@ -86,7 +86,10 @@ var deg = min1 ++ maj ++ min2 ++ maj;
     \type, \playPiano,
     \dur, Pseq([4, 2, 2], inf),
 //     \num, ~toMidi.("F3") + Pseq([0, 4, 7], inf)
-    \num, Pseq([c3, c1, c2, c1].stutter(6), inf) + Pseq(deg, inf) + Pwrand([0, 12], [0.9, 0.1], inf),
+    \num, Pseq([c3, c1, c2, c1].stutter(6), inf) 
+    + Pseq(deg, inf) 
+    + Pwrand([0, 12], [0.9, 0.1], inf)
+    + Pdefn(\pShift, 0),
 ).play(t, quant: 4);
 ~shimmerD2.stop;
 ~shimmerD2 = Pbind(
@@ -101,7 +104,7 @@ var deg = min1 ++ maj ++ min2 ++ maj;
     \out, ~highPassBus
 ).play(t, quant: [4, -0.5]);
 )
-
+Pdefn(\shimPos, -0.001);
 (
 ~p2.stop;
 ~p2 = Pbind(
@@ -111,16 +114,17 @@ var deg = min1 ++ maj ++ min2 ++ maj;
         + Prand([0, 2, 4, 5, 7, 9, 11], inf) 
         + Pwrand([Rest(), 0], [0.9, 0.1], inf) 
         + Pwrand([0, 12], [0.9, 0.1], inf)
+        + Pdefn(\pShift, 0),
 ).play(t, quant: 4);
 )
 
-
+Pdefn(\pShift, 0);
 
 (
 SynthDef(\piano, {
     arg buf = ~pianoSamples[0], rate = 1, spos = 0, pan = 1, amp = 1, out = ~limitBus;
     var sig, env, lfo;
-    env = EnvGen.kr(Env.new([1, 0], [2]), doneAction: 2);
+    env = EnvGen.kr(Env.new([1, 0], [8]), doneAction: 2);
     sig = PlayBuf.ar(2, buf, rate * BufRateScale.ir(buf), startPos: 0, doneAction: 2);
     sig = sig * amp * 2 * env;
     sig = Balance2.ar(sig[0], sig[1], 0, 1);

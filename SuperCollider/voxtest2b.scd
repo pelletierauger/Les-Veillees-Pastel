@@ -20,15 +20,26 @@
     \spos, Pseq([0.13, 0.069].stutter(8), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
     \spos, Pseq([0.067, 0.069].stutter(8), inf) + (Pwhite(0.001, 0.002, inf) * 0.15),
     \spos, Pseq([0.067, 0.0665, 0.069, 0.08].stutter(8), inf),
-    \spos, Pseq([0.067, 0.0665, 0.0681, 0.0695].stutter(8), inf) + Pseq([Pseries(0, 0.001, 8)], inf),
-    \rel, 0.15,
-    \atk, 0.07,
-    \amp, 1 * Pseq([Pgeom(1, 1.1265, 8)], inf) * Pseq([1, 0.75], inf) * Pdefn(\buildAmpV2, 3),
+    \spos, Pseq([0.067, 0.0665, 0.069, 0.075].stutter(16), inf) + Pseq([Pseries(0, 0.0005, 16)], inf) + Pdefn(\buildPos, 0),
+//     \spos, Pseq([0.067, 0.0665, 0.0681, 0.0695].stutter(8), inf) + Pseq([Pseries(0, 0.001, 16)], inf),
+//     en mer
+//     \spos, Pseq([0.162].stutter(1), inf) + Pseq([Pseries(0, 0.001 * 0.125, 24 * 4)], inf)
+//      + (Pwhite(0.001, 0.002, inf) * 0.5),
+//     \rel, 0.25,
+    \rel, Pdefn(\buildRel, 0.025),
+//     \atk, 0.07,
+    \atk, Pdefn(\buildAtk, 0.07),
+    \amp, 1 * Pseq([Pgeom(1, 1.1265, 8)], inf) * Pseq([1, 0.75], inf) * Pdefn(\buildAmpV2, 0.5),
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
 ).play(t, quant: [4, 2]);
 )
-Pdefn(\buildAmpV2, 2);
+Pdefn(\buildAmpV2, 2.25);
+Pdefn(\buildRel, 0.25);
+Pdefn(\buildAtk, 0.07);
+Pdefn(\buildPos, 0.42);
+Pdefn(\buildPos, 0.5);
+Pdefn(\buildPos, 0.391);
 ~buildVoice2.stop;
 Pdefn(\buildAmp2, 0.25);
 Pdefn(\buildAmp3, 7);
@@ -38,17 +49,135 @@ Pdefn(\buildAmp3, 7);
 ~buildVoice2b.stop;
 ~buildVoice2b = Pbind(
     \instrument, \vox,
-    \dur, Pseq([0.25,0.25,0.25, 0.25, 2] * 2, inf),
-    \spos, Pseq([0.111, 0.1119].stutter(4), inf),
-    \spos, 0.0695 - 0.00025,
+    \dur, Pseq([0.5], inf),
+    \spos, Pseq([0.2, 0.201, 0.3035, 0.5, 0.58, 0.24, 0.2414, 0.2415, 0.242, 0.244, 0.2445].stutter(8), inf),
     \rel, 0.3,
-    \atk, 0.001,
-    \amp, 1 * Pseq([Pgeom(1, 1.1265, 16)], inf) * Pseq([1, 0.5], inf) * Pdefn(\buildAmp2, 1),
+    \atk, 0.005,
+    \amp, 3 * Pseq([Pgeom(1, 1.1265, 16)], inf) * Pseq([1, 0.5, 0.5, 0.25], inf) * Pdefn(\buildAmp2, 1),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4, 2]);
 )
 ~buildVoice2b.stop;
+
+
+
+
+(
+~buildVoice2b.stop;
+~buildVoice2b = Pbind(
+    \instrument, \vox,
+    \dur, Pseq([0.5] * 2, inf),
+    \spos, Pseq([0.2, 0.201, 0.3035, 0.5, 0.58, 0.24, 0.2414, 0.2415, 0.242, 0.244, 0.2445].stutter(8), inf),
+    \spos, Pfunc(~calcPos),
+    \rel, Pdefn(\buildVoiceRel, 0.3),
+    \atk, Pdefn(\buildVoiceAtk, 0.05),
+    \amp, 3 * Pseq([Pgeom(1, 0.95, 8)], inf) * Pseq([1, 0.5, 0.5, 0.25], inf) * Pdefn(\buildAmp2, 1) * Pseq([1, 0.15], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4, 2]);
+)
+~buildVoice2b.stop;
+Pdefn(\buildVoiceRel, 0.5);
+Pdefn(\buildVoiceAtk, 0.05);
+Pdefn(\buildAmp2, 2);
+
+(
+~posList = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
+~posList = [0.2, 0.201, 0.3035, 0.5, 0.24, 0.2414, 0.2415, 0.242, 0.2445];
+~minList = 0;
+~maxList = 3;
+~currentBeat = 0;
+~numBeats = 16;
+~curInList = ~minList;
+)
+~posList = [0.2, 0.229, 0.08, 0.076];
+
+(
+~calcPos = {
+    var ret = ~posList[~curInList];
+//     if (~currentBeat == 0, {
+//         (~posList[~curInList]!4).postln;
+//     });
+//     ~currentBeat.postln;
+    ~currentBeat = ~currentBeat + 1;
+    if (~currentBeat == ~numBeats, {
+        ~currentBeat = 0;
+        ~curInList = ~curInList + 1;
+        if (~curInList > ~maxList, {
+           ~curInList = ~minList;
+        });
+    });
+    ret;
+};
+)
+
+
+
+
+
+(
+~buildVoice3.stop;
+~buildVoice3 = Pbind(
+    \instrument, \vox,
+    \dur, Pseq([0.5] * 2, inf),
+    \spos, Pseq([0.2, 0.201, 0.3035, 0.5, 0.58, 0.24, 0.2414, 0.2415, 0.242, 0.244, 0.2445].stutter(8), inf),
+    \spos, Pfunc(~calcPos2),
+    \rel, Pdefn(\buildVoiceRel3, 0.3),
+    \atk, Pdefn(\buildVoiceAtk3, 0.05),
+    \amp, 3 * Pseq([Pgeom(1, 0.95, 8)], inf) * Pseq([1, 0.5, 0.5, 0.25], inf) * Pdefn(\buildAmp3, 2) * Pseq([0.15, 1], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4, 2]);
+)
+~buildVoice3.stop;
+Pdefn(\buildVoiceRel3, 0.5);
+Pdefn(\buildVoiceAtk3, 0.05);
+Pdefn(\buildAmp3, 4);
+
+(
+~posList2 = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
+~posList2 = [0.2, 0.201, 0.3035, 0.5, 0.24, 0.2414, 0.2415, 0.242, 0.2445];
+~minList2 = 2;
+~maxList2 = 3;
+~currentBeat2 = 0;
+~numBeats2 = 16;
+~curInList2 = ~minList2;
+)
+~posList2 = [0.2, 0.229, 0.08, 0.076];
+
+(
+~calcPos2 = {
+    var ret = ~posList2[~curInList2];
+//     if (~currentBeat == 0, {
+//         (~posList[~curInList]!4).postln;
+//     });
+//     ~currentBeat.postln;
+    ~currentBeat2 = ~currentBeat2 + 1;
+    if (~currentBeat2 == ~numBeats2, {
+        ~currentBeat2 = 0;
+        ~curInList2 = ~curInList2 + 1;
+        if (~curInList2 > ~maxList2, {
+           ~curInList2 = ~minList2;
+        });
+    });
+    ret;
+};
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 (

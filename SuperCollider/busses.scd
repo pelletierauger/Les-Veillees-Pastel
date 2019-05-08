@@ -26,7 +26,7 @@ SynthDef.new(\reverb, {
     decaytime: 20,
     mul: 1, add: 0);
     del = LPF.ar(del, 600);
-	sig = sig + (del * 0.125);
+	sig = sig + (del * 0.5);
     Out.ar(~limitBus, sig);
 }).add;
 )

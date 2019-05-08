@@ -186,4 +186,4 @@ SynthDef(\sand, {
 	Out.ar(out, sig);
 }).add;
 )
-~sa = Synth.new(\sand, [\freq, ~toFreq.("F5") * -10.midiratio, \amp, 0.25, \sus, 1, \out, ~reverbBus]);
+~sa = Synth.new(\sand, [\freq, ~toFreq.("F4") * -12.midiratio, \amp, 0.25, \sus, 10, \out, ~reverbBus]);
