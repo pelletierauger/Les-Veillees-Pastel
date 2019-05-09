@@ -19,7 +19,7 @@
 ~mousse.free;
 ~mousse = {
     arg gate = 1, atk = 5, rel = 10;
-    var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
+    var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 2, 2].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
     var env = Env.step(levels, [1, 1, 2, 1, 1, 2, 2] * 0.05 * 8, releaseNode: 6, loopNode: 0);
     var envgen = EnvGen.kr(env);
     var envRel = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
@@ -29,7 +29,7 @@
     var osc2 = (SinOsc.ar(5, 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = SinOsc.ar([freq + 1.1 + ((1 - osc) * 200), freq + 1 + ((1 - osc) * 200)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1]) * 0.1 * osc;
     var bigOsc = SinOsc.kr(0.1, 0.5, 0.5);
-    var cAmp = Control.names(\altAmp).kr(1, 3) * 0.25;
+    var cAmp = Control.names(\amp).kr(1, 3) * 0.25;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
@@ -40,7 +40,7 @@
 
 ~mousse.free;
 ~mousse.set(\gate, 0);
-~mousse.setn(\altAmp, 5);
+~mousse.setn(\amp, 5);
 (
 t.sched(4, {
 ~mousse.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(6, {[-12, 0, 12, 24].choose;}));
@@ -92,7 +92,7 @@ t.beatDur * 8;
 ~brindilles.free;
 ~brindilles = {
     arg gate = 1, atk = 5, rel = 10;
-    var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[12].choose;}));
+    var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 2, 2].scramble + Array.fill(7, {[12].choose;}));
     var env = Env.step(levels, [1, 1, 2, 1, 1, 2, 2] * t.beatDur * 2, releaseNode: 6, loopNode: 0);
     var envgen = EnvGen.kr(env);
     var envRel = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
@@ -113,7 +113,7 @@ t.beatDur * 8;
 
 ~brindilles.free;
 ~brindilles.set(\gate, 0);
-~brindilles.setn(\amp, 3);
+~brindilles.setn(\amp, 2);
 
 ~brindilles.setn(\levels, [0, 4, 7, 9, 11, 2, 2].scramble + 12);
 
