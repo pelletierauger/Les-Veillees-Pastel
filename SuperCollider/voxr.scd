@@ -21,31 +21,58 @@ SynthDef(\vox, {
 ~voxA.stop;
 ~voxA = Pbind(
     \instrument, \vox,
-    \dur, 1 / 16 * 4,
-    // En La majeur
-    // Dmaj7, A, Dmaj7, Cm
-    // IV, I, IV, iii
-    \spos, Pseq([0.237, 0.2545, 0.237, 0.252].stutter(4 * 16), inf) + Pwhite(0.001, 0.002, inf),
-    // \spos, ~har - ~loc + Pwhite(-0.0001, 0.0001, inf),
-//     \rel, 1 / 128 * Pseq([Pgeom(0.5, 1.1, 4 * 16)], inf),
-    \spos, Pseq([0.237 + 0.041].stutter(40) + 0.0125, inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
-
-    // \spos, Pseq([0.275].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
-    \spos, Pseq([0.278].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
-    \spos, Pseq([0.279].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
-
-    \spos, Pseq([0.285].stutter(40), inf) + (Pwhite(0.001, 0.002, inf) * 0.5),
-
-    \rel, 0.5,
-    \atk, 0.07,
-    \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
-    \rate, 0.midiratio,
-    \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, 4,
-    \pan, Pwhite(-0.5, 0.5, inf),
-    \out, 0
+    \dur, 0.25,
+    \spos, 0.215,
+// 0.05, 0.07, 0.09, 0.12, 0.15, 0.175, 0.19, 0.215, 0.225, 0.235, 
+// 0.52, 0.53, 0.54, 0.565, 0.62, 0.64, 0.715, 
+// 0.75, 0.78, 0.8, 0.83, 0.85, 0.87, 0.905, 0.91
+    \rel, 4.0,
+    \atk, 0.7,
+    \amp, 3.5,
+    \pan, Pwhite(-0.5, 0.5, 1),
+    \out, ~reverbBus
 ).play(t);
 )
+Synth.new(\glitchVox, [\amp, 2.5, \spos, 0.3, \out, ~reverbBus, \rel, 8]);
+
+s.avgCPU;
+
+(
+SynthDef(\glitchVox, {
+    arg buf = ~voice, rate = 1, spos = 0, pan = 1, amp = 1, rel = 2, atk = 0.1, out = 0, hpass = 50;
+    var sig, env, lfo, rate2;
+    rate = FSinOsc.kr(XLine.kr(1, 0.2, 30), 0, 1, 0);
+    rate2 = FSinOsc.kr(XLine.kr(1, 0.2, 30), pi, 1, 0);
+    env = EnvGen.kr(Env.new([0.0001, 1, 0.0001], [atk, rel], [\exponential, \exponential]), doneAction: 2);
+    sig = PlayBuf.ar(2, ~voice, [rate, rate2] * BufRateScale.ir(buf), startPos: spos * 7481001);
+    // sig = LPF.ar(sig, 7000);
+    sig = HPF.ar(sig, hpass);
+//     sig = sig * SinOsc.kr(10, mul:0.5, add:0.5);
+//     sig = sig + (Resonz.ar(sig, ~toFreq.("F5")) * 8);
+//     sig = (Resonz.ar(sig, ~toFreq.("F5")) * 8);
+    sig = sig * env;
+    sig = sig * amp;
+    sig = HPF.ar(sig, 1000);
+    sig = GVerb.ar(sig) * 0.5;
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
+    Out.ar(out, sig);
+}).add;
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 (
 ~voxB.stop;

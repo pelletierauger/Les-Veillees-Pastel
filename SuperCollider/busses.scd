@@ -26,7 +26,7 @@ SynthDef.new(\reverb, {
     decaytime: 20,
     mul: 1, add: 0);
     del = LPF.ar(del, 600);
-	sig = sig + (del * 0.5);
+	sig = sig + (del * 0.25);
     Out.ar(~limitBus, sig);
 }).add;
 )
@@ -41,7 +41,7 @@ SynthDef.new(\highPass, {
     arg in, out = 0;
     var sig;
     sig = In.ar(in, 2);
-    sig = HPF.ar(sig, 300);
+    sig = HPF.ar(sig, 400);
 //     sig = LPF.ar(sig, 10000);
     Out.ar(~reverbBus, sig);
 }).add;

@@ -21,7 +21,7 @@ SynthDef(\bvox, {
     \spos, 0.887 + (Pwhite(0.001, 0.002, inf) * 0.15),
     \rel, 2,
     \atk, 0.07,
-    \amp, 12 * 1,
+    \amp, 12 * 0.75,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~limitBus
 ).play(t, quant: [4, 1]);
@@ -36,7 +36,7 @@ SynthDef(\bvox, {
     \spos, 0.6982 + (Pwhite(0.001, 0.002, inf) * 0.15),
     \rel, 2,
     \atk, 0.07,
-    \amp, 12 * 1,
+    \amp, 12 * 0.75,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~limitBus
 ).play(t, quant: [4, 1]);

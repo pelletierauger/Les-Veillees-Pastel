@@ -78,15 +78,15 @@ Pdefn(\buildAmp3, 7);
 ).play(t, quant: [4, 2]);
 )
 ~buildVoice2b.stop;
-Pdefn(\buildVoiceRel, 0.5);
+Pdefn(\buildVoiceRel, 0.75);
 Pdefn(\buildVoiceAtk, 0.05);
-Pdefn(\buildAmp2, 2);
+Pdefn(\buildAmp2, 3);
 
 (
 ~posList = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
 ~posList = [0.2, 0.201, 0.3035, 0.5, 0.24, 0.2414, 0.2415, 0.242, 0.2445];
-~minList = 0;
-~maxList = 3;
+~minList = 3;
+~maxList = 8;
 ~currentBeat = 0;
 ~numBeats = 16;
 ~curInList = ~minList;
@@ -131,7 +131,7 @@ Pdefn(\buildAmp2, 2);
 ).play(t, quant: [4, 2]);
 )
 ~buildVoice3.stop;
-Pdefn(\buildVoiceRel3, 0.5);
+Pdefn(\buildVoiceRel3, 0.75);
 Pdefn(\buildVoiceAtk3, 0.05);
 Pdefn(\buildAmp3, 4);
 

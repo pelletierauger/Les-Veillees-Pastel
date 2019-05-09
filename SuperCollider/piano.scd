@@ -74,37 +74,42 @@ Event.addEventType(\playPiano, {
 )
 ([0, 4, 7]!2).flatten;
 (
-var c1 = ~toMidi.("F5");
-var c2 = ~toMidi.("G5");
-var c3 = ~toMidi.("A5");
-var maj = ([4, 7, 12]!2).flatten;
-var min1 = ([0, 3, 7]!2).flatten;
-var min2 = ([0, 7, 3]!2).flatten;
-var deg = min1 ++ maj ++ min2 ++ maj;
-~p1.stop;
-~p1 = Pbind(
-    \type, \playPiano,
-    \dur, Pseq([4, 2, 2], inf),
-//     \num, ~toMidi.("F3") + Pseq([0, 4, 7], inf)
-    \num, Pseq([c3, c1, c2, c1].stutter(6), inf) 
-    + Pseq(deg, inf) 
-    + Pwrand([0, 12], [0.9, 0.1], inf)
-    + Pdefn(\pShift, 0),
-).play(t, quant: 4);
-~shimmerD2.stop;
-~shimmerD2 = Pbind(
-    \instrument, \guitare,
-    \dur, 0.25,
-    \spos, Pseq([0.141, 0.2545, 0.141, 0.2545].stutter(64), inf) + Pdefn(\shimPos, 0.001) + Pwhite(0.001, 0.002, inf),
-    \rel, 0.1,
-    \atk, 0.7,
-    \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf) * 0.midiratio,
-    \amp, 6,
-    \pan, Pwhite(-1.0, 1.0, inf),
-    \out, ~highPassBus
-).play(t, quant: [4, -0.5]);
+t.sched(t.timeToNextBeat + t.beatDur, {
+    var c1 = ~toMidi.("F5");
+    var c2 = ~toMidi.("G5");
+    var c3 = ~toMidi.("A5");
+    var maj = ([4, 7, 12]!2).flatten;
+    var min1 = ([0, 3, 7]!2).flatten;
+    var min2 = ([0, 7, 3]!2).flatten;
+    var deg = min1 ++ maj ++ min2 ++ maj;
+    ~p1.stop;
+    ~p1 = Pbind(
+        \type, \playPiano,
+        \dur, Pseq([4, 2, 2], inf),
+    //     \num, ~toMidi.("F3") + Pseq([0, 4, 7], inf)
+        \num, Pseq([c3, c1, c2, c1].stutter(6), inf) 
+        + Pseq(deg, inf) 
+        + (Pwrand([0, 12], [0.9, 0.1], inf) * Pdefn(\pProb, 0))
+        + Pdefn(\pShift, 0),
+    ).play(t, quant: 4);
+    ~shimmerD2.stop;
+    ~shimmerD2 = Pbind(
+        \instrument, \guitare,
+        \dur, 0.25,
+        \spos, Pseq([0.141, 0.2545, 0.141, 0.2545].stutter(64), inf)
+        + Pdefn(\shimPos, 0.001) + Pwhite(0.001, 0.002, inf),
+        \rel, 0.1,
+        \atk, 0.7,
+        \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf)
+        * 0.midiratio,
+        \amp, 6,
+        \pan, Pwhite(-1.0, 1.0, inf),
+        \out, ~highPassBus
+    ).play(t, quant: [4, -0.5]);
+});
 )
-Pdefn(\shimPos, -0.001);
+Pdefn(\shimPos, -0.000);
+Pdefn(\pProb, 1);
 (
 ~p2.stop;
 ~p2 = Pbind(
@@ -116,6 +121,11 @@ Pdefn(\shimPos, -0.001);
         + Pwrand([0, 12], [0.9, 0.1], inf)
         + Pdefn(\pShift, 0),
 ).play(t, quant: 4);
+)
+
+(
+~p1.stop;
+~p2.stop;
 )
 
 Pdefn(\pShift, 0);
