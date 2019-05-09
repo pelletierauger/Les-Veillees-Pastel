@@ -40,24 +40,22 @@
 
 ~mousse.free;
 ~mousse.set(\gate, 0);
-~mousse.setn(\altAmp, 10);
+~mousse.setn(\altAmp, 5);
 (
 t.sched(4, {
 ~mousse.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(6, {[-12, 0, 12, 24].choose;}));
 4;
 });
 )
-~mousse.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(6, {[-12, 0, 12].choose;}));
+~mousse.setn(\levels, [0, 4, 7, 9, 11, 2, 2].scramble + Array.fill(6, {[-12, 0, 0].choose;}));
 ~mousse.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
 
 
 (
 ~nouvellesMousses = Task { {
-    var lev0 = [12, 2].choose;
-    var lev1 = [0, 2].choose;
-    ~mousse.setn(\levels, [0, 4, 7, 9, 11, lev0, lev1].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
+    ~mousse.setn(\levels, [0, 4, 7, 9, 11, 2, 2].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
     "Nouvelle mousse.".postln;
-    8.wait;
+    16.wait;
 }.loop(t);
 }.start;
 )
@@ -104,28 +102,26 @@ t.beatDur * 8;
     var osc2 = (SinOsc.ar(LFNoise1.ar(2, 4, 4), 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = LFSaw.ar([freq + 1.1 + ((1 - osc) * 20), freq + 1 + ((1 - osc) * 20)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1] * 1) * 0.1 * osc;
     var bigOsc = SinOsc.kr(0.1, 0.5, 0.5);
-    var cAmp = Control.names(\altAmp).kr(1, 3) * 0.5;
+    var cAmp = Control.names(\amp).kr(1, 3) * 0.125;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
     sig = HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq * 0.5, decaytime: 0.8, mul:0.2) * cAmp * envRel, 175);
-    Out.ar(~limitBus, sig);
+    Out.ar(~reverbBus, sig);
 }.play;
 )
 
 ~brindilles.free;
 ~brindilles.set(\gate, 0);
-~brindilles.setn(\altAmp, 1);
+~brindilles.setn(\amp, 3);
 
-~brindilles.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + 12);
+~brindilles.setn(\levels, [0, 4, 7, 9, 11, 2, 2].scramble + 12);
 
 (
 ~nouvellesBrindilles = Task { {
-    var lev0 = [12, 2].choose;
-    var lev1 = [0, 2].choose;
-    ~brindilles.setn(\levels, [0, 4, 7, 9, 11, lev0, lev1].scramble + 12);
+    ~brindilles.setn(\levels, [0, 4, 7, 9, 11, 2, 2].scramble + 12);
     "Nouvelles brindilles.".postln;
-    8.wait;
+    16.wait;
 }.loop(t);
 }.start;
 )

@@ -256,7 +256,7 @@ Pdefn(\buildAmp, 10);
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 0.5,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 1,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
@@ -318,7 +318,7 @@ Pdefn(\buildAmp, 10);
     \rate, [1] * -8.midiratio  + Pwhite(0.001, 0.01, inf),
     \rate, 0.midiratio,
     \amp, Pseq([Pgeom(0.5, 1.065, 4 * 16)], inf) * 0.5,
-    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 0.75,
+    \amp, Pseq(Pgeom(8, 0.8, 4).asStream.nextN(4), inf) * 1,
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4, 1]);
@@ -411,7 +411,7 @@ Pdefn(\buildAmp, 10);
     \rel, Pseq([0.5, 0.75], inf),
     \atk, 0.07,
     \rate, 0.midiratio,
-    \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 0.75 * Pseq([1, 0.25], inf),
+    \amp, Pseq(Pgeom(8, 0.8, 8).asStream.nextN(8), inf) * 1 * Pseq([1, 0.25], inf),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [1, 0.25] * 4);

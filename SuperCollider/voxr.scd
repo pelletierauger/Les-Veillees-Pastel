@@ -1,5 +1,5 @@
 (
-// ~voice = Buffer.read(s, "/Users/guillaumepelletier/Downloads/slackjaw vox.wav");
+~voice = Buffer.read(s, "/Users/guillaumepelletier/Downloads/slackjaw vox.wav");
 // ~voice.numFrames;
 SynthDef(\vox, {
     arg buf = ~voice, rate = 1, spos = 0, pan = 1, amp = 1, rel = 2, atk = 0.1, out = 0, hpass = 50;
@@ -33,27 +33,27 @@ SynthDef(\vox, {
     \out, ~reverbBus
 ).play(t);
 )
-Synth.new(\glitchVox, [\amp, 2.5, \spos, 0.3, \out, ~reverbBus, \rel, 8]);
-
+Synth.new(\glitchVox, [\amp, 4.5, \spos, 0.55, \out, ~reverbBus, \rel, 8]);
+s.numSynths;
 s.avgCPU;
 
 (
 SynthDef(\glitchVox, {
     arg buf = ~voice, rate = 1, spos = 0, pan = 1, amp = 1, rel = 2, atk = 0.1, out = 0, hpass = 50;
     var sig, env, lfo, rate2;
-    rate = FSinOsc.kr(XLine.kr(1, 0.2, 30), 0, 1, 0);
-    rate2 = FSinOsc.kr(XLine.kr(1, 0.2, 30), pi, 1, 0);
+    rate = FSinOsc.kr(XLine.kr(1, 0.2, 30), 0, 3, 0.6);
+    rate2 = FSinOsc.kr(XLine.kr(1, 0.2, 30), pi, 3, 0.6);
     env = EnvGen.kr(Env.new([0.0001, 1, 0.0001], [atk, rel], [\exponential, \exponential]), doneAction: 2);
     sig = PlayBuf.ar(2, ~voice, [rate, rate2] * BufRateScale.ir(buf), startPos: spos * 7481001);
     // sig = LPF.ar(sig, 7000);
     sig = HPF.ar(sig, hpass);
-//     sig = sig * SinOsc.kr(10, mul:0.5, add:0.5);
+    sig = sig * SinOsc.kr(10, mul:0.5, add:0.5);
 //     sig = sig + (Resonz.ar(sig, ~toFreq.("F5")) * 8);
 //     sig = (Resonz.ar(sig, ~toFreq.("F5")) * 8);
     sig = sig * env;
     sig = sig * amp;
     sig = HPF.ar(sig, 1000);
-    sig = GVerb.ar(sig) * 0.5;
+//     sig = GVerb.ar(sig) * 0.5;
     sig = Balance2.ar(sig[0], sig[1], pan, 1);
     Out.ar(out, sig);
 }).add;
