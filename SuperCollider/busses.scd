@@ -1,3 +1,4 @@
+s.options.memSize = 2.pow(16);
 s.boot;
 s.quit;
 s.record;
