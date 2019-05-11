@@ -1,3 +1,7 @@
+
+s.record;
+s.stopRecording;
+
 (
 var c1 = ~toMidi.("A6");
 var c2 = ~toMidi.("E6");
