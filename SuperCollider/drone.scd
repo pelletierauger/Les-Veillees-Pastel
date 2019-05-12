@@ -1,4 +1,41 @@
-~lowDrone.free;
+
+(
+~vagueHaute.set(\gate, 0);
+~vagueHaute = {
+    arg gate = 1, atk = 4, rel = 16;
+    var sig, env;
+    env = EnvGen.ar(Env.new(
+        [0, 1.0, 0.00001], 
+        [atk, rel], 
+        [\linear, \exponential], 1), gate, doneAction: 2);
+    sig = Resonz.ar(
+        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F6"), 0.01)
+        * 6 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
+    sig = sig * env;
+    Out.ar(~limitBus, sig);
+}.play;
+)
+
+(
+~vagueBasse.set(\gate, 0);
+~vagueBasse = {
+    arg gate = 1, atk = 4, rel = 16;
+    var sig, env, osc;
+    env = EnvGen.ar(Env.new(
+        [0, 1.0, 0.00001], 
+        [atk, rel], 
+        [\linear, \exponential], 1), gate, doneAction: 2);
+    sig = Resonz.ar(
+        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F4"), 0.01)
+        * 8 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
+    sig = sig * SinOsc.kr(0.05, 0, mul:0.5, add:0.5);
+    sig = sig * env;
+    Out.ar(~limitBus, sig);
+}.play;
+)
+
+
+// ~lowDrone.free;
 (
 ~lowDrone.set(\gate, 0);
 ~lowDrone = {
@@ -29,25 +66,6 @@
     chans = [0, 1];
     // using "slice" to select specific channels
     sig = FM7.ar(ctls, mods).slice(chans) * -12.dbamp * 0.2; 
-    sig = sig * env;
-    Out.ar(~limitBus, sig);
-}.play;
-)
-
-
-(
-~vagueBasse.set(\gate, 0);
-~vagueBasse = {
-    arg gate = 1, atk = 4, rel = 16;
-    var sig, env, osc;
-    env = EnvGen.ar(Env.new(
-        [0, 1.0, 0.00001], 
-        [atk, rel], 
-        [\linear, \exponential], 1), gate, doneAction: 2);
-    sig = Resonz.ar(
-        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F4"), 0.01)
-        * 8 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
-    sig = sig * SinOsc.kr(0.05, 0, mul:0.5, add:0.5);
     sig = sig * env;
     Out.ar(~limitBus, sig);
 }.play;

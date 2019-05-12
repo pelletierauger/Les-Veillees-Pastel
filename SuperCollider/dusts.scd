@@ -24,7 +24,7 @@
 
 ~mousse.free;
 ~mousse.set(\gate, 0);
-~mousse.setn(\amp, 4);
+~mousse.setn(\amp, 2);
 
 ~mousse.setn(\levels, [0, 4, 7, 7, 4, 2, 2].scramble + Array.fill(6, {[-12, 0, 0].choose;}));
 ~mousse.setn(\levels, [0, 4, 7, 7, 4, 2, 2].scramble);
