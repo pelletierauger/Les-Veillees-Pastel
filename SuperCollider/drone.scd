@@ -29,8 +29,8 @@
 
 
 (
-~vague2.set(\gate, 0);
-~vague2 = {
+~vagueBasse.set(\gate, 0);
+~vagueBasse = {
     arg gate = 1, atk = 4, rel = 16;
     var sig, env;
     env = EnvGen.ar(Env.new(
