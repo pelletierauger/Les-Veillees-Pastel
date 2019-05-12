@@ -87,8 +87,8 @@ Pdefn(\voxFloorB, 2.5);
 (
 ~posListB = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
 ~posListB = [0.2, 0.201, 0.3035, 0.5, 0.24, 0.2414, 0.2415, 0.242, 0.2445];
-~minListB = 2;
-~maxListB = 3;
+~minListB = 1;
+~maxListB = 2;
 ~currentBeatB = 0;
 ~numBeatsB = 32;
 ~curInListB = ~minListB;
