@@ -57,6 +57,7 @@ floor(35 / 12) - 1; // how to get the octave, where 35 is our original note and 
         Synth.new(\piano, [
             \buf, ~pianoSamples[sampleToGet], 
             \rate, pitch.midiratio,
+            \pan, rrand(-0.75, 0.75),
             \out, ~reverbBus
         ]);
     });
@@ -108,7 +109,7 @@ t.sched(t.timeToNextBeat + t.beatDur, {
     ).play(t, quant: [4, -0.5]);
 });
 )
-Pdefn(\shimPos, -0.000);
+Pdefn(\shimPos, 0.000);
 Pdefn(\pProb, 1);
 (
 ~p2.stop;
@@ -132,12 +133,12 @@ Pdefn(\pShift, 0);
 
 (
 SynthDef(\piano, {
-    arg buf = ~pianoSamples[0], rate = 1, spos = 0, pan = 1, amp = 1, out = ~limitBus;
+    arg buf = ~pianoSamples[0], rate = 1, spos = 0, pan = 0, amp = 1, out = ~limitBus;
     var sig, env, lfo;
     env = EnvGen.kr(Env.new([1, 0], [8]), doneAction: 2);
     sig = PlayBuf.ar(2, buf, rate * BufRateScale.ir(buf), startPos: 0, doneAction: 2);
     sig = sig * amp * 2 * env;
-    sig = Balance2.ar(sig[0], sig[1], 0, 1);
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
     Out.ar(out, sig);
 }).add;
 )
@@ -174,4 +175,21 @@ SynthDef(\piano, {
     );
     midinote = (midinote + (octave.clip(0,99999) * 12)) + detune;
 };
+)
+
+
+(
+~vague.free;
+~vague = {
+Resonz.ar(PinkNoise.ar([0.5, 0.5]), 440 * 12.midiratio * 2 * -4.midiratio, 0.01) * 6
+    * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
+}.play;
+)
+
+(
+~vague2.free;
+~vague2 = {
+Resonz.ar(BrownNoise.ar([0.5, 0.5]), 440 * -4.midiratio, 0.01) * 4
+    * SinOsc.kr(0.05, [0, pi], mul:0.5, add:0.5);
+}.play;
 )
