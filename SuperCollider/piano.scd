@@ -103,7 +103,7 @@ t.sched(t.timeToNextBeat + t.beatDur, {
         \atk, 0.7,
         \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf)
         * 0.midiratio,
-        \amp, 6,
+        \amp, 6 * Pdefn(\shimmerAmp, 1),
         \pan, Pwhite(-1.0, 1.0, inf),
         \out, ~highPassBus
     ).play(t, quant: [4, -0.5]);
