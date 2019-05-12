@@ -14,33 +14,52 @@ SynthDef(\bvox, {
 
 (
 // many rhythms
-~voxFin.stop;
-~voxFin = Pbind(
+~voxFinA.stop;
+~voxFinA = Pbind(
     \instrument, \vox,
     \dur, 8,
     \spos, 0.887 + (Pwhite(0.001, 0.002, inf) * 0.15),
     \rel, 2,
     \atk, 0.07,
-    \amp, 14 * 1,
+    \amp, 14 * Pdefn(\finA, 0.125),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~limitBus
 ).play(t, quant: [4, 1]);
 )
+Pdefn(\finA, 0.125);
 
 (
 // many rhythms bvox
-~voxFin2.stop;
-~voxFin2 = Pbind(
+~voxFinB.stop;
+~voxFinB = Pbind(
     \instrument, \bvox,
     \dur, 8,
     \spos, 0.6982 + (Pwhite(0.001, 0.002, inf) * 0.15),
     \rel, 2,
     \atk, 0.07,
-    \amp, 14 * 1,
+    \amp, 14 * Pdefn(\finB, 0.125),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~limitBus
 ).play(t, quant: [4, 1]);
 )
+Pdefn(\finB, 0.125)
+
+
+
+
+(
+Pdefn(\finA, 1 * 1.0);
+Pdefn(\finA, 1 * 1.0);
+Pdefn(\lentoB, 1 * 1.0);
+Pdefn(\lentoB, 1 * 1.0);
+Pdefn(\lentoB, 1 * 1.0);
+Pdefn(\voxAmpA, 3 * 1.0);
+Pdefn(\voxAmpB, 3 * 1.0);
+Pdefn(\shimmerAmp, 1 * 1.0);
+Pdefn(\nuitsAmp, 1 * 1.0);
+)
+
+
 
 (
 ~voxAbc.stop;
