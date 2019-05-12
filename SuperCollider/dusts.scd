@@ -27,6 +27,8 @@
 ~mousse.setn(\amp, 4);
 
 ~mousse.setn(\levels, [0, 4, 7, 7, 4, 2, 2].scramble + Array.fill(6, {[-12, 0, 0].choose;}));
+~mousse.setn(\levels, [0, 4, 7, 7, 4, 2, 2].scramble);
+~mousse.setn(\levels, 0!7);
 // [0, 4, 7, 9, 11, 2, 2]
 ~mousse.setn(\durations, [1, 1, 2, 1, 1, 2, 2] * t.beatDur * 8);
 
