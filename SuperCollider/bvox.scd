@@ -49,10 +49,10 @@ Pdefn(\finB, 0.125)
 
 (
 Pdefn(\finA, 1 * 1.0);
-Pdefn(\finA, 1 * 1.0);
+Pdefn(\finB, 1 * 1.0);
+Pdefn(\lentoA, 1 * 1.0);
 Pdefn(\lentoB, 1 * 1.0);
-Pdefn(\lentoB, 1 * 1.0);
-Pdefn(\lentoB, 1 * 1.0);
+Pdefn(\lentoC, 1 * 1.0);
 Pdefn(\voxAmpA, 3 * 1.0);
 Pdefn(\voxAmpB, 3 * 1.0);
 Pdefn(\shimmerAmp, 1 * 1.0);
