@@ -1,7 +1,13 @@
-(
 ~lowDrone.free;
+(
+~lowDrone.set(\gate, 0);
 ~lowDrone = {
-    var ctls, mods, chans, freq, sig;
+    arg gate = 1, atk = 4, rel = 16;
+    var env, ctls, mods, chans, freq, sig;
+    env = EnvGen.ar(Env.new(
+        [0, 1.0, 0.00001], 
+        [atk, rel], 
+        [\linear, \exponential], 1), gate, doneAction: 2);
     freq = 440 * -28.midiratio;
     ctls = [
         // freq, phase, amp
@@ -21,8 +27,9 @@
         [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]  // input of osc 5
     ];
     chans = [0, 1];
-    sig = FM7.ar(ctls, mods).slice(chans) * -12.dbamp * 0.2; // using "slice" to select specific channels
-//     sig = LPF.ar(sig, 1000);
+    // using "slice" to select specific channels
+    sig = FM7.ar(ctls, mods).slice(chans) * -12.dbamp * 0.2; 
+    sig = sig * env;
     Out.ar(~limitBus, sig);
 }.play;
 )
