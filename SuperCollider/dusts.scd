@@ -39,7 +39,7 @@
 ~nouvellesMousses.stop;
 
 (
-~brindilles.free;
+~brindilles.set(\gate, 0);
 ~brindilles = {
     arg gate = 1, atk = 5, rel = 10;
     var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 2, 2].scramble + Array.fill(7, {[12].choose;}));
