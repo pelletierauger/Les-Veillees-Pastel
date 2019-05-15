@@ -26,7 +26,6 @@ SynthDef(\bvox, {
     \out, ~limitBus
 ).play(t, quant: [8, 1]);
 )
-Pdefn(\finA, 0.125);
 
 (
 // many rhythms bvox
@@ -42,11 +41,13 @@ Pdefn(\finA, 0.125);
     \out, ~limitBus
 ).play(t, quant: [8, 1]);
 )
-Pdefn(\finB, 0.125)
+
+Pdefn(\finA, 0.25);
+Pdefn(\finB, 0.25);
 
 
 (
-var amp = 1.0;
+var amp = 0.9;
 Pdefn(\finA, 1 * amp);
 Pdefn(\finB, 1 * amp);
 Pdefn(\lentoA, 1 * amp);
@@ -72,4 +73,8 @@ Pdefn(\nuitsAmp, 1 * amp);
 ~buildVoiceB.stop;
 ~vagueHaute.set(\gate, 0);
 ~vagueBasse.set(\gate, 0);
+~currentBeatA = 0;
+~curInListA = ~minListA;
+~currentBeatB = 0;
+~curInListB = ~minListB;
 )

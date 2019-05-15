@@ -55,21 +55,21 @@ SynthDef(\guitare, {
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
 ).play(t, quant: [4, 2]);
-~vagueHaute.free;
-~vagueHaute = {
-    arg gate = 1, atk = 4, rel = 16;
-    var sig, env;
-    env = EnvGen.ar(Env.new(
-        [0, 1.0, 0.00001], 
-        [atk, rel], 
-        [\linear, \exponential], 1), gate, doneAction: 2);
-    sig = Resonz.ar(
-        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F6"), 0.01)
-        * 6 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
-    sig = sig * SinOsc.kr(0.05).range(0.25, 1);
-    sig = sig * env * 0.75;
-    Out.ar(~limitBus, sig);
-}.play;
+// ~vagueHaute.free;
+// ~vagueHaute = {
+//     arg gate = 1, atk = 4, rel = 16;
+//     var sig, env;
+//     env = EnvGen.ar(Env.new(
+//         [0, 1.0, 0.00001], 
+//         [atk, rel], 
+//         [\linear, \exponential], 1), gate, doneAction: 2);
+//     sig = Resonz.ar(
+//         BrownNoise.ar([0.5, 0.5]), ~toFreq.("F6"), 0.01)
+//         * 6 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
+//     sig = sig * SinOsc.kr(0.05).range(0.25, 1);
+//     sig = sig * env * 0.75;
+//     Out.ar(~limitBus, sig);
+// }.play;
 )
 
 Pdefn(\shimPos, 0.000);

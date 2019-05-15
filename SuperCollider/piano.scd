@@ -139,6 +139,40 @@ Pdefn(\pProb, 1);
 ).play(t, quant: 4);
 )
 
+~mousse.setn(\amp, 8);
+
+(
+~buildVoiceA.stop;
+~buildVoiceA = Pbind(
+    \instrument, \vox,
+    \dur, Pseq([0.5] * 2, inf),
+    \spos, Pseq([0.2, 0.201, 0.3035, 0.5, 0.58, 0.24, 0.2414, 0.2415, 0.242, 0.244, 0.2445].stutter(8), inf),
+    \spos, Pfunc(~calcPosA),
+    \rel, Pdefn(\voxRelA, 0.3),
+    \atk, Pdefn(\voxAtkA, 0.05),
+    \amp, 3 * max(Pdefn(\voxFloorA, 0), Pseq(Pgeom(0.1, 1.15, 16).asStream.nextN(16).mirror2, inf)) * Pseq([1, 0.5, 0.5, 0.25], inf) * Pdefn(\voxAmpA, 3) * Pseq([1, 0.15], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4, 2]);
+~buildVoiceB.stop;
+~buildVoiceB = Pbind(
+    \instrument, \vox,
+    \dur, Pseq([0.5] * 2, inf),
+    \spos, Pseq([0.2, 0.201, 0.3035, 0.5, 0.58, 0.24, 0.2414, 0.2415, 0.242, 0.244, 0.2445].stutter(8), inf),
+    \spos, Pfunc(~calcPosB),
+    \rel, Pdefn(\voxRelB, 0.3),
+    \atk, Pdefn(\voxAtkB, 0.05),
+    \amp, 3 * max(Pdefn(\voxFloorB, 0), Pseq(Pgeom(0.1, 1.2, 16).asStream.nextN(16).mirror2, inf)) * Pseq([1, 0.5, 0.5, 0.25], inf) * Pdefn(\voxAmpB, 3) * Pseq([0.15, 1], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4, 2]);
+)
+
+
+
+
+
+
 (
 ~p1.stop;
 ~p2.stop;
