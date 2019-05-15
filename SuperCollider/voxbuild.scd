@@ -40,8 +40,8 @@ Pdefn(\voxFloorA, 2.5);
 (
 ~posListA = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
 ~posListA = [0.2, 0.201, 0.3035, 0.5, 0.24, 0.2414, 0.2415, 0.242, 0.2445];
-~minListA = 0;
-~maxListA = 4;
+~minListA = 5;
+~maxListA = 8;
 ~currentBeatA = 0;
 ~numBeatsA = 32;
 ~curInListA = ~minListA;
@@ -87,15 +87,16 @@ Pdefn(\voxFloorB, 2.5);
 (
 ~posListB = [0.073, 0.0735, 0.0745, 0.075, 0.076, 0.08];
 ~posListB = [0.2, 0.201, 0.3035, 0.5, 0.24, 0.2414, 0.2415, 0.242, 0.2445];
-~minListB = 1;
-~maxListB = 2;
+~minListB = 3;
+~maxListB = 5;
 ~currentBeatB = 0;
 ~numBeatsB = 32;
 ~curInListB = ~minListB;
-~posListB = [0.2, 0.08, 0.076];
+// ~posListB = [0.2, 0.08, 0.076];
+~posListB = [0.2, 0.229, 0.69, 0.7, 0.72, 0.73];
 )
 ~curInListB;
-~posListB = [0.2, 0.229, 0.69, 0.7, 0.72, 0.73];
+
 
 (
 ~calcPosB = {

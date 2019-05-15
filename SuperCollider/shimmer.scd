@@ -12,6 +12,93 @@ SynthDef(\guitare, {
 }).add;
 )
 
+
+(
+~mousse.set(\gate, 0);
+~brindilles.set(\gate, 0);
+// ~shimmerD2.stop;
+// ~shimmer.stop;
+// ~shimmer = Pbind(
+//     \instrument, \guitare,
+//     \dur, 0.25,
+//     \spos, Pseq([0.141, 0.2545, 0.141, 0.2545].stutter(64), inf)
+//     + Pdefn(\shimPos, 0.001) + Pwhite(0.001, 0.002, inf),
+//     \rel, 0.1,
+//     \atk, 0.7,
+//     \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf)
+//     * 0.midiratio,
+//     \amp, 6 * Pdefn(\shimmerAmp, 1),
+//     \pan, Pwhite(-1.0, 1.0, inf),
+//     \out, ~highPassBus
+// ).play(t, quant: [4, -0.5]);
+~buildVoiceA.stop;
+~buildVoiceA = Pbind(
+    \instrument, \vox,
+    \dur, Pseq([0.5] * 2, inf),
+    \spos, Pseq([0.2, 0.201, 0.3035, 0.5, 0.58, 0.24, 0.2414, 0.2415, 0.242, 0.244, 0.2445].stutter(8), inf),
+    \spos, Pfunc(~calcPosA),
+    \rel, Pdefn(\voxRelA, 0.3),
+    \atk, Pdefn(\voxAtkA, 0.05),
+    \amp, 3 * max(Pdefn(\voxFloorA, 0), Pseq(Pgeom(0.1, 1.15, 16).asStream.nextN(16).mirror2, inf)) * Pseq([1, 0.5, 0.5, 0.25], inf) * Pdefn(\voxAmpA, 3) * Pseq([1, 0.15], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4, 2]);
+~buildVoiceB.stop;
+~buildVoiceB = Pbind(
+    \instrument, \vox,
+    \dur, Pseq([0.5] * 2, inf),
+    \spos, Pseq([0.2, 0.201, 0.3035, 0.5, 0.58, 0.24, 0.2414, 0.2415, 0.242, 0.244, 0.2445].stutter(8), inf),
+    \spos, Pfunc(~calcPosB),
+    \rel, Pdefn(\voxRelB, 0.3),
+    \atk, Pdefn(\voxAtkB, 0.05),
+    \amp, 3 * max(Pdefn(\voxFloorB, 0), Pseq(Pgeom(0.1, 1.2, 16).asStream.nextN(16).mirror2, inf)) * Pseq([1, 0.5, 0.5, 0.25], inf) * Pdefn(\voxAmpB, 3) * Pseq([0.15, 1], inf),
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~reverbBus
+).play(t, quant: [4, 2]);
+~vagueHaute.free;
+~vagueHaute = {
+    arg gate = 1, atk = 4, rel = 16;
+    var sig, env;
+    env = EnvGen.ar(Env.new(
+        [0, 1.0, 0.00001], 
+        [atk, rel], 
+        [\linear, \exponential], 1), gate, doneAction: 2);
+    sig = Resonz.ar(
+        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F6"), 0.01)
+        * 6 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
+    sig = sig * SinOsc.kr(0.05).range(0.25, 1);
+    sig = sig * env * 0.75;
+    Out.ar(~limitBus, sig);
+}.play;
+)
+
+Pdefn(\shimPos, 0.000);
+
+(
+~shimmer.stop;
+~shimmerD2.stop;
+~shimmerNuits.stop;
+~buildVoiceA.stop;
+~buildVoiceB.stop;
+~vagueHaute.free;
+~vagueBasse.free;
+~currentBeatA = 0;
+~curInListA = ~minListA;
+~currentBeatB = 0;
+~curInListB = ~minListB;
+~pianoA.stop;
+~pianoB.stop;
+)
+
+Pdefn(\shimPos, 0.000);
+
+
+
+
+
+
+
+
 (
 // Le chaud shimmer en Fa majeur
 ~shimmerD2.stop;

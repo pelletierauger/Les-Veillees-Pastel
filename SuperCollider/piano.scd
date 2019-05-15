@@ -83,8 +83,8 @@ t.sched(t.timeToNextBeat + t.beatDur, {
     var min1 = ([0, 3, 7]!2).flatten;
     var min2 = ([0, 7, 3]!2).flatten;
     var deg = min1 ++ maj ++ min2 ++ maj;
-    ~p1.stop;
-    ~p1 = Pbind(
+    ~pianoA.stop;
+    ~pianoA = Pbind(
         \type, \playPiano,
         \dur, Pseq([4, 2, 2], inf),
     //     \num, ~toMidi.("F3") + Pseq([0, 4, 7], inf)
@@ -107,19 +107,34 @@ t.sched(t.timeToNextBeat + t.beatDur, {
         \pan, Pwhite(-1.0, 1.0, inf),
         \out, ~highPassBus
     ).play(t, quant: [4, -0.5]);
+    ~vagueHaute.free;
+    ~vagueHaute = {
+    arg gate = 1, atk = 4, rel = 16;
+    var sig, env;
+    env = EnvGen.ar(Env.new(
+        [0, 1.0, 0.00001], 
+        [atk, rel], 
+        [\linear, \exponential], 1), gate, doneAction: 2);
+    sig = Resonz.ar(
+        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F6"), 0.01)
+        * 6 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
+    sig = sig * SinOsc.kr(0.05).range(0.25, 1);
+    sig = sig * env * 0.75;
+    Out.ar(~limitBus, sig);
+}.play;
 });
 )
 Pdefn(\shimPos, 0.000);
 Pdefn(\pProb, 1);
 (
-~p2.stop;
-~p2 = Pbind(
+~pianoB.stop;
+~pianoB = Pbind(
     \type, \playPiano,
     \dur, Pseq([Rest(1), 1, 1, 1, Rest(1), 1, Rest(1), 1], inf),
     \num, ~toMidi.("F6") 
         + Prand([0, 2, 4, 5, 7, 9, 11], inf) 
-        + Pwrand([Rest(), 0], [0.9, 0.1], inf) 
-        + Pwrand([0, 12], [0.9, 0.1], inf)
+        + Pwrand([Rest(), 0], [0.8, 0.2], inf) 
+        + Pwrand([0, 12], [0.5, 0.5], inf)
         + Pdefn(\pShift, 0),
 ).play(t, quant: 4);
 )

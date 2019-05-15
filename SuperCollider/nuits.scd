@@ -1,6 +1,9 @@
 (
 // Les recherches lentes, les ruisseaux nuiteux
 // le long desquels on pense à Neptune
+~pianoA.stop;
+~pianoB.stop;
+~mousse.set(\gate, 0);
 ~shimmerNuits.stop;
 ~shimmerNuits = Pbind(
     \instrument, \guitare,
