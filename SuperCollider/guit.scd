@@ -89,11 +89,14 @@ SynthDef(\accords, {
 ~p1.stop;
 ~shimmerD2.stop;
 ~p2.stop;
+~mousse.free;
+~brindilles.free;
+~vagueHaute.free;
 ~guitare1.stop;
 ~guitare1 = Pbind(
     \instrument, \accords,
     \dur, 8/1,
-    \spos, Pseq([0.1, 0.2, 0.4].stutter(4) + 0.1, inf)
+    \spos, Pseq([0.0, 0.2, 0.4].stutter(4) + 0.1, inf)
     + 0.2
     + Pseq([Pseries(0, 0.001, 64)], inf),
     \rel, 3.5,
@@ -132,4 +135,36 @@ SynthDef(\accords, {
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
 ).play(t, quant: [4, 2]);
+)
+
+
+(
+// doudou
+~guitare1.stop;
+~guitare1 = Pbind(
+    \instrument, \accords2,
+    \dur, 1/8,
+    \spos, Pseq([0.1, 0.6].stutter(48) - 0.05, inf)
+    + 0.0
+    + Pseq(Pseries(0, 0.001, 24).asStream.nextN(24).mirror2, inf),
+    \rel, 2.5,
+    \amp, [1, 1, 0.8] * 1,
+    \rate, [0.5, 1, 2] * -1.midiratio,
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \out, ~reverbBus
+).play();
+)
+
+
+(
+~vox2.stop;
+~vox2 = Pbind(
+    \instrument, \vox,
+    \dur, Pseq(1!8 ++ 8 * 0.125, inf),
+    \spos, Pseq(([6.5]/10).stutter(64 * 2), inf)
+    + Pseq(Pseries(0, 0.01, 8).asStream.nextN(8).stutter(2), inf),
+    \rel, 0.5,
+    \amp, 8,
+    \pan, Pwhite(-1.0, 1.0, inf)
+).play(t);
 )
