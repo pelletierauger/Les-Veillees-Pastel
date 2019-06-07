@@ -143,3 +143,21 @@ SynthDef(\piano, {
 }).add;
 )
 
+
+
+(
+~shimmerD2.stop;
+    ~shimmerD2 = Pbind(
+        \instrument, \guitare,
+        \dur, 1,
+        \spos, Pseq([0.144, 0.254, 0.144, 0.2545].stutter(16), inf)
+        + Pdefn(\shimPos, -0.0025) + Pwhite(0.001, 0.002, inf),
+        \rel, 0.5,
+        \atk, 0.1,
+        \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(16), inf)
+        * -12.midiratio,
+        \amp, 6 * Pdefn(\shimmerAmp, 1),
+        \pan, Pwhite(-1.0, 1.0, inf),
+        \out, ~highPassBus
+    ).play(t, quant: [4, -0.5]);
+)
