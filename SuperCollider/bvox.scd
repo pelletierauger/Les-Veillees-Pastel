@@ -24,9 +24,8 @@ SynthDef(\bvox, {
     \amp, 14 * Pdefn(\finA, 0.125),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~limitBus
-).play(t, quant: [4, 1]);
+).play(t, quant: [8, 1]);
 )
-Pdefn(\finA, 0.125);
 
 (
 // many rhythms bvox
@@ -40,35 +39,43 @@ Pdefn(\finA, 0.125);
     \amp, 14 * Pdefn(\finB, 0.125),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~limitBus
-).play(t, quant: [4, 1]);
+).play(t, quant: [8, 1]);
 )
-Pdefn(\finB, 0.125)
+
+Pdefn(\finA, 0.25);
+Pdefn(\finB, 0.25);
+
+
+(
+var amp = 0.9;
+Pdefn(\finA, 1 * amp);
+Pdefn(\finB, 1 * amp);
+Pdefn(\lentoA, 1 * amp);
+Pdefn(\lentoB, 1 * amp);
+Pdefn(\lentoC, 1 * amp);
+Pdefn(\voxAmpA, 3 * amp);
+Pdefn(\voxAmpB, 3 * amp);
+Pdefn(\shimmerAmp, 1 * amp);
+Pdefn(\nuitsAmp, 1 * amp);
+)
 
 
 
 
 (
-Pdefn(\finA, 1 * 1.0);
-Pdefn(\finB, 1 * 1.0);
-Pdefn(\lentoA, 1 * 1.0);
-Pdefn(\lentoB, 1 * 1.0);
-Pdefn(\lentoC, 1 * 1.0);
-Pdefn(\voxAmpA, 3 * 1.0);
-Pdefn(\voxAmpB, 3 * 1.0);
-Pdefn(\shimmerAmp, 1 * 1.0);
-Pdefn(\nuitsAmp, 1 * 1.0);
-)
-
-
-
-(
-~voxAbc.stop;
-~voxFin.stop;
-~voxFin2.stop;
-~shimmerD2.stop;
-~voxLento2.stop;
-~voxLento3.stop;
-~voxLento.stop;
+~voxFinA.stop;
+~voxFinB.stop;
+~shimmer.stop;
+~voxLentoA.stop;
+~voxLentoB.stop;
+~voxLentoC.stop;
 ~shimmerNuits.stop;
-~sylv.set(\gate, 0);
+~buildVoiceA.stop;
+~buildVoiceB.stop;
+~vagueHaute.set(\gate, 0);
+~vagueBasse.set(\gate, 0);
+~currentBeatA = 0;
+~curInListA = ~minListA;
+~currentBeatB = 0;
+~curInListB = ~minListB;
 )
