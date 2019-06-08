@@ -182,7 +182,7 @@ SynthDef(\accords, {
     + Pseq(Pseries(0, 0.001 * 0.5, 16).asStream.nextN(16).mirror2, inf),
     \rel, 2.5,
     \amp, [1, 1, 0.8] * 1,
-    \rate, [0.5, 1, 2] * -1.midiratio,
+    \rate, Pseq([1, -7.midiratio, -2.midiratio, -7.midiratio].stutter(32), inf) * -1.midiratio * [0.5, 1, 2],
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
 ).play(t);
@@ -226,4 +226,24 @@ SynthDef(\accords, {
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
+)
+
+
+(
+// nouvelle doudou
+// 1/8 * 4;
+~guitare1.stop;
+~guitare1 = Pbind(
+    \instrument, \accords2,
+    \dur, 1/8 * 4 / 1,
+    \spos, Pseq([0.14, 0.6].stutter(32 * 1) - 0.05, inf)
+    + 0.0
+    + Pseq(Pseries(0, 0.001 * 1, 16 * 1).asStream.nextN(16 * 1).mirror2, inf),
+    \rel, 0.5,
+    \atk, 0.01,
+    \amp, [1, 1, 0.8] * 1,
+    \rate, Pseq([0, -7, -2, -7].midiratio.stutter(32 * 1), inf) * -1.midiratio * [1, 2],
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \out, ~reverbBus
+).play(t);
 )
