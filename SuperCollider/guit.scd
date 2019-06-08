@@ -239,10 +239,51 @@ SynthDef(\accords, {
     \spos, Pseq([0.14, 0.6].stutter(32 * 1) - 0.05, inf)
     + 0.0
     + Pseq(Pseries(0, 0.001 * 1, 16 * 1).asStream.nextN(16 * 1).mirror2, inf),
-    \rel, 0.5,
+    \rel, Pdefn(\foamRel, 0.5);,
+    \atk, 0.01,
+    \amp, [1, 1, 0.8] * 1 * Pdefn(\foamAmp, 0.125),
+    \rate, Pseq([0, -7, -2, -7].midiratio.stutter(32 * 1), inf) * -1.midiratio * [1, 2],
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \out, ~reverbBus
+).play(t);
+)
+Pdefn(\foamAmp, 1);
+Pdefn(\foamRel, 2.5);
+
+
+(
+// nouvelle doudou
+// 1/8 * 4;
+~guitareB.stop;
+~guitareB = Pbind(
+    \instrument, \accords,
+    \dur, 1/8 * 4 / 1 * 2,
+    \spos, Pseq([0.14, 0.6].stutter(32 * 1) - 0.05, inf)
+    + 0.0
+    + Pseq(Pseries(0, 0.001 * 4, 16 * 1).asStream.nextN(16 * 1).mirror2, inf),
+    \rel, 2.5,
     \atk, 0.01,
     \amp, [1, 1, 0.8] * 1,
     \rate, Pseq([0, -7, -2, -7].midiratio.stutter(32 * 1), inf) * -1.midiratio * [1, 2],
+    \pan, Pwhite(-1.0, 1.0, inf),
+    \out, ~reverbBus
+).play(t);
+)
+
+(
+// nouvelle doudou
+// 1/8 * 4;
+~guitareB.stop;
+~guitareB = Pbind(
+    \instrument, \accords,
+    \dur, 1/8 * 4 / 1 * 8,
+    \spos, Pseq([0.14, 0.6].stutter(32 * 1) - 0.05, inf)
+    + 0.0
+    + Pseq(Pseries(0, 0.001 * 4, 16 * 1).asStream.nextN(16 * 1).mirror2, inf),
+    \rel, 5.5,
+    \atk, 0.01,
+    \amp, [1, 1, 0.8] * 1,
+    \rate, Pseq([0, 0, 0, 0].midiratio.stutter(32 * 1), inf) * -1.midiratio * [1, 2],
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
 ).play(t);
