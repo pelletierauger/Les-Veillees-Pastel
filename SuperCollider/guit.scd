@@ -172,13 +172,14 @@ SynthDef(\accords, {
 
 (
 // nouvelle doudou
+// 1/8 * 4;
 ~guitare1.stop;
 ~guitare1 = Pbind(
     \instrument, \accords2,
     \dur, 1/8 * 4,
-    \spos, Pseq([0.1, 0.6].stutter(48 * 2) - 0.05, inf)
+    \spos, Pseq([0.1, 0.6].stutter(32) - 0.05, inf)
     + 0.0
-    + Pseq(Pseries(0, 0.001 * 0.5, 24 * 2).asStream.nextN(24 * 2).mirror2, inf),
+    + Pseq(Pseries(0, 0.001 * 0.5, 16).asStream.nextN(16).mirror2, inf),
     \rel, 2.5,
     \amp, [1, 1, 0.8] * 1,
     \rate, [0.5, 1, 2] * -1.midiratio,
