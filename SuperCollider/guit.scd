@@ -197,7 +197,7 @@ SynthDef(\accords, {
     \dur, 4/1,
     \spos, Pseq([0.2, 0.5], inf),
     \rel, 0.5,
-    \amp, 4,
+    \amp, 8,
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
 ).play(t, quant: [4, 2]);
@@ -209,9 +209,9 @@ SynthDef(\accords, {
     \dur, 4/1,
     \spos, Pseq([0.15, 0.35], inf),
     \rel, 1,
-    \amp, 4,
+    \amp, 8,
     \pan, Pwhite(-1.0, 1.0, inf),
-    \out, ~reverbBus
+    \out, ~limitBus
 ).play(t, quant: [4]);
 )
 
@@ -288,3 +288,193 @@ Pdefn(\foamRel, 2.5);
     \out, ~reverbBus
 ).play(t);
 )
+
+
+
+
+
+
+(
+// var n;
+~solo = Buffer.read(s, "/Users/guillaumepelletier/Music/SuperCollider\ Recordings/en-mer-guitare-3.aiff");
+~solo.numFrames;
+// 7144448/14400/2/60;
+/*n = ~guitare.numFrames;*/
+SynthDef(\solo3, {
+    arg buf = ~solo, rate = 1, spos = 0, pan = 0, amp = 1, rel = 2, atk = 0.1, out = 0;
+    var sig, env, lfo;
+//     env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]), doneAction: 2);
+    // env = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
+    env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]), doneAction: 2);
+    sig = PlayBuf.ar(2, ~solo, rate * BufRateScale.ir(buf), startPos: spos * 11012096, doneAction: 2);
+    sig = sig * env;
+    sig = sig * amp;
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
+    Out.ar(out, sig);
+}).add;
+)
+
+
+(
+// nouvelle doudou
+// 1/8 * 4;
+~guitareSolo.stop;
+~guitareSolo = Pbind(
+    \instrument, \solo3,
+    \dur, 16,
+    \spos, Pseq([0.0085, 0.0275, 0.05, 0.0275], inf),
+    \rel, Pseq([4, 4, 11, 4], inf),
+    \atk, 0.01,
+    \amp, 3,
+    \rate, 1,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~bigReverbBus
+).play(t);
+)
+
+
+(
+SynthDef(\solo3cont, {
+    arg buf = ~solo, rate = 1, pan = 0, amp = 1, rel = 2, atk = 0.1, out = 0, gate = 1;
+    var sig, env, lfo;
+//     env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]), doneAction: 2);
+    env = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
+    sig = PlayBuf.ar(2, ~solo, rate * BufRateScale.ir(buf), startPos: 0, doneAction: 2);
+    sig = sig * env;
+    sig = sig * amp;
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
+    Out.ar(out, sig);
+}).add;
+)
+
+~soloCont = Synth.new(\solo3cont, [\out, ~bigReverbBus, \amp, 0.75]);
+~soloCont.set(\gate, 0);
+
+
+
+
+(
+~guitCluster = {
+// var degrees = Array.fill(3, {[1, 1, 1, 2].choose}) ++ [1, 1];
+// var modif = [0].midiratio;
+// var key = ~toFreq.(~key) * modif * 2;
+// var notes = key * [0, 4, 7, 11, 14].midiratio;
+// var arr = (notes * degrees).scramble;
+// var steps = Array.fill(5, {[0.125, 0.25].choose});
+// var baseOsc = rrand(1, 12);
+// var minOsc = baseOsc - 0.05 / 12;
+// var maxOsc = baseOsc + 0.05 / 12;
+var durs = Array.fill(8, {[0.5].choose});
+var positions = Array.fill(8, {rrand(0.0, 0.9)});
+var rels = Array.fill(8, {[0.5, 1].choose});
+var pulse = Pbind(
+    \instrument, \solo3,
+    \dur, Pseq(durs, 4),
+    \spos, Pseq(positions, inf),
+    \atk, 0.01, 
+    \rel, Pseq(rels, 4), 
+    \amp, 3,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~limitBus
+).play(t);
+durs.sum * 4;
+};
+)
+Array.fill(6, {[1].choose});
+(
+~guitClusters = Task {
+{
+var waitValue = ~guitCluster.();
+waitValue.wait;
+}.loop;}.start(t);
+)
+~guitClusters.stop;
+
+
+
+~soloList = Array.fill(8, {rrand(0.0, 0.9)});
+(
+var oldList = ~soloList;
+~soloList = Array.fill(8, {
+    |i| 
+    [oldList[i], rrand(0.0, 0.9)].wchoose([0.9, 0.1]);
+});
+)
+~soloList;
+
+
+(
+~guitCluster2 = {
+var oldList, durs, positions, rels, pulse;
+oldList = ~soloList;
+~soloList = Array.fill(8, {
+    |i| 
+    [oldList[i], rrand(0.0, 0.9)].wchoose([0.5, 0.5]);
+});
+durs = 0.5!8;
+positions = ~soloList;
+rels = Array.fill(8, {[0.5, 1].choose});
+pulse = Pbind(
+    \instrument, \solo3,
+    \dur, Pseq(durs, 4),
+    \spos, Pseq(positions, inf),
+    \atk, 0.01, 
+    \rel, Pseq(rels, 4), 
+    \amp, 3,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~limitBus
+).play(t);
+durs.sum * 4;
+};
+)
+
+(
+~soloList = Array.fill(8, {rrand(0.0, 0.9)});
+~guitClusters2 = Task {
+{
+var waitValue = ~guitCluster2.();
+waitValue.wait;
+}.loop;}.start(t);
+)
+~guitClusters2.stop;
+
+
+// -----------------------------------------------------
+// Automated vocal clusters
+
+
+
+(
+~voxCluster = {
+var oldList, durs, positions, rels, pulse;
+oldList = ~voxList;
+~voxList = Array.fill(8, {
+    |i| 
+    [oldList[i], rrand(0.0, 0.9)].wchoose([0.5, 0.5]);
+});
+durs = 0.5!8;
+positions = ~voxList;
+rels = Array.fill(8, {[0.5, 1].choose * 0.25});
+pulse = Pbind(
+    \instrument, \vox,
+    \dur, Pseq(durs, 4),
+    \spos, Pseq(positions, inf),
+    \rel, Pseq(rels, 4), 
+    \amp, 8,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~limitBus
+).play(t);
+durs.sum * 4;
+};
+)
+
+(
+~voxList = Array.fill(8, {rrand(0.0, 0.9)});
+~voxClusters = Task {
+{
+var waitValue = ~voxCluster.();
+waitValue.wait;
+}.loop;}.start(t);
+)
+~voxClusters.stop;
+

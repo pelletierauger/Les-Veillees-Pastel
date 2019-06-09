@@ -10,6 +10,7 @@ FreqScope.new(500, 500, 0, server: s);
 ~sourceGroup = Group.new;
 ~fxGroup = Group.after(~sourceGroup);
 ~reverbBus = Bus.audio(s, 2);
+~bigReverbBus = Bus.audio(s, 2);
 ~highPassBus = Bus.audio(s, 2);
 ~pulseBus = Bus.audio(s, 1);
 ~limitBus = Bus.audio(s, 2);
@@ -127,3 +128,26 @@ SynthDef.new(\pulsemetro, {
 //     \out, [0, ~pulseBus]
 ).play(t, quant: 4);
 )
+
+
+(
+SynthDef.new(\bigReverb, {
+    arg in, out = 0;
+    var sig, del;
+    sig = In.ar(in, 2);
+    del = CombC.ar(in: sig,
+    maxdelaytime: 0.1,
+    delaytime: [0.25, 0.26],
+    decaytime: 20,
+    mul: 1, add: 0);
+    del = LPF.ar(del, 1200);
+	sig = sig + (del * 0.25);
+    Out.ar(~limitBus, sig);
+}).add;
+)
+
+(
+~bigReverbSynth.free;
+~bigReverbSynth = Synth.new(\bigReverb, [\in, ~bigReverbBus], ~fxGroup);
+)
+
