@@ -222,7 +222,7 @@ SynthDef(\accords, {
     \dur, 16,
     \spos, Pseq([0.55, 0.57], inf),
     \rel, 2,
-    \amp, 4,
+    \amp, 8,
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
 ).play(t, quant: [4]);
@@ -241,13 +241,13 @@ SynthDef(\accords, {
     + Pseq(Pseries(0, 0.001 * 1, 16 * 1).asStream.nextN(16 * 1).mirror2, inf),
     \rel, Pdefn(\foamRel, 0.5);,
     \atk, 0.01,
-    \amp, [1, 1, 0.8] * 1 * Pdefn(\foamAmp, 0.125),
+    \amp, [1, 1, 0.8] * 1 * Pdefn(\foamAmp, 2),
     \rate, Pseq([0, -7, -2, -7].midiratio.stutter(32 * 1), inf) * -1.midiratio * [1, 2],
     \pan, Pwhite(-1.0, 1.0, inf),
     \out, ~reverbBus
 ).play(t);
 )
-Pdefn(\foamAmp, 1);
+Pdefn(\foamAmp, 2);
 Pdefn(\foamRel, 2.5);
 
 
@@ -420,15 +420,17 @@ pulse = Pbind(
     \spos, Pseq(positions, inf),
     \atk, 0.01, 
     \rel, Pseq(rels, 4), 
-    \amp, 3,
+    \amp, 4,
     \pan, Pwhite(-0.5, 0.5, inf),
-    \out, ~limitBus
+    \out, ~reverbBus
 ).play(t);
 durs.sum * 4;
 };
 )
 
 (
+~brindilles.set(\gate, 0);
+~mousse.set(\gate, 0);
 ~soloList = Array.fill(8, {rrand(0.0, 0.9)});
 ~guitClusters2 = Task {
 {
@@ -478,3 +480,151 @@ waitValue.wait;
 )
 ~voxClusters.stop;
 
+(
+~solo1 = Buffer.read(s, "/Users/guillaumepelletier/Music/SuperCollider\ Recordings/en-mer-guitare-1.wav");
+~solo1.numFrames;
+SynthDef(\solo1cont, {
+    arg buf = ~solo1, rate = 1, pan = 0, amp = 1, rel = 2, atk = 0.1, out = 0, gate = 1;
+    var sig, env, lfo;
+//     env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]), doneAction: 2);
+    env = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
+    sig = PlayBuf.ar(2, ~solo1, rate * BufRateScale.ir(buf), startPos: 0, doneAction: 2);
+    sig = sig * env;
+    sig = sig * amp;
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
+    Out.ar(out, sig);
+}).add;
+)
+
+~soloCont1 = Synth.new(\solo1cont, [\out, ~reverbBus, \amp, 3]);
+~soloCont1.set(\gate, 0);
+~soloCont1.set(\amp, 6);
+
+
+(
+SynthDef(\solo1, {
+    arg buf = ~solo1, rate = 1, spos = 0, pan = 0, amp = 1, rel = 2, atk = 0.1, out = 0;
+    var sig, env, lfo;
+//     env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]), doneAction: 2);
+    // env = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
+    env = EnvGen.kr(Env.new([0, 1, 0], [atk, rel]), doneAction: 2);
+    sig = PlayBuf.ar(2, ~solo1, rate * BufRateScale.ir(buf), startPos: spos * 21780480, doneAction: 2);
+    sig = sig * env;
+    sig = sig * amp;
+    sig = Balance2.ar(sig[0], sig[1], pan, 1);
+    Out.ar(out, sig);
+}).add;
+)
+
+
+
+
+
+(
+~guitCluster1 = {
+var durs = Array.fill(8, {[0.5].choose});
+var basicPos = rrand(0.0, 0.9);
+var positions = Array.fill(8, {basicPos + rrand(0.0, 0.01)});
+var rels = Array.fill(8, {[0.5, 1].choose * 2});
+var pulse = Pbind(
+    \instrument, \solo1,
+    \dur, Pseq(durs, 4),
+    \spos, Pseq(positions, inf),
+    \atk, 0.01, 
+    \rel, Pseq(rels, 4), 
+    \amp, 5,
+    \rate, 1,
+    \pan, Pwhite(-0.5, 0.5, inf),
+    \out, ~limitBus
+).play(t);
+durs.sum * 4;
+};
+)
+Array.fill(6, {[1].choose});
+(
+~guitClusters1 = Task {
+{
+var waitValue = ~guitCluster1.();
+waitValue.wait;
+}.loop;}.start(t);
+)
+~guitClusters1.stop;
+
+
+
+
+Pwhite().asStream.next.stutter(2);
+
+
+(
+// nouvelle doudou
+// 1/8 * 4;
+~wobblyCluster = {
+var pos = rrand(0.0, 0.9);
+pos.postln;
+~autreGuitare.stop;
+~autreGuitare = Pbind(
+    \instrument, \solo1,
+    \dur, 1/2,
+    \spos, Pseq([pos], 64)
+    + Pseq(Pseries(0, 0.00001, 64).asStream.nextN(64), inf),
+    \rel, Pseq([1/8], inf),
+    \atk, 0.0001,
+    \amp, 24 * Pseq(Pgeom(1, 0.95, 64).asStream.nextN(64), inf)
+    * Pseq([1, 0.5], inf),
+    \rate, 1,
+    \pan, Pwhite(-0.75, 0.75, inf),
+    \out, ~reverbBus
+).play(t);
+}
+)
+
+(
+~wobblyCluster = {
+var pos = [
+    0.026112163066864,
+    0.062166202068329,
+    0.74659781455994,
+    0.78977344036102,
+    0.062755215167999,
+    0.74401377439499,
+    0.43313534259796,
+    0.43743299245834,
+    0.73360691070557,
+    0.22772061824799,
+    0.21568940877914,
+    0.45996032953262,
+    0.36069284677505,
+    0.76989204883575,
+    0.68512533903122
+].choose;
+pos.postln;
+Pbind(
+    \instrument, \solo1,
+    \dur, 1/2,
+    \spos, Pseq([pos], 128)
+//     + Pseq(Pseries(0, 0.00001, 64).asStream.nextN(64), inf),
+    + Pseq(Pseries(0, 0.00001/2, 64).asStream.nextN(64).mirror2, inf),
+    \rel, Pseq([1/4], inf),
+    \atk, 0.0001,
+//     \amp, 24 * Pseq(Pgeom(1, 0.95, 64).asStream.nextN(64), inf)
+    \amp, 24 * Pseq(Pseries(0, 1/63, 64).asStream.nextN(64).mirror2, 128)
+    * Pseq([1, 0.5], inf),
+    \rate, [1],
+    \pan, Pwhite(-0.75, 0.75, inf),
+    \out, ~reverbBus
+).play(t);
+15.5;
+}
+)
+Pseries(0, 1/63, 64).asStream.nextN(64).mirror2;
+(
+// ~guitare1.stop;
+// ~guitClusters2.stop;
+~wobblyClusters = Task {
+{
+var waitValue = ~wobblyCluster.();
+waitValue.wait;
+}.loop;}.start(t);
+)
+~wobblyClusters.stop;

@@ -24,7 +24,7 @@
 
 ~mousse.free;
 ~mousse.set(\gate, 0);
-~mousse.setn(\amp, 8);
+~mousse.setn(\amp, 2);
 
 ~mousse.setn(\levels, [0, 4, 7, 7, 4, 2, 2].scramble + Array.fill(6, {[-12, 0, 0].choose;}));
 ~mousse.setn(\levels, [0, 4, 7, 7, 4, 2, 2].scramble);
@@ -60,7 +60,7 @@
     var osc2 = (SinOsc.ar(LFNoise1.ar(2, 4, 4), 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = LFSaw.ar([freq + 1.1 + ((1 - osc) * 20), freq + 1 + ((1 - osc) * 20)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1] * 1) * 0.1 * osc;
     var bigOsc = SinOsc.kr(0.1, 0.5, 0.5);
-    var cAmp = Control.names(\amp).kr(1, 3) * 0.125;
+    var cAmp = Control.names(\amp).kr(4, 3) * 0.125;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
@@ -173,4 +173,4 @@ SynthDef(\sand, {
 }.play;
 )
 ~mousse.free;
-~mousse.setn(\amp, 32);
+~mousse.setn(\amp, 16);

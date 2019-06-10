@@ -1,15 +1,29 @@
 
+
+(1!16 ++ 4!4).flatten.scramble;
+
+((1!16) ++ (2!4)).scramble;
 (
 ~vagueHaute.set(\gate, 0);
 ~vagueHaute = {
     arg gate = 1, atk = 4, rel = 16;
     var sig, env;
+    var levels = [~toFreq.("F6"), ~toFreq.("F7"), ~toFreq.("A6"), ~toFreq.("C7")];
+    var levs2 = ((1!16) ++ (0.5!4)).scramble;
+    var durs2 = 0.1!20;
+    var durations = 2!4;
+    var envStep = Env.step(levels, durations, releaseNode: 3, loopNode: 0);
+    var envStep2 = Env.step(levs2, durs2, releaseNode: 19, loopNode: 0);
+
+    var envgen2 = EnvGen.kr(envStep2);
+        var envgen = EnvGen.kr(envStep);
     env = EnvGen.ar(Env.new(
         [0, 1.0, 0.00001], 
         [atk, rel], 
         [\linear, \exponential], 1), gate, doneAction: 2);
+        
     sig = Resonz.ar(
-        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F6"), 0.01)
+        BrownNoise.ar([0.5, 0.5]), envgen, 0.01)
         * 6 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
     sig = sig * env;
     Out.ar(~limitBus, sig);
@@ -26,7 +40,7 @@
         [atk, rel], 
         [\linear, \exponential], 1), gate, doneAction: 2);
     sig = Resonz.ar(
-        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F4"), 0.01)
+        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F6"), 0.01)
         * 8 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
     sig = sig * SinOsc.kr(0.05, 0, mul:0.5, add:0.5);
     sig = sig * env;
