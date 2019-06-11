@@ -74,7 +74,7 @@ SynthDef.new(\rectangle, {
     
     // Safety measures, constraining values.
     amp = min(max(amp, 0), 1.5);
-    freq = min(max(freq, 50), 1000);
+    freq = min(max(freq, 50), 3000);
     
     
     lfo = SinOsc.kr(lfoFreq, mul: 0.5, add: 0.5);
@@ -92,5 +92,30 @@ sig = sig * amp;
 
 
 (
-Synth.new(\rectangle, [\freq, ~toFreq.("F2"), \lfoFreq, rrand(0.1, 6), \pMod, rrand(0.1, 3), \pan, rrand(-1.0, 1.0), \amp, 4])
+Synth.new(\rectangle, [\freq, ~toFreq.("A5"), \lfoFreq, rrand(0.1, 0.1), \pMod, rrand(0.1, 3), \dec, 0.045, \sustime, 0.001, \rel, 0.001, \atk, 0.0001, \pan, rrand(-0.5, 0.5), \amp, 2])
 )
+
+
+(
+var key = ~toFreq.("F4");
+var freqs = key * [0, 2, 4, 7, 9, -1].midiratio.choose * [1, 2].choose;
+var freqList = Array.fill(16, {freqs;});
+var durs = Array.fill(16, {[0.25, 0.25].wchoose([0.9, 0.1]);});
+var amps = Pseries(0, 1/64, 64).asStream.nextN(64).mirror2;
+~laser.stop;
+Pbind(
+    \instrument, \rectangle,
+    \dur, Pseq(durs, inf),
+    \freq, Pseq(freqList, inf) * Pseq([0, 12].midiratio, inf),
+    \dec, 0.045, 
+    \sustime, 0.001, 
+    \rel, 0.001,
+    \atk, 0.0001,
+    \amp, Pseq(amps * 10, 1) * Pseq([1, 0.5], inf),
+    \lfoFreq, rrand(0.1, 0.1),
+    \pMod, rrand(0.1, 3),
+    \pan, Pwhite(-0.75, 0.75, inf),
+    \out, ~reverbBus
+).play(t, quant: 0.25);
+)
+
