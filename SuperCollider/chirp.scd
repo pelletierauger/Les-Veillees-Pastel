@@ -80,6 +80,7 @@ SynthDef.new(\rectangle, {
     lfo = SinOsc.kr(lfoFreq, mul: 0.5, add: 0.5);
     env = EnvGen.ar(Env.new([0.0, 1.0, sus, sus, 0.00001], [atk, dec, sustime, rel], [\linear, \linear, \linear, \exponential]), doneAction: 2);
     sig = Pulse.ar([freq, freq+1], width: SinOsc.kr(pMod).range(0.25, 0.75), mul: 1.0, add: 0.0) * 0.11;
+//     sig = sig * LFSaw.ar([freq + 1, freq]);
     sig = sig * env;
     sig = (sig * 0.75) + (sig * lfo * 0.25);
 //     envf = XLine.kr(400, 20000, sustime * 0.1);
@@ -97,25 +98,33 @@ Synth.new(\rectangle, [\freq, ~toFreq.("A5"), \lfoFreq, rrand(0.1, 0.1), \pMod, 
 
 
 (
+~laserCluster = {
 var key = ~toFreq.("F4");
 var freqs = key * [0, 2, 4, 7, 9, -1].midiratio.choose * [1, 2].choose;
+var freq2 = key * [0, 2, 4, 7, 9, -1].midiratio.choose * [1, 2].choose;
 var freqList = Array.fill(16, {freqs;});
-var durs = Array.fill(16, {[0.25, 0.25].wchoose([0.9, 0.1]);});
+var durs = Array.fill(16, {[0.25, 0.25].wchoose([0.9, 0.1])});
 var amps = Pseries(0, 1/64, 64).asStream.nextN(64).mirror2;
+durs = ([0.25, 0.25].choose)!16;
 ~laser.stop;
 Pbind(
     \instrument, \rectangle,
     \dur, Pseq(durs, inf),
-    \freq, Pseq(freqList, inf) * Pseq([0, 12].midiratio, inf),
-    \dec, 0.045, 
+    \freq, Pseq([freqs, freq2], inf),
+    \dec, 0.045 * 1, 
     \sustime, 0.001, 
     \rel, 0.001,
     \atk, 0.0001,
-    \amp, Pseq(amps * 10, 1) * Pseq([1, 0.5], inf),
+    \amp, Pseq(amps * 10, 1) * Pseq([1, 1], inf),
     \lfoFreq, rrand(0.1, 0.1),
     \pMod, rrand(0.1, 3),
     \pan, Pwhite(-0.75, 0.75, inf),
     \out, ~reverbBus
 ).play(t, quant: 0.25);
+}
 )
-
+(
+~laserClusters = Task {
+{~laserCluster.(); [6, 8].choose.wait;}.loop;}.start;
+)
+~laserClusters.stop;

@@ -40,7 +40,25 @@
         [atk, rel], 
         [\linear, \exponential], 1), gate, doneAction: 2);
     sig = Resonz.ar(
-        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F6"), 0.01)
+        BrownNoise.ar([0.5, 0.5]), ~toFreq.("F6") * 1, 0.01)
+        * 8 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
+    sig = sig * SinOsc.kr(0.05, 0, mul:0.5, add:0.5);
+    sig = sig * env;
+    Out.ar(~limitBus, sig);
+}.play;
+)
+
+(
+~vagueBasse2.set(\gate, 0);
+~vagueBasse2 = {
+    arg gate = 1, atk = 4, rel = 16;
+    var sig, env, osc;
+    env = EnvGen.ar(Env.new(
+        [0, 1.0, 0.00001], 
+        [atk, rel], 
+        [\linear, \exponential], 1), gate, doneAction: 2);
+    sig = Resonz.ar(
+        BrownNoise.ar([0.5, 0.5]), ~toFreq.("A6") * 1, 0.01)
         * 8 * SinOsc.kr(0.1, [0, pi], mul:0.5, add:0.5);
     sig = sig * SinOsc.kr(0.05, 0, mul:0.5, add:0.5);
     sig = sig * env;

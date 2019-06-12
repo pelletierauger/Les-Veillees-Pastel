@@ -60,7 +60,7 @@
     var osc2 = (SinOsc.ar(LFNoise1.ar(2, 4, 4), 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = LFSaw.ar([freq + 1.1 + ((1 - osc) * 20), freq + 1 + ((1 - osc) * 20)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1] * 1) * 0.1 * osc;
     var bigOsc = SinOsc.kr(0.1, 0.5, 0.5);
-    var cAmp = Control.names(\amp).kr(4, 3) * 0.125;
+    var cAmp = Control.names(\amp).kr(8, 3) * 0.125;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
@@ -71,7 +71,7 @@
 
 ~brindilles.free;
 ~brindilles.set(\gate, 0);
-~brindilles.setn(\amp, 4);
+~brindilles.setn(\amp, 6);
 
 ~brindilles.setn(\levels, [0, 4, 7, 9, 11, 2, 2].scramble + 12);
 
@@ -174,3 +174,4 @@ SynthDef(\sand, {
 )
 ~mousse.free;
 ~mousse.setn(\amp, 16);
+~mousse.set(\gate, 0);

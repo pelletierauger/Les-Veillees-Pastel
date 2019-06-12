@@ -32,3 +32,5 @@
     \out, ~reverbBus
 ).play(t);
 )
+
+Pdefn(\nuitsAmp, 2);
