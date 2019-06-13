@@ -74,6 +74,7 @@ Pdefn(\nuitsAmp, 1 * amp);
 ~buildVoiceB.stop;
 ~vagueHaute.set(\gate, 0);
 ~vagueBasse.set(\gate, 0);
+~vagueBasse2.set(\gate, 0);
 ~currentBeatA = 0;
 ~curInListA = ~minListA;
 ~currentBeatB = 0;

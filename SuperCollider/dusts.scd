@@ -95,7 +95,8 @@
 ~happyLowCloud = {
     arg gate = 1, atk = 5, rel = 10;
     var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[-24].choose;}));
-    var env = Env.step(levels, [1, 1, 2, 1, 1, 2, 2] * 0.05 * 8, releaseNode: 6, loopNode: 0);
+    var durations = Control.names(\durations).kr([1, 1, 2, 1, 1, 2, 2] * t.beatDur * 8);
+    var env = Env.step(levels, durations, releaseNode: 6, loopNode: 0);
     var envgen = EnvGen.kr(env);
     var envRel = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
     var freq = (envgen + 65 + 0).midicps;
@@ -104,7 +105,7 @@
     var osc2 = (SinOsc.ar(5, 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = SinOsc.ar([freq + 1.1 + ((1 - osc) * 200), freq + 1 + ((1 - osc) * 200)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1]) * 0.1 * osc;
     var bigOsc = SinOsc.kr(0.1, 0.5, 0.5);
-    var cAmp = Control.names(\altAmp).kr(1, 3) * 0.25;
+    var cAmp = Control.names(\altAmp).kr(30, 3) * 0.25;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
@@ -112,11 +113,20 @@
 }.play;
 )
 
-~happyLowCloud.setn(\altAmp, 40);
+~happyLowCloud.setn(\altAmp, 30);
 ~happyLowCloud.set(\gate, 0);
+~happyLowCloud.setn(\durations, [1, 1, 2, 1, 1, 2, 2] * t.beatDur * 8);
+~happyLowCloud.setn(\durations, [1, 1, 2, 1, 1, 2, 2] * 0.4);
 
-
-
+(
+~nouveauxNuagesBas = Task { {
+    ~happyLowCloud.setn(\levels, [0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[-24].choose;}));
+    "Nouveaux nuages bas.".postln;
+    16.wait;
+}.loop(t);
+}.start;
+)
+~nouveauxNuagesBas.stop;
 
 
 (
@@ -152,7 +162,7 @@ SynthDef(\sand, {
 ~mousse = {
     arg gate = 1, atk = 5, rel = 10;
     var levels = Control.names(\levels).kr([0, 4, 7, 7, 4, 2, 2].scramble + Array.fill(7, {[0, 0, 0].choose;}));
-    var durations = Control.names(\durations).kr([1, 1, 2, 1, 1, 2, 2] * 1 * 2);
+    var durations = Control.names(\durations).kr([1, 1, 2, 1, 1, 2, 2] * 8);
     var env = Env.step(levels, durations, releaseNode: 6, loopNode: 0);
     var envgen = EnvGen.kr(env);
     var envRel = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
@@ -164,11 +174,11 @@ SynthDef(\sand, {
     var osc2 = (SinOsc.ar(5, 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = SinOsc.ar([freq + 1.1 + ((1 - osc) * 200), freq + 1 + ((1 - osc) * 200)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1]) * 0.1 * osc;
     var bigOsc = SinOsc.kr(0.025).range(0.25, 1);
-    var cAmp = Control.names(\amp).kr(4, 3) * 0.25;
+    var cAmp = Control.names(\amp).kr(16, 3) * 0.25;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
-    sig = HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq, mul:0.1) * cAmp * envRel, 5175);
+    sig = HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq, mul:0.1) * cAmp * envRel, SinOsc.kr(0.1).range(175, 5175));
     Out.ar(~limitBus, sig);
 }.play;
 )

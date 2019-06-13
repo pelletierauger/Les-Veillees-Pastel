@@ -14,7 +14,7 @@ SynthDef.new(\basschirp, {
     sig = (sig * loopEnv) * (1 + LFTri.ar([freq + 1.1, freq + 1] * 1.001 * triMod, mul: loopEnv * 1));
 //     sig = sig + (sig * LFTri.ar([freq + 0.1, freq + 0.2] * 1.01) * 0.25);
     linPass = XLine.kr(low, 6000, atk + rel * 0.5);
-    sig = LPF.ar(sig, linPass) * 4;
+    sig = LPF.ar(sig, linPass) * 8;
     sig = HPF.ar(sig, 250);
     sig = Balance2.ar(sig[panFlip[0]], sig[panFlip[1]], pan, 1);
     Out.ar(out, sig);

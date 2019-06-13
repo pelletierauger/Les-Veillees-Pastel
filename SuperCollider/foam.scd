@@ -53,6 +53,7 @@ Pdefn(\foamRel, 0.5);
 
 
 (
+~soloCont.set(\gate, 0);
 ~foamClusters = Task {
 {
 var waitValue = ~foamCluster.();

@@ -183,7 +183,7 @@ void main() {
 
 // --------------- //
 // vagues simples- //
-// --------------- //
+// ------ --------- //
 setBothShaders(`
 precision mediump float;
 varying vec2 vTexCoord;
@@ -318,7 +318,7 @@ void main() {
     uv *= 0.5;
     float d = length(uv);
     float t = time * 0.125 * 0.06125 * 0.5;
-    t *= 2.;
+    t *= 4.;
 //     t = time * 0.125;
     float c = d;
 //     if (d < 0.3) c = 1.; else c = 0.;
@@ -406,7 +406,7 @@ void main() {
     uv *= 0.5;
     float d = length(uv);
     float t = time * 0.125 * 0.06125 * 0.5;
-    t *= 2.;
+    t *= 5.;
 //     t = time * 0.125;
     float c = d;
 //     if (d < 0.3) c = 1.; else c = 0.;
@@ -494,7 +494,7 @@ void main() {
     uv *= 0.5;
     float d = length(uv);
     float t = time * 0.125 * 0.06125 * 0.5;
-    t *= 2.;
+    t *= 200.;
 //  t = time * 0.125;
     float c = d;
 //  if (d < 0.3) c = 1.; else c = 0.;
@@ -513,12 +513,12 @@ void main() {
     col.r += abs(sin(length(uv - p) * (0.1 + sin(1. * 2.) * 0.001)) * 5.);
 //  col.g *= sin(length(uv - p) * (6. + sin(1. * 20.) * 0.01));
     vec2 newV = (0.001 * uv + tan(uv.x * 3.)) - (p + sin(uv.x * 5.));
-    newV += sin(uv * 150. + sin(uv.y * 10. * (sin(time * 50.)) * uv.y)) * t * 0.1;
-    newV += cos(uv * 150. + cos(uv.x * 10. * (cos(time * 50.)) * uv.x)) * t * 0.1;
+    newV += sin(uv * 150. + sin(uv.y * 10. * (sin(time * 50.)) * uv.y)) * 0.5;
+    newV += cos(uv * 150. + cos(uv.x * 10. * (cos(time * 50.)) * uv.x)) * 0.5;
 //  col *= sin(atan(newV.x, newV.y));
-    col *= sin(sin(atan(newV.x, newV.y) * (sin(t * 100.) * 0.75)) * 10. + sin(t * 10.) * 10.);
-    col *= sin(cos(atan(newV.x, newV.y) * (sin(t * 100.) * 0.75)) * 10. + cos(t * 10.) * 10.);
-    col *= sin(sin(atan(newV.x, newV.y) * (sin(t * 100.) * 0.75)) * 10. + cos(t * 10.) * 10.);
+    col *= sin(sin(atan(newV.x, newV.y) * (sin(t * 10.) * 0.75)) * 10. + sin(t * 10.) * 10.);
+    col *= sin(cos(atan(newV.x, newV.y) * (sin(t * 10.) * 0.75)) * 10. + cos(t * 10.) * 10.);
+    col *= sin(sin(atan(newV.x, newV.y) * (sin(t * 10.) * 0.75)) * 10. + cos(t * 10.) * 10.);
 //  col -=  CircleRGB(uv, p2, 0.2, 0.2, vec3(1.0, 1.0, 1.0));
 //  col = max(col, 0.);
 //  col += CircleRGB(uv, p2, 0.5, 0.1, vec3(0.2, 0.0, 0.8));
@@ -674,7 +674,7 @@ void main() {
     uv *= 0.5;
     float d = length(uv);
     float t = time * 0.125 * 0.06125 * 0.5;
-    t *= 2.;
+    t *= 10.;
     vec2 p = vec2(3.0, 0.0);
     vec2 p2 = vec2(0.0, 0.0);
     vec3 col = CircleRGB(uv, p2, 1.9, 0.2, vec3(0.25, 1.4, 1.0));
