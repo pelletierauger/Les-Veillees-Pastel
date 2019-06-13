@@ -16,7 +16,7 @@ Pbind(
     \spos, Pseq(calcPos, inf),
     \atk, 0.01, 
     \rel, Pseq(rels, 16), 
-    \amp, 24 * 
+    \amp, 18 * 
     Pseq(Pseries(0, 1/(64), 64).asStream.nextN(64).mirror2, inf),
     \pan, Pwhite(-0.5, 0.5, inf),
     \out, ~reverbBus
@@ -70,6 +70,6 @@ waitValue.wait;
 ~foamClusters.stop;
 ~happyLowCloud.set(\gate, 0);
 ~mousse.set(\gate, 0);
-
+~shimmer.stop;
 
 Pdefn(\guitClusterAmp, 1);

@@ -363,7 +363,7 @@ SynthDef(\solo3cont, {
 }).add;
 )
 
-~soloCont = Synth.new(\solo3cont, [\out, ~reverbBus, \amp, 2]);
+~soloCont = Synth.new(\solo3cont, [\out, ~reverbBus, \amp, 5]);
 ~soloCont.set(\gate, 0);
 
 
