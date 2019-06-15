@@ -178,7 +178,10 @@ void main() {
 
 
 
-
+drawCount = 20;
+logJavaScriptConsole(drawIncrement);
+drawIncrement = 0.00125;;
+drawIncrement *= 2;
 
 
 // --------------- //
@@ -248,6 +251,10 @@ void main() {
 //     col.g *= sin(length(uv - p) * (6. + sin(1. * 20.) * 0.01));
     vec2 newV = (uv + tan(uv.y * 3.)) - (p + sin(uv.x * 3.));
     newV += cos(sin(uv * 20.));
+//     
+//     lignes contours
+//     newV.x *= cos(uv.y * sin(t * 100.) * 100.) * 100.;
+//     
 //     col *= sin(atan(newV.x, newV.y));
       col *= sin(sin(atan(newV.x, newV.y) * (sin(t * 100.) * 1.)) * 10. + sin(t * 10.) * 100.);
       col *= sin(cos(atan(newV.x, newV.y) * (sin(t * 100.) * 1.)) * 10. + cos(t * 10.) * 100.);

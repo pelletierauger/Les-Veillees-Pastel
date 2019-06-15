@@ -371,6 +371,8 @@ void main() {
 // fonds-marins--- //
 // le ventre------ //
 // --------------- //
+drawCount = 20;
+drawIncrement = 0.00125;
 setBothShaders(`
 precision mediump float;
 varying vec2 vTexCoord;
@@ -412,6 +414,7 @@ void main() {
 //  uv.x -= 0.0005;
     uv.y -= 1.4;
     uv *= 1.05;
+    uv *= 0.05;
     float d = length(uv);
     float t = time * 0.125 * 0.06125 * 0.5;
     t *= 5.;
