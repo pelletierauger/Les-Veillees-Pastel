@@ -1,9 +1,9 @@
 (
 ~mousse.set(\gate, 0);
 ~mousse = {
-    arg gate = 1, atk = 5, rel = 10;
-    var levels = Control.names(\levels).kr([0, 4, 7, 7, 4, 2, 2].scramble + Array.fill(7, {[-12, 0, 0].choose;}));
-    var durations = Control.names(\durations).kr([1, 1, 2, 1, 1, 2, 2] * t.beatDur * 2);
+    arg gate = 1, atk = 5, rel = 30;
+    var levels = Control.names(\levels).kr([0, 4, 7, 7, 4, 2, 2].scramble + Array.fill(7, {[0, 0, 0].choose;}));
+    var durations = Control.names(\durations).kr([1, 1, 2, 1, 1, 2, 2] * t.beatDur * 8);
     var env = Env.step(levels, durations, releaseNode: 6, loopNode: 0);
     var envgen = EnvGen.kr(env);
     var envRel = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
@@ -13,7 +13,7 @@
     var osc2 = (SinOsc.ar(5, 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = SinOsc.ar([freq + 1.1 + ((1 - osc) * 200), freq + 1 + ((1 - osc) * 200)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1]) * 0.1 * osc;
     var bigOsc = SinOsc.kr(0.025, 0.5, 0.5);
-    var cAmp = Control.names(\amp).kr(1, 3) * 0.25;
+    var cAmp = Control.names(\amp).kr(16, 3) * 0.25;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
@@ -24,7 +24,7 @@
 
 ~mousse.free;
 ~mousse.set(\gate, 0);
-~mousse.setn(\amp, 2);
+~mousse.setn(\amp, 16);
 
 ~mousse.setn(\levels, [0, 4, 7, 7, 4, 2, 2].scramble + Array.fill(6, {[-12, 0, 0].choose;}));
 ~mousse.setn(\levels, [0, 4, 7, 7, 4, 2, 2].scramble);
@@ -36,7 +36,7 @@
 ~nouvellesMousses = Task { {
     ~mousse.setn(\levels, 
         [0, 4, 7, 7, 4, 2, 2].scramble
-        + Array.fill(7, {[-12, 0, 0].choose;})
+        + Array.fill(7, {[0, 0, 0].choose;})
     );
     "Nouvelle mousse.".postln;
     16.wait;
@@ -48,7 +48,7 @@
 (
 ~brindilles.set(\gate, 0);
 ~brindilles = {
-    arg gate = 1, atk = 5, rel = 10;
+    arg gate = 1, atk = 5, rel = 30;
     var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 2, 2].scramble + Array.fill(7, {[12].choose;}));
     var durations = Control.names(\durations).kr([1, 1, 2, 1, 1, 2, 2] * t.beatDur * 2);
     var env = Env.step(levels, durations, releaseNode: 6, loopNode: 0);
@@ -56,7 +56,8 @@
     var envRel = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
     var freq = (envgen + 65 + 0).midicps;
     var oscF = SinOsc.kr(0.01, 0.5, 0.5) + 1 * 50;
-    var osc = (SinOsc.ar(16, 0.5, 0.5) * oscF).clip(0, 1.0);
+    var gEnv = EnvGen.kr(Env.step([16, 16, 16, 8, 32, 16].stutter(16).scramble, 1!96, 5, 0));
+    var osc = (SinOsc.ar(gEnv, 0.5, 0.5) * oscF).clip(0, 1.0);
     var osc2 = (SinOsc.ar(LFNoise1.ar(2, 4, 4), 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = LFSaw.ar([freq + 1.1 + ((1 - osc) * 20), freq + 1 + ((1 - osc) * 20)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1] * 1) * 0.1 * osc;
     var bigOsc = SinOsc.kr(0.1, 0.5, 0.5);
@@ -71,7 +72,7 @@
 
 ~brindilles.free;
 ~brindilles.set(\gate, 0);
-~brindilles.setn(\amp, 6);
+~brindilles.setn(\amp, 16);
 
 ~brindilles.setn(\levels, [0, 4, 7, 9, 11, 2, 2].scramble + 12);
 
@@ -91,9 +92,10 @@
 
 
 (
-~happyLowCloud.free;
+// ~happyLowCloud.free;
+~happyLowCloud.set(\gate, 0);
 ~happyLowCloud = {
-    arg gate = 1, atk = 5, rel = 10;
+    arg gate = 1, atk = 5, rel = 30;
     var levels = Control.names(\levels).kr([0, 4, 7, 9, 11, 12, 0].scramble + Array.fill(7, {[-24].choose;}));
     var durations = Control.names(\durations).kr([1, 1, 2, 1, 1, 2, 2] * t.beatDur * 8);
     var env = Env.step(levels, durations, releaseNode: 6, loopNode: 0);
@@ -101,18 +103,21 @@
     var envRel = EnvGen.ar(Env.new([0.0, 1.0, 0.00001], [atk, rel], [\linear, \exponential],1), gate, doneAction: 2);
     var freq = (envgen + 65 + 0).midicps;
     var oscF = SinOsc.kr(0.01, 0.5, 0.5) + 1 * 50000;
-    var osc = (SinOsc.ar(4, 0.5, 0.5) * oscF).clip(0, 1.0);
+    var gEnv = EnvGen.kr(Env.step([1, 1, 1, 2, 4, 1], 8!6, 1, 0));
+    var osc = (SinOsc.ar(gEnv, 0.5, 0.5) * oscF).clip(0, 1.0);
     var osc2 = (SinOsc.ar(5, 0.5, 0.5) * 500).clip(0, 1.0);
-    var sig = SinOsc.ar([freq + 1.1 + ((1 - osc) * 200), freq + 1 + ((1 - osc) * 200)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1]) * 0.1 * osc;
-    var bigOsc = SinOsc.kr(0.1, 0.5, 0.5);
+    var sig = SinOsc.ar([freq + 1.1 + ((1 - osc) * 200), freq + 1 + ((1 - osc) * 200)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1]) * 0.2 * osc;
+    var bigOsc = SinOsc.kr(0.1).range(0.5, 1);
     var cAmp = Control.names(\altAmp).kr(30, 3) * 0.25;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
-    HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq, mul:0.1) * cAmp * envRel, 175);
+    sig = HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq, mul:0.1) * cAmp * envRel, SinOsc.kr(0.1).range(875, 1475));
+    Out.ar(~limitBus, sig);
 }.play;
 )
 
+~happyLowCloud.free;
 ~happyLowCloud.setn(\altAmp, 30);
 ~happyLowCloud.set(\gate, 0);
 ~happyLowCloud.setn(\durations, [1, 1, 2, 1, 1, 2, 2] * t.beatDur * 8);
@@ -158,10 +163,10 @@ SynthDef(\sand, {
 
 
 (
-~mousse.set(\gate, 0);
-~mousse = {
-    arg gate = 1, atk = 5, rel = 10;
-    var levels = Control.names(\levels).kr([0, 4, 7, 7, 4, 2, 2].scramble + Array.fill(7, {[0, 0, 0].choose;}));
+~mousse2.set(\gate, 0);
+~mousse2 = {
+    arg gate = 1, atk = 5, rel = 30;
+    var levels = Control.names(\levels).kr([0, 4, -5, -5, 4, 2, 2].scramble + Array.fill(7, {[0, 0, 0].choose;}));
     var durations = Control.names(\durations).kr([1, 1, 2, 1, 1, 2, 2] * 8);
     var env = Env.step(levels, durations, releaseNode: 6, loopNode: 0);
     var envgen = EnvGen.kr(env);
@@ -173,7 +178,7 @@ SynthDef(\sand, {
     var osc = (SinOsc.ar(gEnv, 0.5, 0.5) * oscF).clip(0, 1.0);
     var osc2 = (SinOsc.ar(5, 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = SinOsc.ar([freq + 1.1 + ((1 - osc) * 200), freq + 1 + ((1 - osc) * 200)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1]) * 0.1 * osc;
-    var bigOsc = SinOsc.kr(0.025).range(0.25, 1);
+    var bigOsc = SinOsc.kr(0.025).range(0.75, 1);
     var cAmp = Control.names(\amp).kr(16, 3) * 0.25;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
@@ -182,6 +187,6 @@ SynthDef(\sand, {
     Out.ar(~limitBus, sig);
 }.play;
 )
-~mousse.free;
-~mousse.setn(\amp, 16);
-~mousse.set(\gate, 0);
+~mousse2.free;
+~mousse2.setn(\amp, 16);
+~mousse2.set(\gate, 0);

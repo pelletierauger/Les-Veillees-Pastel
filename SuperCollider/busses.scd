@@ -28,7 +28,7 @@ SynthDef.new(\reverb, {
     decaytime: 20,
     mul: 1, add: 0);
     del = LPF.ar(del, 600);
-	sig = sig + (del * 0.25);
+	sig = sig + (del * 0.2);
     Out.ar(~limitBus, sig);
 }).add;
 )
@@ -66,7 +66,7 @@ SynthDef.new(\limit, {
         clampTime: 0.01,
         relaxTime: 0.01
     );
-    sig = (sig * 0.95 + (compSig * 0.05));
+//     sig = (sig * 0.95 + (compSig * 0.025));
     sig = Limiter.ar(sig,0.97, 0.01);
     Out.ar(0, sig);
 }).add;

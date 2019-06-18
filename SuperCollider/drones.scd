@@ -64,7 +64,7 @@
 )
 
 
-// ~lowDrone.free;
+~lowDrone.free;
 (
 ~lowDrone.set(\gate, 0);
 ~lowDrone = {
@@ -94,7 +94,7 @@
     ];
     chans = [0, 1];
     // using "slice" to select specific channels
-    sig = FM7.ar(ctls, mods).slice(chans) * -12.dbamp * 0.2; 
+    sig = FM7.ar(ctls, mods).slice(chans) * -12.dbamp * 0.4; 
     sig = sig * env;
     Out.ar(~limitBus, sig);
 }.play;
