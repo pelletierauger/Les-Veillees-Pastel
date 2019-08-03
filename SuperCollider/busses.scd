@@ -19,7 +19,7 @@ FreqScope.new(500, 500, 0, server: s);
 
 (
 SynthDef.new(\reverb, {
-    arg in, out = 0;
+    arg in, out = 0, amount = 0.2;
     var sig, del;
     sig = In.ar(in, 2);
     del = CombC.ar(in: sig,
@@ -28,7 +28,7 @@ SynthDef.new(\reverb, {
     decaytime: 20,
     mul: 1, add: 0);
     del = LPF.ar(del, 600);
-	sig = sig + (del * 0.2);
+	sig = sig + (del * amount);
     Out.ar(~limitBus, sig);
 }).add;
 )

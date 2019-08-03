@@ -93,8 +93,8 @@ t.sched(t.timeToNextBeat + t.beatDur, {
         + (Pwrand([0, 12], [0.9, 0.1], inf) * Pdefn(\pProb, 0))
         + Pdefn(\pShift, 0),
     ).play(t, quant: 4);
-    ~shimmerD2.stop;
-    ~shimmerD2 = Pbind(
+    ~shimmer.stop;
+    ~shimmer = Pbind(
         \instrument, \guitare,
         \dur, 0.25,
         \spos, Pseq([0.141, 0.2545, 0.141, 0.2545].stutter(64), inf)
@@ -103,9 +103,9 @@ t.sched(t.timeToNextBeat + t.beatDur, {
         \atk, 0.7,
         \rate, Pseq([-4, -4, -6, -4].midiratio.stutter(64), inf)
         * 0.midiratio,
-        \amp, 6 * Pdefn(\shimmerAmp, 1),
+        \amp, 6 * Pdefn(\shimmerAmp, 2),
         \pan, Pwhite(-1.0, 1.0, inf),
-        \out, ~highPassBus
+        \out, ~reverbBus
     ).play(t, quant: [4, -0.5]);
 });
 )
@@ -127,6 +127,7 @@ t.sched(t.timeToNextBeat + t.beatDur, {
 )
 Pdefn(\shimPos, 0.000);
 Pdefn(\pProb, 1);
+Pdefn(\shimmerAmp, 2);
 (
 ~p2.stop;
 ~p2 = Pbind(
@@ -153,7 +154,7 @@ SynthDef(\piano, {
     var sig, env, lfo;
     env = EnvGen.kr(Env.new([1, 0], [8]), doneAction: 2);
     sig = PlayBuf.ar(2, buf, rate * BufRateScale.ir(buf), startPos: 0, doneAction: 2);
-    sig = sig * amp * 2 * env;
+    sig = sig * amp * 6 * env;
     sig = Balance2.ar(sig[0], sig[1], pan, 1);
     Out.ar(out, sig);
 }).add;

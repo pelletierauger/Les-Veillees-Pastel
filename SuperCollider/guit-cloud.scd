@@ -96,5 +96,7 @@ waitValue.wait;
 ~vagueBasse.set(\gate, 0);
 ~vagueBasse2.set(\gate, 0);
 ~lowDrone.set(\gate, 0);
+~p1.stop;
+~p2.stop;
 
 Pdefn(\guitClusterAmp, 1);

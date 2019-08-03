@@ -17,4 +17,4 @@ SynthDef(\solo3cont, {
 
 ~soloCont = Synth.new(\solo3cont, [\out, ~reverbBus, \amp, 5]);
 ~soloCont.set(\gate, 0);
-~soloCont.setn(\amp, 2.5);
+~soloCont.setn(\amp, 3.5);

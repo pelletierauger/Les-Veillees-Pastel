@@ -2,7 +2,7 @@
 ~mousse.set(\gate, 0);
 ~mousse = {
     arg gate = 1, atk = 5, rel = 30;
-    var levels = Control.names(\levels).kr([0, 4, 7, 7, 4, 2, 2].scramble + Array.fill(7, {[0, 0, 0].choose;}));
+    var levels = Control.names(\levels).kr([0, 4, 0, 4, 4, 2, 2].scramble + Array.fill(7, {[0, 0, 0].choose;}));
     var durations = Control.names(\durations).kr([1, 1, 2, 1, 1, 2, 2] * t.beatDur * 8);
     var env = Env.step(levels, durations, releaseNode: 6, loopNode: 0);
     var envgen = EnvGen.kr(env);
@@ -12,12 +12,12 @@
     var osc = (SinOsc.ar(16, 0.5, 0.5) * oscF).clip(0, 1.0);
     var osc2 = (SinOsc.ar(5, 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = SinOsc.ar([freq + 1.1 + ((1 - osc) * 200), freq + 1 + ((1 - osc) * 200)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1]) * 0.1 * osc;
-    var bigOsc = SinOsc.kr(0.025, 0.5, 0.5);
-    var cAmp = Control.names(\amp).kr(16, 3) * 0.25;
+    var bigOsc = SinOsc.kr(0.025).range(0.75, 1);
+    var cAmp = Control.names(\amp).kr(8, 3) * 0.25;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
-    sig = HPF.ar(GVerb.ar(sig, 4, 10, 0.9) + Ringz.ar(sig, freq, mul:0.1) * cAmp * envRel, 175);
+    sig = HPF.ar(GVerb.ar(sig, 4, 10, 0.9) * cAmp * envRel, 175);
     Out.ar(~limitBus, sig);
 }.play;
 )
@@ -179,7 +179,7 @@ SynthDef(\sand, {
     var osc2 = (SinOsc.ar(5, 0.5, 0.5) * 500).clip(0, 1.0);
     var sig = SinOsc.ar([freq + 1.1 + ((1 - osc) * 200), freq + 1 + ((1 - osc) * 200)] * 1.005 * 1) * LFTri.ar([freq, freq + 0.1]) * 0.1 * osc;
     var bigOsc = SinOsc.kr(0.025).range(0.75, 1);
-    var cAmp = Control.names(\amp).kr(16, 3) * 0.25;
+    var cAmp = Control.names(\amp).kr(8, 3) * 0.25;
     // sig = sig * (1 - osc2);
     // sig = (sig * 20).clip(-1.0, 1.0) * 0.1;
     sig = sig * bigOsc;
